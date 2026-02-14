@@ -1,0 +1,177 @@
+site_name: 100 Days of DevOps - Prashant Gohel
+site_description: 100 Days of DevOps project covering Linux, Git, Docker, Kubernetes, Jenkins, Ansible, Terraform and Cloud Automation by Prashant Gohel.
+site_author: Prashant Gohel
+site_url: https://prashantgohel321.github.io/100-Days-of-DevOps-KodeKloud/
+
+repo_name: 100-Days-of-DevOps-KodeKloud
+repo_url: https://github.com/prashantgohel321/100-Days-of-DevOps-KodeKloud
+edit_uri: ""
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/prashantgohel321
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/prashantgohel1706
+
+extra:
+  generator: false
+  meta:
+    - name: keywords
+      content: DevOps, 100 Days of DevOps, Linux, Docker, Kubernetes, Jenkins, Terraform, Ansible, CI/CD, Cloud Engineering
+    - name: author
+      content: Prashant Gohel
+    - property: og:title
+      content: 100 Days of DevOps - Prashant Gohel
+    - property: og:description
+      content: Follow my 100 Days of DevOps journey covering real-world Linux, Docker, Kubernetes, Jenkins and Terraform projects.
+
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - fenced_code
+  - codehilite
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Commands Reference: commands.md
+  - Terminology: Terminology (From 50 Days of DevOps).md
+
+  - Linux (Day 001-014):
+      - Day 001: Day 001 Linux User Setup With Non-Interactive Shell.md
+      - Day 002: Day 002 Temporary User Setup with Expiry.md
+      - Day 003: Day 003 Secure Root SSH Access.md
+      - Day 004: Day 004 Script Execution Permissions.md
+      - Day 005: Day 005 SElinux Installation and Configuration.md
+      - Day 006: Day 006 Create a Cron Job.md
+      - Day 007: Day 007 Linux SSH Authentication.md
+      - Day 008: Day 008 Install Ansible.md
+      - Day 009: Day 009 MariaDB Troubleshooting.md
+      - Day 010: Day 010 Linux Bash Scripts.md
+      - Day 011: Day 011 Install and Configure Tomcat Server.md
+      - Day 012: Day 012 Linux Network Services.md
+      - Day 013: Day 013 IPtables Installation And Configuration.md
+      - Day 014: Day 014 Linux Process Troubleshooting.md
+
+  - Git (Day 021-034):
+      - Day 021: Day 021 Set Up Git Repository on Storage Server.md
+      - Day 022: Day 022 Clone Git Repository on Storage Server.md
+      - Day 023: Day 023 Fork a Git Repository.md
+      - Day 024: Day 024 Git Create Branches.md
+      - Day 025: Day 025 Git Merge Branches.md
+      - Day 026: Day 026 Git Manage Remotes.md
+      - Day 027: Day 027 Git Revert Some Changes.md
+      - Day 028: Day 028 Git Cherry Pick.md
+      - Day 029: Day 029 Manage Git Pull Requests.md
+      - Day 030: Day 030 Git hard reset.md
+      - Day 031: Day 031 Git Stash.md
+      - Day 032: Day 032 Git Rebase.md
+      - Day 033: Day 033 Resolve Git Merge Conflicts.md
+      - Day 034: Day 034 Git Hook.md
+
+  - Docker (Day 035-047):
+      - Day 035: Day 035 Install Docker Packages and Start Docker Service.md
+      - Day 036: Day 036 Deploy Nginx Container on Application Server.md
+      - Day 037: Day 037 Copy File to Docker Container.md
+      - Day 038: Day 038 Pull Docker Image.md
+      - Day 039: Day 039 Create a Docker Image From Container.md
+      - Day 040: Day 040 Docker EXEC Operations.md
+      - Day 041: Day 041 Write a Dockerfile.md
+      - Day 042: Day 042 Create a Docker Network.md
+      - Day 043: Day 043 Docker Ports Mapping.md
+      - Day 044: Day 044 Write a Docker Compose File.md
+      - Day 045: Day 045 Resolve Dockerfile Issues.md
+      - Day 046: Day 046 Deploy an App on Docker Containers.md
+      - Day 047: Day 047 Docker Python App.md
+
+  - Kubernetes (Day 048-067):
+      - Day 048: Day 048 Deploy Pods in Kubernetes Cluster.md
+      - Day 049: Day 049 Deploy Applications with Kubernetes Deployments.md
+      - Day 050: Day 050 Set Resource Limits in Kubernetes Pods.md
+      - Day 051: Day 051 Execute Rolling Updates in Kubernetes.md
+      - Day 052: Day 052 Revert Deployment to Previous Version in Kubernetes.md
+      - Day 053: Day 053 Resolve VolumeMounts Issue in Kubernetes.md
+      - Day 054: Day 054 Kubernetes Shared Volumes.md
+      - Day 055: Day 055 Kubernetes Sidecar Containers.md
+      - Day 056: Day 056 Deploy Nginx Web Server on Kubernetes Cluster.md
+      - Day 057: Day 057 Print Environment Variables.md
+      - Day 058: Day 058 Deploy Grafana on Kubernetes Cluster.md
+      - Day 059: Day 059 Troubleshoot Deployment issues in Kubernetes.md
+      - Day 060: Day 060 Persistent Volumes in Kubernetes.md
+      - Day 061: Day 061 Init Containers in Kubernetes.md
+      - Day 062: Day 062 Manage Secrets in Kubernetes.md
+      - Day 063: Day 063 Deploy Iron Gallery App on Kubernetes.md
+      - Day 064: Day 064 Fix Python App Deployed on Kubernetes Cluster.md
+      - Day 065: Day 065 Deploy Redis Deployment on Kubernetes.md
+      - Day 066: Day 066 Deploy MySQL on Kubernetes.md
+      - Day 067: Day 067 Deploy Guest Book App on Kubernetes.md
+
+  - Jenkins (Day 068-081):
+      - Day 068: Day 068 Set Up Jenkins Server.md
+      - Day 069: Day 069 Install Jenkins Plugins.md
+      - Day 070: Day 070 Configure Jenkins User Access.md
+      - Day 071: Day 071 Configure Jenkins Job for Package Installation.md
+      - Day 072: Day 072 Jenkins Parameterized Builds.md
+      - Day 073: Day 073 Jenkins Scheduled Jobs.md
+      - Day 074: Day 074 Jenkins Database Backup Job.md
+      - Day 075: Day 075 Jenkins Slave Nodes.md
+      - Day 076: Day 076 Jenkins Project Security.md
+      - Day 077: Day 077 Jenkins Deploy Pipeline.md
+      - Day 078: Day 078 Jenkins Conditional Pipeline.md
+      - Day 079: Day 079 Jenkins Deployment Job.md
+      - Day 080: Day 080 Jenkins Chained Builds.md
+      - Day 081: Day 081 Jenkins Multistage Pipeline.md
+
+  - Ansible (Day 082-093):
+      - Day 082: Day 082 Create Ansible Inventory for App Server Testing.md
+      - Day 083: Day 083 Ansible Playbook and File Management.md
+      - Day 084: Day 084 Copy Data to App Servers Using Ansible.md
+      - Day 085: Day 085 Create Files on App Servers Using Ansible.md
+      - Day 086: Day 086 Ansible Ping Module.md
+      - Day 087: Day 087 Ansible Install Package.md
+      - Day 088: Day 088 Ansible Block In FIle Module.md
+      - Day 089: Day 089 Ansible Manage Services.md
+      - Day 090: Day 090 Managing ACLs Using Ansible.md
+      - Day 091: Day 091 Ansible Lineinfile Module.md
+      - Day 092: Day 092 Managing Jinja2 Templates Using Ansible.md
+      - Day 093: Day 093 Using Ansible Conditionals.md
+
+  - Terraform (Day 094-100):
+      - Day 094: Day 094 Create VPC Using Terraform.md
+      - Day 095: Day 095 Create Security Group Using Terraform.md
+      - Day 096: Day 096 Create EC2 Instance Using Terraform.md
+      - Day 097: Day 097 Create IAM Policy Using Terraform.md
+      - Day 098: Day 098 Launch EC2 in Private VPC Subnet Using Terraform.md
+      - Day 099: Day 099 Attach IAM Policy for DynamoDB Access Using Terraform.md
+      - Day 100: Day 100 Create and Configure Alarm Using CloudWatch Using Terraform.md
