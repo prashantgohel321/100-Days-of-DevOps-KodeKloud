@@ -8,14 +8,12 @@ repo_url: https://github.com/prashantgohel321/100-Days-of-DevOps-KodeKloud
 edit_uri: ""
 
 extra:
+  generator: false
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/prashantgohel321
     - icon: fontawesome/brands/linkedin
       link: https://linkedin.com/in/prashantgohel1706
-
-extra:
-  generator: false
   meta:
     - name: keywords
       content: DevOps, 100 Days of DevOps, Linux, Docker, Kubernetes, Jenkins, Terraform, Ansible, CI/CD, Cloud Engineering
@@ -26,31 +24,46 @@ extra:
     - property: og:description
       content: Follow my 100 Days of DevOps journey covering real-world Linux, Docker, Kubernetes, Jenkins and Terraform projects.
 
-
 theme:
   name: material
+  language: en
+
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: deep purple
+      accent: cyan
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: deep purple
+      accent: cyan
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+
+  font:
+    text: Roboto
+    code: Roboto Mono
+
   features:
     - navigation.tabs
     - navigation.sections
     - navigation.expand
+    - navigation.instant
+    - navigation.tracking
     - navigation.top
+    - toc.integrate
     - search.highlight
     - search.suggest
     - content.code.copy
+    - content.tabs.link
     - content.action.edit
+    - content.action.view
+
+  icon:
+    repo: fontawesome/brands/github
+
 
 markdown_extensions:
   - admonition
