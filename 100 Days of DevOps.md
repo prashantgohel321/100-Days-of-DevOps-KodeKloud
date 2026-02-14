@@ -1,9 +1,984 @@
 # 100 Days of DevOps
 
+
+
 <br>
 <br>
 
-## Table of Content
+## Index
+
+- [100 Days of DevOps](#100-days-of-devops)
+  - [Index](#index)
+- [Day 001: Creating a User with a Non-Interactive Shell](#day-001-creating-a-user-with-a-non-interactive-shell)
+    - [The Task](#the-task)
+    - [My Solution \& Command Breakdown](#my-solution--command-breakdown)
+      - [1. The Creation Command](#1-the-creation-command)
+      - [2. The Verification Command](#2-the-verification-command)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why)
+    - [Deep Dive: What is a Non-Interactive Shell?](#deep-dive-what-is-a-non-interactive-shell)
+    - [Exploring the Directories and Files](#exploring-the-directories-and-files)
+- [Day 002: Creating a User with an Expiry Date](#day-002-creating-a-user-with-an-expiry-date)
+    - [The Task](#the-task-1)
+    - [My Solution \& Command Breakdown](#my-solution--command-breakdown-1)
+      - [1. The Creation Command](#1-the-creation-command-1)
+      - [2. The Verification Command](#2-the-verification-command-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-1)
+    - [Deep Dive: How Account Expiry Works](#deep-dive-how-account-expiry-works)
+    - [Exploring the Commands Used](#exploring-the-commands-used)
+- [Day 003: Disabling Direct Root SSH Login](#day-003-disabling-direct-root-ssh-login)
+    - [The Task](#the-task-2)
+    - [My Solution \& Command Breakdown](#my-solution--command-breakdown-2)
+      - [1. Editing the SSH Configuration File](#1-editing-the-ssh-configuration-file)
+      - [2. Restarting the SSH Service](#2-restarting-the-ssh-service)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-2)
+    - [Deep Dive: The `PermitRootLogin` Directive](#deep-dive-the-permitrootlogin-directive)
+    - [Exploring the Files and Commands](#exploring-the-files-and-commands)
+- [Day 004: Setting Executable Permissions on a Script](#day-004-setting-executable-permissions-on-a-script)
+    - [The Task](#the-task-3)
+    - [My Solution \& Command Breakdown](#my-solution--command-breakdown-3)
+      - [1. The Verification Command (Before)](#1-the-verification-command-before)
+      - [2. The Permission Change Command](#2-the-permission-change-command)
+      - [3. The Verification Command (After)](#3-the-verification-command-after)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-3)
+    - [Deep Dive: Understanding Linux File Permissions](#deep-dive-understanding-linux-file-permissions)
+    - [Exploring the Commands Used](#exploring-the-commands-used-1)
+- [Day 005: Installing SELinux and Handling Unexpected Issues](#day-005-installing-selinux-and-handling-unexpected-issues)
+    - [The Task](#the-task-4)
+    - [The Final Solution](#the-final-solution)
+      - [1. Install the Correct Packages](#1-install-the-correct-packages)
+      - [2. Configure SELinux to be Disabled](#2-configure-selinux-to-be-disabled)
+    - [My Troubleshooting Journey](#my-troubleshooting-journey)
+      - [Hurdle #1: "Packages Not Installed" Error](#hurdle-1-packages-not-installed-error)
+      - [Hurdle #2: Empty Configuration File](#hurdle-2-empty-configuration-file)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-4)
+    - [Deep Dive: The `/etc/selinux/config` File](#deep-dive-the-etcselinuxconfig-file)
+    - [Key Takeaways from This Task](#key-takeaways-from-this-task)
+- [Day 006: Automation with Cron Jobs](#day-006-automation-with-cron-jobs)
+    - [The Task](#the-task-5)
+    - [My Step-by-Step Solution](#my-step-by-step-solution)
+      - [Step 1: Install and Start the Cron Service](#step-1-install-and-start-the-cron-service)
+      - [Step 2: Add the Cron Job for the `root` User](#step-2-add-the-cron-job-for-the-root-user)
+      - [Step 3: Verification](#step-3-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-5)
+    - [Deep Dive: Decoding the Cron Schedule](#deep-dive-decoding-the-cron-schedule)
+    - [Common Pitfalls](#common-pitfalls)
+    - [Exploring the Commands Used](#exploring-the-commands-used-2)
+- [Day 007: Automation with Password-less SSH](#day-007-automation-with-password-less-ssh)
+    - [The Task](#the-task-6)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-1)
+      - [Step 1: Generate an SSH Key Pair](#step-1-generate-an-ssh-key-pair)
+      - [Step 2: Copy the Public Key to Each App Server](#step-2-copy-the-public-key-to-each-app-server)
+      - [Step 3: Verification](#step-3-verification-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-6)
+    - [Deep Dive: How Public Key Authentication Works](#deep-dive-how-public-key-authentication-works)
+    - [Common Pitfalls](#common-pitfalls-1)
+    - [Exploring the Commands Used](#exploring-the-commands-used-3)
+- [Day 008: Setting Up the Ansible Controller](#day-008-setting-up-the-ansible-controller)
+    - [The Task](#the-task-7)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-2)
+      - [Step 1: Install Ansible](#step-1-install-ansible)
+      - [Step 2: Verification](#step-2-verification)
+    - [The Verification "Gotcha": `ansible` vs. `ansible-core`](#the-verification-gotcha-ansible-vs-ansible-core)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-7)
+    - [Common Pitfalls](#common-pitfalls-2)
+    - [Exploring the Commands Used](#exploring-the-commands-used-4)
+- [Day 009: Real-World Production Troubleshooting](#day-009-real-world-production-troubleshooting)
+    - [The Task](#the-task-8)
+    - [My Troubleshooting Journey: A Step-by-Step Solution](#my-troubleshooting-journey-a-step-by-step-solution)
+      - [Step 1: Initial Investigation](#step-1-initial-investigation)
+      - [Step 2: Digging into the Logs](#step-2-digging-into-the-logs)
+      - [Step 3: Testing Hypotheses](#step-3-testing-hypotheses)
+      - [Step 4: Discovering the True Root Cause](#step-4-discovering-the-true-root-cause)
+      - [Step 5: The Final Solution](#step-5-the-final-solution)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-8)
+    - [Deep Dive: The Hierarchy of Troubleshooting](#deep-dive-the-hierarchy-of-troubleshooting)
+    - [Common Pitfalls](#common-pitfalls-3)
+    - [Exploring the Commands Used](#exploring-the-commands-used-5)
+- [Day 010: Automating Backups with a Bash Script](#day-010-automating-backups-with-a-bash-script)
+    - [The Task](#the-task-9)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-3)
+      - [Part 1: The Critical Prerequisite Setup](#part-1-the-critical-prerequisite-setup)
+      - [Part 2: Writing the Backup Script](#part-2-writing-the-backup-script)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-9)
+    - [Deep Dive: Why Password-less SSH is Non-Negotiable for Automation](#deep-dive-why-password-less-ssh-is-non-negotiable-for-automation)
+    - [Common Pitfalls](#common-pitfalls-4)
+    - [Exploring the Commands Used](#exploring-the-commands-used-6)
+- [Day 011: Deploying a Java Application on Tomcat](#day-011-deploying-a-java-application-on-tomcat)
+    - [The Task](#the-task-10)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-4)
+      - [Phase 1: Installing and Configuring Tomcat on App Server 3](#phase-1-installing-and-configuring-tomcat-on-app-server-3)
+      - [Phase 2: Preparing for Secure File Transfer](#phase-2-preparing-for-secure-file-transfer)
+      - [Phase 3: Deploying the Web Application](#phase-3-deploying-the-web-application)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-10)
+    - [Deep Dive: The Magic of `ROOT.war`](#deep-dive-the-magic-of-rootwar)
+    - [Common Pitfalls](#common-pitfalls-5)
+    - [Exploring the Commands Used](#exploring-the-commands-used-7)
+- [Day 012: The Port Conflict Detective Story](#day-012-the-port-conflict-detective-story)
+    - [The Task](#the-task-11)
+    - [My Troubleshooting Journey: A Step-by-Step Solution](#my-troubleshooting-journey-a-step-by-step-solution-1)
+      - [Step 1: Confirming the Failure](#step-1-confirming-the-failure)
+      - [Step 2: The First Clue - A Failed Service](#step-2-the-first-clue---a-failed-service)
+      - [Step 3: The Second Clue - The Root Cause](#step-3-the-second-clue---the-root-cause)
+      - [Step 4: The Third Clue - Identifying the Culprit](#step-4-the-third-clue---identifying-the-culprit)
+      - [Step 5: The First Fix - Resolving the Port Conflict](#step-5-the-first-fix---resolving-the-port-conflict)
+      - [Step 6: The Final Hurdle - The Firewall](#step-6-the-final-hurdle---the-firewall)
+      - [Step 7: The Final Fix - Configuring `iptables`](#step-7-the-final-fix---configuring-iptables)
+      - [Step 8: Final Verification](#step-8-final-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-11)
+    - [Deep Dive: The Sysadmin's Method - A Layered Approach](#deep-dive-the-sysadmins-method---a-layered-approach)
+    - [Common Pitfalls](#common-pitfalls-6)
+    - [Exploring the Commands Used](#exploring-the-commands-used-8)
+- [Day 013: Securing Servers with an `iptables` Firewall](#day-013-securing-servers-with-an-iptables-firewall)
+    - [The Task](#the-task-12)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-5)
+      - [Prerequisite: Finding the LBR IP](#prerequisite-finding-the-lbr-ip)
+      - [Main Workflow (for each server)](#main-workflow-for-each-server)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-12)
+    - [Deep Dive: The Importance of `iptables` Rule Order](#deep-dive-the-importance-of-iptables-rule-order)
+    - [Common Pitfalls](#common-pitfalls-7)
+    - [Exploring the Commands Used](#exploring-the-commands-used-9)
+- [Day 014: The Multi-Server Troubleshooting and Standardization Challenge](#day-014-the-multi-server-troubleshooting-and-standardization-challenge)
+    - [The Task](#the-task-13)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-6)
+      - [Step 1: The Investigation - Finding the Faulty Server](#step-1-the-investigation---finding-the-faulty-server)
+      - [Step 2: The Diagnosis - Identifying the Culprit](#step-2-the-diagnosis---identifying-the-culprit)
+      - [Step 3: The First Fix - Resolving the Conflict](#step-3-the-first-fix---resolving-the-conflict)
+      - [Step 4: The Main Fix - Standardization Across All Servers](#step-4-the-main-fix---standardization-across-all-servers)
+      - [Step 5: Final Verification](#step-5-final-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-13)
+    - [Deep Dive: The Importance of Standardization](#deep-dive-the-importance-of-standardization)
+    - [Common Pitfalls](#common-pitfalls-8)
+    - [Exploring the Commands Used](#exploring-the-commands-used-10)
+- [Day 015: Deploying a Secure Nginx Web Server with SSL](#day-015-deploying-a-secure-nginx-web-server-with-ssl)
+    - [The Task](#the-task-14)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-7)
+      - [Step 1: Install Nginx and Prepare Certificates](#step-1-install-nginx-and-prepare-certificates)
+      - [Step 2: Configure Nginx for SSL/HTTPS](#step-2-configure-nginx-for-sslhttps)
+      - [Step 3: Deploy Content and Start the Service](#step-3-deploy-content-and-start-the-service)
+      - [Step 4: Final Verification](#step-4-final-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-14)
+    - [Deep Dive: Anatomy of an Nginx SSL Server Block](#deep-dive-anatomy-of-an-nginx-ssl-server-block)
+    - [Exploring the Commands Used](#exploring-the-commands-used-11)
+- [Day 016: Building a High-Availability Stack with an Nginx Load Balancer](#day-016-building-a-high-availability-stack-with-an-nginx-load-balancer)
+    - [The Task](#the-task-15)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-8)
+      - [Step 1: The Investigation Phase](#step-1-the-investigation-phase)
+      - [Step 2: LBR Server Configuration](#step-2-lbr-server-configuration)
+    - [Step 3: Verification](#step-3-verification-2)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-15)
+    - [Deep Dive: The "Investigate First" Principle](#deep-dive-the-investigate-first-principle)
+    - [Common Pitfalls](#common-pitfalls-9)
+    - [Exploring the Commands Used](#exploring-the-commands-used-12)
+- [Day 017: PostgreSQL Database and User Management](#day-017-postgresql-database-and-user-management)
+    - [The Task](#the-task-16)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-9)
+      - [Step 1: Gaining Administrative Access](#step-1-gaining-administrative-access)
+      - [Step 2: Executing the SQL Commands](#step-2-executing-the-sql-commands)
+    - [Step 3: Verification](#step-3-verification-3)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-16)
+    - [Deep Dive: The Principle of Least Privilege in Databases](#deep-dive-the-principle-of-least-privilege-in-databases)
+      - [How I Applied the Principle:](#how-i-applied-the-principle)
+    - [Common Pitfalls](#common-pitfalls-10)
+    - [Exploring the Commands Used](#exploring-the-commands-used-13)
+- [Day 018: Graduating to Automation with Ansible for a LAMP Stack Deployment](#day-018-graduating-to-automation-with-ansible-for-a-lamp-stack-deployment)
+    - [The Task](#the-task-17)
+    - [My Solution: The Ansible Automation Approach](#my-solution-the-ansible-automation-approach)
+      - [1. The Inventory (`inventory.ini`)](#1-the-inventory-inventoryini)
+      - [2. The Playbook (`playbook.yaml`)](#2-the-playbook-playbookyaml)
+      - [3. The Execution](#3-the-execution)
+    - [Post-Mortem: Why My Manual Attempts Failed](#post-mortem-why-my-manual-attempts-failed)
+    - [Why Did I Do This? (The "What \& Why" of Ansible)](#why-did-i-do-this-the-what--why-of-ansible)
+    - [Deep Dive: A Line-by-Line Explanation of My Ansible Playbook](#deep-dive-a-line-by-line-explanation-of-my-ansible-playbook)
+    - [Exploring the Commands Used](#exploring-the-commands-used-14)
+- [Day 019: Hosting Multiple Websites on a Single Apache Server](#day-019-hosting-multiple-websites-on-a-single-apache-server)
+    - [The Task](#the-task-18)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-10)
+      - [Phase 1: Preparing the Web Server (on App Server 1)](#phase-1-preparing-the-web-server-on-app-server-1)
+      - [Phase 2: Transferring the Website Files (from Jump Host)](#phase-2-transferring-the-website-files-from-jump-host)
+      - [Phase 3: Deploying the Websites (on App Server 1)](#phase-3-deploying-the-websites-on-app-server-1)
+      - [Phase 4: Verification](#phase-4-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-17)
+    - [Deep Dive: How Apache Maps URLs to Directories](#deep-dive-how-apache-maps-urls-to-directories)
+    - [Common Pitfalls](#common-pitfalls-11)
+    - [Exploring the Commands Used](#exploring-the-commands-used-15)
+- [Day 020: Mastering the Nginx + PHP-FPM Stack](#day-020-mastering-the-nginx--php-fpm-stack)
+    - [The Task](#the-task-19)
+    - [My Step-by-Step Solution (The One That Worked)](#my-step-by-step-solution-the-one-that-worked)
+      - [Phase 1: Installing the Correct PHP Version](#phase-1-installing-the-correct-php-version)
+      - [Phase 2: Configuring PHP-FPM](#phase-2-configuring-php-fpm)
+      - [Phase 3: Configuring Nginx](#phase-3-configuring-nginx)
+      - [Phase 4: Final Verification](#phase-4-final-verification)
+    - [Post-Mortem: The Platform Validation Issue](#post-mortem-the-platform-validation-issue)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-18)
+    - [Deep Dive: Nginx Server Blocks vs. the Main Config File](#deep-dive-nginx-server-blocks-vs-the-main-config-file)
+    - [The Full Arsenal: Every Command I Used, Explained](#the-full-arsenal-every-command-i-used-explained)
+- [Day 021: Creating a Central Git Repository](#day-021-creating-a-central-git-repository)
+    - [The Task](#the-task-20)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-11)
+      - [Step 1: Connect and Install Git](#step-1-connect-and-install-git)
+      - [Step 2: Create the Bare Repository](#step-2-create-the-bare-repository)
+      - [Step 3: Verification](#step-3-verification-4)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-19)
+    - [Deep Dive: Bare vs. Non-Bare (Working) Repositories](#deep-dive-bare-vs-non-bare-working-repositories)
+    - [Common Pitfalls](#common-pitfalls-12)
+    - [Exploring the Commands Used](#exploring-the-commands-used-16)
+- [Day 022: Mastering the `git clone` Command](#day-022-mastering-the-git-clone-command)
+    - [The Task](#the-task-21)
+    - [My Step-by-Step Solution (The One That Worked)](#my-step-by-step-solution-the-one-that-worked-1)
+      - [Step 1: Connect to the Server](#step-1-connect-to-the-server)
+      - [Step 2: Navigate to the Parent Directory](#step-2-navigate-to-the-parent-directory)
+      - [Step 3: Clone the Repository](#step-3-clone-the-repository)
+      - [Step 4: Verification](#step-4-verification)
+    - [Post-Mortem: Why My Previous Attempts Failed](#post-mortem-why-my-previous-attempts-failed)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-20)
+    - [Deep Dive: How `git clone` Determines the Destination Path](#deep-dive-how-git-clone-determines-the-destination-path)
+    - [Common Pitfalls](#common-pitfalls-13)
+    - [Exploring the Commands Used](#exploring-the-commands-used-17)
+- [Day 023: Collaborative Git Workflows with Forks](#day-023-collaborative-git-workflows-with-forks)
+    - [The Task](#the-task-22)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-12)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-21)
+    - [The Fork and Pull Request Workflow](#the-fork-and-pull-request-workflow)
+    - [Exploring the UI Used](#exploring-the-ui-used)
+- [Day 024: Managing Development with Git Branches](#day-024-managing-development-with-git-branches)
+    - [The Task](#the-task-23)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-13)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-22)
+    - [Deep Dive: `git branch` vs. `git checkout -b`](#deep-dive-git-branch-vs-git-checkout--b)
+    - [Exploring the Commands Used](#exploring-the-commands-used-18)
+- [DevOps Day 25: The Complete Git Feature Branch Workflow](#devops-day-25-the-complete-git-feature-branch-workflow)
+    - [The Task](#the-task-24)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-14)
+      - [Phase 1: Branching and Development](#phase-1-branching-and-development)
+      - [Phase 2: Merging and Pushing](#phase-2-merging-and-pushing)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-23)
+    - [Deep Dive: The Lifecycle of a Feature Branch](#deep-dive-the-lifecycle-of-a-feature-branch)
+    - [Common Pitfalls](#common-pitfalls-14)
+    - [Exploring the Commands Used](#exploring-the-commands-used-19)
+- [Day 026: Managing Multiple Git Remotes](#day-026-managing-multiple-git-remotes)
+    - [The Task](#the-task-25)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-15)
+      - [Phase 1: Managing the Remote](#phase-1-managing-the-remote)
+      - [Phase 2: Committing and Pushing the New File](#phase-2-committing-and-pushing-the-new-file)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-24)
+    - [Deep Dive: How Git Remotes Work](#deep-dive-how-git-remotes-work)
+    - [Common Pitfalls](#common-pitfalls-15)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used)
+- [Day 027: Safely Undoing Changes with `git revert`](#day-027-safely-undoing-changes-with-git-revert)
+    - [The Task](#the-task-26)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-16)
+      - [Phase 1: Investigation](#phase-1-investigation)
+      - [Phase 2: The Revert and Commit](#phase-2-the-revert-and-commit)
+      - [Phase 3: Verification](#phase-3-verification)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-25)
+    - [Deep Dive: The Critical Difference - `git revert` vs. `git reset`](#deep-dive-the-critical-difference---git-revert-vs-git-reset)
+    - [Common Pitfalls](#common-pitfalls-16)
+    - [Exploring the Commands Used](#exploring-the-commands-used-20)
+- [Day 028: Targeted Code Integration with `git cherry-pick`](#day-028-targeted-code-integration-with-git-cherry-pick)
+    - [The Task](#the-task-27)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-17)
+      - [Phase 1: Investigation and Preparation](#phase-1-investigation-and-preparation)
+      - [Phase 2: The Cherry-Pick and Push](#phase-2-the-cherry-pick-and-push)
+      - [Phase 3: Verification](#phase-3-verification-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-26)
+    - [Deep Dive: The Power of `git cherry-pick` vs. `git merge`](#deep-dive-the-power-of-git-cherry-pick-vs-git-merge)
+    - [Common Pitfalls](#common-pitfalls-17)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-1)
+- [Day 029: Mastering the Pull Request Workflow](#day-029-mastering-the-pull-request-workflow)
+    - [The Task](#the-task-28)
+    - [My Step-by-Step Solution (The One That Worked)](#my-step-by-step-solution-the-one-that-worked-2)
+      - [Phase 1: Max Creates the Pull Request](#phase-1-max-creates-the-pull-request)
+      - [Phase 2: Tom Reviews, Approves, and Merges](#phase-2-tom-reviews-approves-and-merges)
+    - [Post-Mortem: Why My Previous Attempts Failed](#post-mortem-why-my-previous-attempts-failed-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-27)
+    - [Deep Dive: The Anatomy of a Professional Code Review](#deep-dive-the-anatomy-of-a-professional-code-review)
+    - [Common Pitfalls](#common-pitfalls-18)
+    - [Exploring the UI Used](#exploring-the-ui-used-1)
+- [Day 030: Rewriting History with `git reset --hard`](#day-030-rewriting-history-with-git-reset---hard)
+    - [The Task](#the-task-29)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-18)
+      - [Phase 1: Investigation](#phase-1-investigation-1)
+      - [Phase 2: The Reset and Force Push](#phase-2-the-reset-and-force-push)
+      - [Phase 3: Verification](#phase-3-verification-2)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-28)
+    - [Deep Dive: What Exactly is `HEAD` in Git?](#deep-dive-what-exactly-is-head-in-git)
+    - [The Dangers: `reset` vs. `revert` and the Force Push](#the-dangers-reset-vs-revert-and-the-force-push)
+    - [Common Pitfalls](#common-pitfalls-19)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-2)
+- [Day 031: Managing Work-in-Progress with `git stash`](#day-031-managing-work-in-progress-with-git-stash)
+    - [The Task](#the-task-30)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-19)
+      - [Phase 1: Investigation](#phase-1-investigation-2)
+      - [Phase 2: Restoring and Committing](#phase-2-restoring-and-committing)
+      - [Phase 3: Verification](#phase-3-verification-3)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-29)
+    - [Deep Dive: The Stash Stack and `apply` vs. `pop`](#deep-dive-the-stash-stack-and-apply-vs-pop)
+    - [Common Pitfalls](#common-pitfalls-20)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-3)
+- [Day 032: Keeping History Clean with `git rebase`](#day-032-keeping-history-clean-with-git-rebase)
+    - [The Task](#the-task-31)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-20)
+      - [Phase 1: Preparation](#phase-1-preparation)
+      - [Phase 2: The Rebase and Force Push](#phase-2-the-rebase-and-force-push)
+      - [Phase 3: Verification](#phase-3-verification-4)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-30)
+    - [Deep Dive: The Great Debate - `rebase` vs. `merge`](#deep-dive-the-great-debate---rebase-vs-merge)
+    - [Common Pitfalls and the Dangers of Rewriting History](#common-pitfalls-and-the-dangers-of-rewriting-history)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-4)
+- [Day 033: Resolving a Real-World Merge Conflict](#day-033-resolving-a-real-world-merge-conflict)
+    - [The Task](#the-task-32)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-21)
+      - [Phase 1: Diagnosing the Problem](#phase-1-diagnosing-the-problem)
+      - [Phase 2: The Conflict](#phase-2-the-conflict)
+      - [Phase 3: The Resolution](#phase-3-the-resolution)
+      - [Phase 4: The Final Push](#phase-4-the-final-push)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-31)
+    - [Deep Dive: The Anatomy of a Merge Conflict](#deep-dive-the-anatomy-of-a-merge-conflict)
+    - [Common Pitfalls](#common-pitfalls-21)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-5)
+- [Day 034: Automating Releases with Server-Side Git Hooks](#day-034-automating-releases-with-server-side-git-hooks)
+    - [The Task](#the-task-33)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-22)
+      - [Phase 1: Creating the Server-Side Git Hook](#phase-1-creating-the-server-side-git-hook)
+      - [Phase 2: Triggering the Hook](#phase-2-triggering-the-hook)
+      - [Phase 3: Verification](#phase-3-verification-5)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-32)
+    - [Deep Dive: Anatomy of My `post-update` Hook Script](#deep-dive-anatomy-of-my-post-update-hook-script)
+    - [Common Pitfalls](#common-pitfalls-22)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-6)
+- [Day 035: Setting Up a Docker Environment](#day-035-setting-up-a-docker-environment)
+    - [The Task](#the-task-34)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-23)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why)
+    - [Commands I Used](#commands-i-used)
+- [Day 036: Deploying a Simple Nginx Container](#day-036-deploying-a-simple-nginx-container)
+    - [The Task](#the-task-35)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-24)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-1)
+    - [Commands I Used](#commands-i-used-1)
+- [Day 037: Transferring Files into a Running Docker Container](#day-037-transferring-files-into-a-running-docker-container)
+    - [The Task](#the-task-36)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-25)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-2)
+    - [Commands I Used](#commands-i-used-2)
+- [Day 038: Docker Image Management and Tagging](#day-038-docker-image-management-and-tagging)
+    - [The Task](#the-task-37)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-26)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-3)
+    - [Commands I Used](#commands-i-used-3)
+- [Day 039: Creating a Docker Image from a Running Container](#day-039-creating-a-docker-image-from-a-running-container)
+    - [The Task](#the-task-38)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-27)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-4)
+    - [Commands I Used](#commands-i-used-4)
+- [Day 040: Modifying a Live Container with `docker exec`](#day-040-modifying-a-live-container-with-docker-exec)
+    - [The Task](#the-task-39)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-28)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-5)
+    - [Commands I Used](#commands-i-used-5)
+- [Day 041: Creating a Custom Apache Image with a `Dockerfile`](#day-041-creating-a-custom-apache-image-with-a-dockerfile)
+    - [The Task](#the-task-40)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-29)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-6)
+    - [Commands I Used](#commands-i-used-6)
+- [Day 042: Creating Custom Docker Networks](#day-042-creating-custom-docker-networks)
+    - [The Task](#the-task-41)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-30)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-7)
+    - [Commands I Used](#commands-i-used-7)
+- [Day 043: Deploying a Container and Exposing a Service](#day-043-deploying-a-container-and-exposing-a-service)
+    - [The Task](#the-task-42)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-31)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-8)
+    - [Commands I Used](#commands-i-used-8)
+- [Day 044: Declarative Container Management with Docker Compose](#day-044-declarative-container-management-with-docker-compose)
+    - [The Task](#the-task-43)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-32)
+    - [Key Concepts (The "What \& Why")](#key-concepts-the-what--why-9)
+    - [Commands I Used](#commands-i-used-9)
+- [Day 045: Debugging a `Dockerfile` with `COPY` Path Errors](#day-045-debugging-a-dockerfile-with-copy-path-errors)
+    - [The Task](#the-task-44)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-33)
+      - [Phase 1: The Diagnosis](#phase-1-the-diagnosis)
+      - [Phase 2: The Investigation](#phase-2-the-investigation)
+      - [Phase 3: The Fix](#phase-3-the-fix)
+      - [Phase 4: Verification](#phase-4-verification-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-33)
+    - [Deep Dive: The Build Context and `COPY` Source Paths](#deep-dive-the-build-context-and-copy-source-paths)
+    - [Common Pitfalls](#common-pitfalls-23)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-7)
+- [Day 046: Deploying a Two-Tier Application with Docker Compose](#day-046-deploying-a-two-tier-application-with-docker-compose)
+    - [The Task](#the-task-45)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-34)
+      - [Phase 1: Preparing the Host and Writing the Compose File](#phase-1-preparing-the-host-and-writing-the-compose-file)
+      - [Phase 2: Launching the Application Stack](#phase-2-launching-the-application-stack)
+      - [Phase 3: Verification](#phase-3-verification-6)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-34)
+    - [Deep Dive: A Line-by-Line Breakdown of My Multi-Service Compose File](#deep-dive-a-line-by-line-breakdown-of-my-multi-service-compose-file)
+    - [Common Pitfalls](#common-pitfalls-24)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-8)
+- [Day 047: "Dockerizing" a Python Application from Scratch](#day-047-dockerizing-a-python-application-from-scratch)
+    - [The Task](#the-task-46)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-35)
+      - [Phase 1: Writing the `Dockerfile`](#phase-1-writing-the-dockerfile)
+      - [Phase 2: Building the Custom Image](#phase-2-building-the-custom-image)
+      - [Phase 3: Running the Container](#phase-3-running-the-container)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-35)
+    - [Deep Dive: A Line-by-Line Explanation of My Python `Dockerfile`](#deep-dive-a-line-by-line-explanation-of-my-python-dockerfile)
+    - [Common Pitfalls](#common-pitfalls-25)
+    - [Exploring the Commands I Used](#exploring-the-commands-i-used-9)
+- [Day 048: My First Pod in Kubernetes](#day-048-my-first-pod-in-kubernetes)
+    - [The Task](#the-task-47)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-36)
+      - [Phase 1: Writing the Pod Manifest](#phase-1-writing-the-pod-manifest)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners)
+    - [Exploring the Essential kubectl Commands](#exploring-the-essential-kubectl-commands)
+- [Day 049: From Pods to Deployments - My First Kubernetes Application](#day-049-from-pods-to-deployments---my-first-kubernetes-application)
+    - [The Task](#the-task-48)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-37)
+      - [Phase 1: Writing the Deployment Manifest](#phase-1-writing-the-deployment-manifest)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-1)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-1)
+    - [Deep Dive: A Line-by-Line Explanation of My Deployment YAML File](#deep-dive-a-line-by-line-explanation-of-my-deployment-yaml-file)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-1)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-1)
+- [Day 050: Managing Container Resources in Kubernetes](#day-050-managing-container-resources-in-kubernetes)
+    - [The Task](#the-task-49)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-38)
+      - [Phase 1: Writing the Pod Manifest](#phase-1-writing-the-pod-manifest-1)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-2)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-2)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file-1)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-2)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-2)
+- [Day 051: Zero-Downtime Updates with Kubernetes Deployments](#day-051-zero-downtime-updates-with-kubernetes-deployments)
+    - [The Task](#the-task-50)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-39)
+      - [Phase 1: The Investigation (The Most Important Step)](#phase-1-the-investigation-the-most-important-step)
+      - [Phase 2: The Rolling Update](#phase-2-the-rolling-update)
+      - [Phase 3: Verification](#phase-3-verification-7)
+    - [My Troubleshooting Journey: Finding the Correct Container Name](#my-troubleshooting-journey-finding-the-correct-container-name)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-3)
+    - [Deep Dive: How a Rolling Update Works](#deep-dive-how-a-rolling-update-works)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-3)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-3)
+- [Day 052: Zero-Downtime Rollbacks in Kubernetes](#day-052-zero-downtime-rollbacks-in-kubernetes)
+    - [The Task](#the-task-51)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-40)
+      - [Phase 1: The Investigation (Investigate Before You Act)](#phase-1-the-investigation-investigate-before-you-act)
+      - [Phase 2: The Rollback](#phase-2-the-rollback)
+      - [Phase 3: Verification](#phase-3-verification-8)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-4)
+    - [Deep Dive: How a rollout undo Works Under the Hood](#deep-dive-how-a-rollout-undo-works-under-the-hood)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-4)
+    - [Exploring the Essential kubectl Commands](#exploring-the-essential-kubectl-commands-4)
+- [Day 053: Troubleshooting a Multi-Container Pod in Kubernetes](#day-053-troubleshooting-a-multi-container-pod-in-kubernetes)
+    - [The Task](#the-task-52)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-41)
+      - [Phase 1: The Investigation](#phase-1-the-investigation)
+      - [Phase 2: Applying the Fix](#phase-2-applying-the-fix)
+      - [Phase 3: Deploying the Content](#phase-3-deploying-the-content)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-36)
+    - [Deep Dive: The Anatomy of a Multi-Container Failure](#deep-dive-the-anatomy-of-a-multi-container-failure)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-5)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-5)
+- [Day 054: Shared Volumes in Multi-Container Pods](#day-054-shared-volumes-in-multi-container-pods)
+    - [The Task](#the-task-53)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-42)
+      - [Phase 1: Writing the Pod Manifest](#phase-1-writing-the-pod-manifest-2)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-3)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-5)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file-2)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-6)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-6)
+- [Day 055: Implementing the Kubernetes Sidecar Pattern](#day-055-implementing-the-kubernetes-sidecar-pattern)
+    - [The Task](#the-task-54)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-43)
+      - [Phase 1: Writing the Pod Manifest](#phase-1-writing-the-pod-manifest-3)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-4)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-6)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file-3)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-7)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-7)
+- [Day 056: Deploying a Scalable and Accessible Application in Kubernetes](#day-056-deploying-a-scalable-and-accessible-application-in-kubernetes)
+    - [The Task](#the-task-55)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-44)
+      - [Phase 1: Writing the Manifest File](#phase-1-writing-the-manifest-file)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-5)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-7)
+    - [Deep Dive: A Line-by-Line Explanation of My YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-yaml-manifest)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-8)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-8)
+- [Day 057: One-Off Tasks and Environment Variables in Kubernetes](#day-057-one-off-tasks-and-environment-variables-in-kubernetes)
+    - [The Task](#the-task-56)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-45)
+      - [Phase 1: Writing the Pod Manifest](#phase-1-writing-the-pod-manifest-4)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-6)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-8)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file-4)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-9)
+    - [Exploring the Essential kubectl Commands](#exploring-the-essential-kubectl-commands-9)
+- [Day 058: Deploying a Grafana Instance on Kubernetes](#day-058-deploying-a-grafana-instance-on-kubernetes)
+    - [The Task](#the-task-57)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-46)
+      - [Phase 1: Writing the Manifest File](#phase-1-writing-the-manifest-file-1)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-7)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-9)
+    - [Deep Dive: A Line-by-Line Explanation of My YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-yaml-manifest-1)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-10)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-10)
+- [Day 059: Troubleshooting a Failing Kubernetes Deployment](#day-059-troubleshooting-a-failing-kubernetes-deployment)
+    - [The Task](#the-task-58)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-47)
+      - [Phase 1: The Diagnosis](#phase-1-the-diagnosis-1)
+      - [Phase 2: The Fix](#phase-2-the-fix)
+      - [Phase 3: Verification](#phase-3-verification-9)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-10)
+    - [Deep Dive: The Power of `kubectl describe` and the Events Section](#deep-dive-the-power-of-kubectl-describe-and-the-events-section)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-11)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-11)
+- [Day 060: Deploying a Stateful Application with Persistent Storage](#day-060-deploying-a-stateful-application-with-persistent-storage)
+    - [The Task](#the-task-59)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-48)
+      - [Phase 1: Writing the Manifest File](#phase-1-writing-the-manifest-file-2)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-8)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-11)
+    - [Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-12)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-12)
+- [Day 061: Pre-requisite Tasks with Kubernetes Init Containers](#day-061-pre-requisite-tasks-with-kubernetes-init-containers)
+    - [The Task](#the-task-60)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-49)
+      - [Phase 1: Writing the Deployment Manifest](#phase-1-writing-the-deployment-manifest-1)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-9)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-12)
+    - [Deep Dive: A Line-by-Line Explanation of My Deployment YAML File](#deep-dive-a-line-by-line-explanation-of-my-deployment-yaml-file-1)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-13)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-13)
+- [Day 062: Managing Secrets in Kubernetes](#day-062-managing-secrets-in-kubernetes)
+    - [The Task](#the-task-61)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-50)
+      - [Phase 1: Creating the Secret](#phase-1-creating-the-secret)
+      - [Phase 2: Creating the Pod to Consume the Secret](#phase-2-creating-the-pod-to-consume-the-secret)
+      - [Phase 3: Verification](#phase-3-verification-10)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-13)
+    - [Deep Dive: A Line-by-Line Explanation of My Pod YAML File](#deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file-5)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-14)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-14)
+- [Day 063: Deploying a Full Two-Tier Application on Kubernetes](#day-063-deploying-a-full-two-tier-application-on-kubernetes)
+    - [The Task](#the-task-62)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-51)
+      - [Phase 1: Writing the Manifest File](#phase-1-writing-the-manifest-file-3)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-10)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-14)
+    - [Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest-1)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-15)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-15)
+- [Day 064: Troubleshooting a Failing Kubernetes Deployment](#day-064-troubleshooting-a-failing-kubernetes-deployment)
+    - [The Task](#the-task-63)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-52)
+      - [Phase 1: Diagnosing the Pod Failure](#phase-1-diagnosing-the-pod-failure)
+      - [Phase 2: Fixing the Deployment and Diagnosing the Service](#phase-2-fixing-the-deployment-and-diagnosing-the-service)
+      - [Phase 3: Fixing the Service and Verifying](#phase-3-fixing-the-service-and-verifying)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-15)
+    - [Deep Dive: `port` vs. `targetPort` vs. `nodePort` in a Service](#deep-dive-port-vs-targetport-vs-nodeport-in-a-service)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-16)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-16)
+- [Day 065: Deploying a Configured Redis Cache on Kubernetes](#day-065-deploying-a-configured-redis-cache-on-kubernetes)
+    - [The Task](#the-task-64)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-53)
+      - [Phase 1: Creating the ConfigMap](#phase-1-creating-the-configmap)
+      - [Phase 2: Writing the Deployment Manifest](#phase-2-writing-the-deployment-manifest)
+      - [Phase 3: Applying the Manifest and Verifying](#phase-3-applying-the-manifest-and-verifying)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-16)
+    - [Deep Dive: A Line-by-Line Explanation of My Deployment YAML](#deep-dive-a-line-by-line-explanation-of-my-deployment-yaml)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-17)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-17)
+- [Day 066: Deploying a Stateful Database on Kubernetes](#day-066-deploying-a-stateful-database-on-kubernetes)
+    - [The Task](#the-task-65)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-54)
+      - [Phase 1: Creating the Secrets (Imperative Commands)](#phase-1-creating-the-secrets-imperative-commands)
+      - [Phase 2: Writing the Manifest File (`mysql-app.yaml`)](#phase-2-writing-the-manifest-file-mysql-appyaml)
+      - [Phase 3: Applying the Manifest and Verifying](#phase-3-applying-the-manifest-and-verifying-1)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-17)
+    - [Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest-2)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-18)
+    - [Exploring the Essential kubectl Commands](#exploring-the-essential-kubectl-commands-18)
+- [Day 067: Deploying a Three-Tier Microservices App on Kubernetes](#day-067-deploying-a-three-tier-microservices-app-on-kubernetes)
+    - [The Task](#the-task-66)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-55)
+      - [Phase 1: Writing the Manifest File](#phase-1-writing-the-manifest-file-4)
+      - [Phase 2: Applying the Manifest and Verifying](#phase-2-applying-the-manifest-and-verifying-11)
+    - [Why Did I Do This? (The "What \& Why" for a K8s Beginner)](#why-did-i-do-this-the-what--why-for-a-k8s-beginner-18)
+    - [Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest](#deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest-3)
+    - [Common Pitfalls for Beginners](#common-pitfalls-for-beginners-19)
+    - [Exploring the Essential `kubectl` Commands](#exploring-the-essential-kubectl-commands-19)
+- [Day 068: Installing and Configuring a Jenkins CI/CD Server](#day-068-installing-and-configuring-a-jenkins-cicd-server)
+    - [The Task](#the-task-67)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-56)
+      - [Phase 1: Server-Side Installation (Command Line)](#phase-1-server-side-installation-command-line)
+      - [Phase 2: Initial Setup (Web UI)](#phase-2-initial-setup-web-ui)
+    - [Common Failures \& Troubleshooting](#common-failures--troubleshooting)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-37)
+    - [Deep Dive: The Two-Part Jenkins Setup](#deep-dive-the-two-part-jenkins-setup)
+    - [Exploring the Commands and UI I Used](#exploring-the-commands-and-ui-i-used)
+      - [**Server-Side Commands**](#server-side-commands)
+      - [**Client-Side (Web UI) Steps**](#client-side-web-ui-steps)
+- [Day 069: Managing Plugins and Conquering "Dependency Hell"](#day-069-managing-plugins-and-conquering-dependency-hell)
+    - [The Task](#the-task-68)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-57)
+      - [Phase 1: Fixing the Dependency Issues](#phase-1-fixing-the-dependency-issues)
+      - [Phase 2: Installing the Required Plugins](#phase-2-installing-the-required-plugins)
+    - [My Troubleshooting Journey: A Detective Story](#my-troubleshooting-journey-a-detective-story)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-38)
+    - [Deep Dive: Understanding Jenkins Plugin Dependencies](#deep-dive-understanding-jenkins-plugin-dependencies)
+    - [Common Pitfalls](#common-pitfalls-26)
+    - [Exploring the Commands and UI Used](#exploring-the-commands-and-ui-used)
+- [Day 070: Granular User Permissions with Matrix Authorization](#day-070-granular-user-permissions-with-matrix-authorization)
+    - [The Task](#the-task-69)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-58)
+      - [Phase 1: Installing the Security Plugin](#phase-1-installing-the-security-plugin)
+      - [Phase 2: Creating the New User](#phase-2-creating-the-new-user)
+      - [Phase 3: Configuring Security](#phase-3-configuring-security)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-39)
+    - [Deep Dive: The Principle of Least Privilege in Jenkins](#deep-dive-the-principle-of-least-privilege-in-jenkins)
+    - [Common Pitfalls](#common-pitfalls-27)
+    - [Exploring the UI Used](#exploring-the-ui-used-2)
+- [Day 071: The CI/CD "Remote Control"](#day-071-the-cicd-remote-control)
+    - [The Task](#the-task-70)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-59)
+      - [Phase 1: Preparing Jenkins](#phase-1-preparing-jenkins)
+      - [Phase 2: Preparing the Remote Server](#phase-2-preparing-the-remote-server)
+      - [Phase 3: Creating and Configuring the Jenkins Job](#phase-3-creating-and-configuring-the-jenkins-job)
+    - [My Troubleshooting Journey: A Two-Part Problem](#my-troubleshooting-journey-a-two-part-problem)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-40)
+    - [Deep Dive: Password-less `sudo` and the `/etc/sudoers` File](#deep-dive-password-less-sudo-and-the-etcsudoers-file)
+    - [Common Pitfalls](#common-pitfalls-28)
+    - [Exploring the UI and Commands Used](#exploring-the-ui-and-commands-used)
+- [Day 072: Creating a Parameterized Build](#day-072-creating-a-parameterized-build)
+    - [The Task](#the-task-71)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-60)
+      - [Phase 1: Creating the Job and Defining Parameters](#phase-1-creating-the-job-and-defining-parameters)
+      - [Phase 2: Configuring the Build Step](#phase-2-configuring-the-build-step)
+      - [Phase 3: Running and Verifying](#phase-3-running-and-verifying)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-41)
+    - [Deep Dive: How Jenkins Exposes Parameters to the Build](#deep-dive-how-jenkins-exposes-parameters-to-the-build)
+    - [Common Pitfalls](#common-pitfalls-29)
+    - [Exploring the UI Used](#exploring-the-ui-used-3)
+- [Day 073: Automating a Multi-Server Log Collection Job](#day-073-automating-a-multi-server-log-collection-job)
+    - [The Task](#the-task-72)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-61)
+      - [Phase 1: Preparing Jenkins](#phase-1-preparing-jenkins-1)
+      - [Phase 2: The Jenkins Job Configuration](#phase-2-the-jenkins-job-configuration)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-42)
+    - [Deep Dive: The "Push" Strategy and the `sshpass` Workaround](#deep-dive-the-push-strategy-and-the-sshpass-workaround)
+    - [Common Pitfalls](#common-pitfalls-30)
+    - [Exploring the UI and Commands I Used](#exploring-the-ui-and-commands-i-used)
+- [Day 074: Automating a Multi-Server Database Backup](#day-074-automating-a-multi-server-database-backup)
+    - [The Task](#the-task-73)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-62)
+      - [Phase 1: Preparing Jenkins](#phase-1-preparing-jenkins-2)
+      - [Phase 2: The Jenkins Job Configuration](#phase-2-the-jenkins-job-configuration-1)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-43)
+    - [Deep Dive: The "Push" Backup Strategy and `sshpass`](#deep-dive-the-push-backup-strategy-and-sshpass)
+    - [Common Pitfalls](#common-pitfalls-31)
+    - [Exploring the UI and Commands I Used](#exploring-the-ui-and-commands-i-used-1)
+- [Day 075: Distributed Builds with Jenkins Agent Nodes](#day-075-distributed-builds-with-jenkins-agent-nodes)
+    - [The Task](#the-task-74)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-63)
+      - [Phase 1: Prerequisites \& Plugin Check](#phase-1-prerequisites--plugin-check)
+      - [Phase 2: Adding Credentials](#phase-2-adding-credentials)
+      - [Phase 3: Configuring App Server 1](#phase-3-configuring-app-server-1)
+      - [Phase 4: Configuring App Servers 2 \& 3](#phase-4-configuring-app-servers-2--3)
+    - [Troubleshooting: Agent Launch Failure (Java Not Found)](#troubleshooting-agent-launch-failure-java-not-found)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-44)
+    - [Deep Dive: The Jenkins Master/Agent Architecture](#deep-dive-the-jenkins-masteragent-architecture)
+    - [Common Pitfalls](#common-pitfalls-32)
+    - [Exploring the UI Used](#exploring-the-ui-used-4)
+- [Day 076: Configuring Job-Level Security](#day-076-configuring-job-level-security)
+    - [The Task](#the-task-75)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-64)
+      - [Phase 1: Global Security Configuration](#phase-1-global-security-configuration)
+      - [Phase 2: Job-Level Configuration](#phase-2-job-level-configuration)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-45)
+    - [Deep Dive: Inheritance Strategy](#deep-dive-inheritance-strategy)
+    - [Common Pitfalls](#common-pitfalls-33)
+    - [Exploring the UI Used](#exploring-the-ui-used-5)
+- [Day 077: Deploying a Static Website with a Jenkins Pipeline](#day-077-deploying-a-static-website-with-a-jenkins-pipeline)
+    - [The Task](#the-task-76)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-65)
+      - [Phase 1: Configuring the Agent Node](#phase-1-configuring-the-agent-node)
+      - [Phase 2: Creating the Pipeline Job](#phase-2-creating-the-pipeline-job)
+      - [Phase 3: Writing the Pipeline Script](#phase-3-writing-the-pipeline-script)
+      - [Phase 4: Execution and Verification](#phase-4-execution-and-verification)
+    - [Troubleshooting: Agent Permission Denied](#troubleshooting-agent-permission-denied)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-46)
+    - [Deep Dive: The Jenkins Pipeline Script](#deep-dive-the-jenkins-pipeline-script)
+    - [Common Pitfalls](#common-pitfalls-34)
+    - [Exploring the UI Used](#exploring-the-ui-used-6)
+- [Day 078: Conditional Deployments with Jenkins Pipelines](#day-078-conditional-deployments-with-jenkins-pipelines)
+    - [The Task](#the-task-77)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-66)
+      - [Phase 1: Configuring the Agent Node (Prerequisite)](#phase-1-configuring-the-agent-node-prerequisite)
+      - [Phase 2: Creating the Credentials](#phase-2-creating-the-credentials)
+      - [Phase 3: Creating the Pipeline Job](#phase-3-creating-the-pipeline-job)
+      - [Phase 4: Writing the Conditional Pipeline Script](#phase-4-writing-the-conditional-pipeline-script)
+      - [Phase 5: Execution and Verification](#phase-5-execution-and-verification)
+    - [Troubleshooting: Pipeline Not Running Logic](#troubleshooting-pipeline-not-running-logic)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-47)
+    - [Deep Dive: The Conditional Pipeline Script](#deep-dive-the-conditional-pipeline-script)
+    - [Common Pitfalls](#common-pitfalls-35)
+    - [Exploring the UI Used](#exploring-the-ui-used-7)
+- [Day 079: Automating Deployment with Jenkins, Git Triggers \& SCP Deployment](#day-079-automating-deployment-with-jenkins-git-triggers--scp-deployment)
+  - [The Task](#the-task-78)
+  - [My Updated, Actual Approach (The Real Workflow)](#my-updated-actual-approach-the-real-workflow)
+    - [**1. Install Git \& Credentials Plugin in Jenkins**](#1-install-git--credentials-plugin-in-jenkins)
+    - [**2. Add Credentials for Sarah**](#2-add-credentials-for-sarah)
+  - [Jenkins Job Setup (nautilus-app-deployment)](#jenkins-job-setup-nautilus-app-deployment)
+    - [**SCM Configuration**](#scm-configuration)
+    - [**Build Trigger**](#build-trigger)
+    - [**Environment Injection**](#environment-injection)
+    - [**Build Step (Execute Shell)**](#build-step-execute-shell)
+  - [Storage Server Preparation](#storage-server-preparation)
+  - [Testing the Pipeline](#testing-the-pipeline)
+  - [Why This Approach Works](#why-this-approach-works)
+  - [Common Pitfalls](#common-pitfalls-36)
+  - [Summary](#summary)
+- [Day 080: Chained Builds and Downstream Jobs](#day-080-chained-builds-and-downstream-jobs)
+    - [The Task](#the-task-79)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-67)
+      - [Phase 1: Configuring "Publish Over SSH"](#phase-1-configuring-publish-over-ssh)
+      - [Phase 2: Creating the Deployment Job (Upstream)](#phase-2-creating-the-deployment-job-upstream)
+      - [Phase 3: Creating the Service Management Job (Downstream)](#phase-3-creating-the-service-management-job-downstream)
+      - [Phase 4: Verification](#phase-4-verification-2)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-48)
+    - [Deep Dive: Upstream vs. Downstream Jobs](#deep-dive-upstream-vs-downstream-jobs)
+    - [Common Pitfalls](#common-pitfalls-37)
+    - [Exploring the UI Used](#exploring-the-ui-used-8)
+- [Day 081: CI/CD Pipeline with Deployment and Test Stages](#day-081-cicd-pipeline-with-deployment-and-test-stages)
+    - [The Task](#the-task-80)
+    - [My Step-by-Step Solution](#my-step-by-step-solution-68)
+      - [Phase 1: Code Update \& Git Push](#phase-1-code-update--git-push)
+      - [Phase 2: Jenkins Configuration](#phase-2-jenkins-configuration)
+      - [Phase 3: Creating the Pipeline](#phase-3-creating-the-pipeline)
+      - [Phase 4: Verification](#phase-4-verification-3)
+    - [Why Did I Do This? (The "What \& Why")](#why-did-i-do-this-the-what--why-49)
+    - [Deep Dive: The Pipeline Script \& `sshpass`](#deep-dive-the-pipeline-script--sshpass)
+    - [Common Pitfalls](#common-pitfalls-38)
+    - [Exploring the UI Used](#exploring-the-ui-used-9)
+- [Day 082: Ansible Playbooks \& Inventories - Testing on App Server 1](#day-082-ansible-playbooks--inventories---testing-on-app-server-1)
+  - [Task Overview](#task-overview)
+  - [Understanding Ansible Concepts](#understanding-ansible-concepts)
+    - [What is Ansible?](#what-is-ansible)
+    - [Inventory Files](#inventory-files)
+    - [Playbooks](#playbooks)
+    - [Modules](#modules)
+  - [Step-by-Step Solution](#step-by-step-solution)
+    - [1. Navigate to the Directory](#1-navigate-to-the-directory)
+    - [Here is the playbook file provided by kodekloud:](#here-is-the-playbook-file-provided-by-kodekloud)
+    - [Playbooks](#playbooks-1)
+    - [2. Create the Inventory File](#2-create-the-inventory-file)
+    - [3. Validate Connectivity (Ad-hoc Command)](#3-validate-connectivity-ad-hoc-command)
+    - [4. Run the Playbook](#4-run-the-playbook)
+  - [Command Breakdown](#command-breakdown)
+  - [Troubleshooting \& Common Scenarios](#troubleshooting--common-scenarios)
+- [Day 083: Ansible Playbooks \& File Management](#day-083-ansible-playbooks--file-management)
+  - [Task Overview](#task-overview-1)
+  - [Step-by-Step Solution](#step-by-step-solution-1)
+    - [1. Update the Inventory File](#1-update-the-inventory-file)
+    - [2. Create the Playbook](#2-create-the-playbook)
+    - [3. Validate and Execute](#3-validate-and-execute)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used)
+    - [The `file` Module](#the-file-module)
+    - [Inventory Variables](#inventory-variables)
+  - [Troubleshooting](#troubleshooting)
+- [Day 084: Copy Data to App Servers using Ansible](#day-084-copy-data-to-app-servers-using-ansible)
+  - [Task Overview](#task-overview-2)
+  - [Step-by-Step Solution](#step-by-step-solution-2)
+    - [1. Create the Inventory File](#1-create-the-inventory-file)
+    - [2. Create the Playbook](#2-create-the-playbook-1)
+    - [3. Execution and Validation](#3-execution-and-validation)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-1)
+    - [Inventory Groups](#inventory-groups)
+    - [The `copy` Module](#the-copy-module)
+  - [Troubleshooting](#troubleshooting-1)
+- [Day 085: Create Files on App Servers using Ansible](#day-085-create-files-on-app-servers-using-ansible)
+  - [Task Overview](#task-overview-3)
+  - [Step-by-Step Solution](#step-by-step-solution-3)
+    - [1. Create the Inventory File](#1-create-the-inventory-file-1)
+    - [2. Create the Playbook](#2-create-the-playbook-2)
+    - [3. Execution and Validation](#3-execution-and-validation-1)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-2)
+    - [The `file` Module](#the-file-module-1)
+    - [Dynamic Ownership with Variables](#dynamic-ownership-with-variables)
+  - [Troubleshooting](#troubleshooting-2)
+- [Day 086: Ansible Ping Module Usage (Password-less SSH)](#day-086-ansible-ping-module-usage-password-less-ssh)
+  - [Task Overview](#task-overview-4)
+  - [Step-by-Step Solution](#step-by-step-solution-4)
+    - [1. Generate SSH Keys](#1-generate-ssh-keys)
+    - [2. Distribute Public Keys](#2-distribute-public-keys)
+    - [3. Update the Inventory File](#3-update-the-inventory-file)
+    - [4. Validate with Ansible Ping](#4-validate-with-ansible-ping)
+  - [Deep Dive: Concepts Used](#deep-dive-concepts-used)
+    - [Password-less SSH](#password-less-ssh)
+    - [Ansible Ping Module](#ansible-ping-module)
+  - [Troubleshooting](#troubleshooting-3)
+- [Day 087: Ansible Install Package \& Troubleshooting](#day-087-ansible-install-package--troubleshooting)
+  - [Task Overview](#task-overview-5)
+  - [Step-by-Step Solution](#step-by-step-solution-5)
+    - [1. Create the Inventory File](#1-create-the-inventory-file-2)
+    - [2. Create the Playbook](#2-create-the-playbook-3)
+    - [3. Initial Execution \& Error](#3-initial-execution--error)
+    - [4. Troubleshooting \& Fix](#4-troubleshooting--fix)
+    - [5. Final Validation](#5-final-validation)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-3)
+    - [The `yum` Module](#the-yum-module)
+    - [Connection Troubleshooting](#connection-troubleshooting)
+- [Day 088: Ansible Blockinfile Module](#day-088-ansible-blockinfile-module)
+  - [Task Overview](#task-overview-6)
+  - [Step-by-Step Solution](#step-by-step-solution-6)
+    - [1. Verify Inventory](#1-verify-inventory)
+    - [2. Create the Playbook](#2-create-the-playbook-4)
+    - [3. Execute and Validate](#3-execute-and-validate)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-4)
+    - [The `blockinfile` Module](#the-blockinfile-module)
+    - [Service Management](#service-management)
+  - [Troubleshooting](#troubleshooting-4)
+- [Day 089: Ansible Manage Services](#day-089-ansible-manage-services)
+  - [Task Overview](#task-overview-7)
+  - [Step-by-Step Solution](#step-by-step-solution-7)
+    - [1. Verify Inventory](#1-verify-inventory-1)
+    - [2. Create the Playbook](#2-create-the-playbook-5)
+    - [3. Execute and Validate](#3-execute-and-validate-1)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-5)
+    - [Package Management (`yum`)](#package-management-yum)
+    - [Service Management (`service`)](#service-management-service)
+    - [Idempotency](#idempotency)
+  - [Troubleshooting](#troubleshooting-5)
+- [Day 090: Managing ACLs using Ansible](#day-090-managing-acls-using-ansible)
+  - [Task Overview](#task-overview-8)
+  - [Step-by-Step Solution](#step-by-step-solution-8)
+    - [1. Verify Inventory](#1-verify-inventory-2)
+    - [2. Create the Playbook](#2-create-the-playbook-6)
+    - [3. Execute and Validate](#3-execute-and-validate-2)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-6)
+    - [The `acl` Module](#the-acl-module)
+    - [Targeting Specific Hosts](#targeting-specific-hosts)
+  - [Troubleshooting](#troubleshooting-6)
+- [Day 091: Ansible Lineinfile Module \& Web Server Automation](#day-091-ansible-lineinfile-module--web-server-automation)
+  - [Task Overview](#task-overview-9)
+  - [Step-by-Step Solution](#step-by-step-solution-9)
+    - [1. Verify Inventory](#1-verify-inventory-3)
+    - [2. Create the Playbook](#2-create-the-playbook-7)
+    - [3. Execute and Validate](#3-execute-and-validate-3)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-7)
+    - [The `lineinfile` Module](#the-lineinfile-module)
+    - [The `insertbefore` Parameter](#the-insertbefore-parameter)
+  - [Troubleshooting](#troubleshooting-7)
+- [Day 092: Managing Jinja2 Templates Using Ansible](#day-092-managing-jinja2-templates-using-ansible)
+  - [Task Overview](#task-overview-10)
+  - [Step-by-Step Solution](#step-by-step-solution-10)
+    - [1. Create the Template](#1-create-the-template)
+    - [2. Update the Role Tasks](#2-update-the-role-tasks)
+    - [3. Configure the Playbook](#3-configure-the-playbook)
+    - [4. Execute and Validate](#4-execute-and-validate)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-8)
+    - [Jinja2 Templates](#jinja2-templates)
+    - [The `template` Module](#the-template-module)
+    - [Ansible Roles](#ansible-roles)
+  - [Internal Execution Flow](#internal-execution-flow)
+- [Day 093: Using Ansible Conditionals](#day-093-using-ansible-conditionals)
+  - [Task Overview](#task-overview-11)
+  - [Step-by-Step Solution](#step-by-step-solution-11)
+    - [1. Verify Inventory](#1-verify-inventory-4)
+    - [2. Create the Playbook](#2-create-the-playbook-8)
+    - [3. Execute and Validate](#3-execute-and-validate-4)
+  - [Deep Dive: Ansible Concepts Used](#deep-dive-ansible-concepts-used-9)
+    - [The `when` Conditional](#the-when-conditional)
+    - [Ansible Facts (`ansible_nodename`)](#ansible-facts-ansible_nodename)
+  - [Troubleshooting](#troubleshooting-8)
+- [Day 094: Create VPC Using Terraform](#day-094-create-vpc-using-terraform)
+  - [Task Overview](#task-overview-12)
+  - [Step-by-Step Solution](#step-by-step-solution-12)
+    - [1. Create the `main.tf` File](#1-create-the-maintf-file)
+    - [2. Initialize Terraform](#2-initialize-terraform)
+    - [3. Generate the Plan](#3-generate-the-plan)
+    - [4. Apply the Configuration](#4-apply-the-configuration)
+  - [Deep Dive: How Terraform Works Internally](#deep-dive-how-terraform-works-internally)
+    - [Core Architecture](#core-architecture)
+    - [The Provider Plugin Model](#the-provider-plugin-model)
+    - [State Management (`terraform.tfstate`)](#state-management-terraformtfstate)
+    - [Execution Flow](#execution-flow)
+- [Day 095: Create Security Group Using Terraform](#day-095-create-security-group-using-terraform)
+  - [Task Overview](#task-overview-13)
+  - [Step-by-Step Solution](#step-by-step-solution-13)
+    - [1. Create `variables.tf`](#1-create-variablestf)
+    - [2. Create `main.tf`](#2-create-maintf)
+    - [3. Initialize and Apply](#3-initialize-and-apply)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used)
+    - [Data Sources (`aws_vpc`)](#data-sources-aws_vpc)
+    - [Resources (`aws_security_group`)](#resources-aws_security_group)
+    - [Ingress Rules](#ingress-rules)
+  - [Troubleshooting](#troubleshooting-9)
+- [Day 096: Create EC2 Instance Using Terraform](#day-096-create-ec2-instance-using-terraform)
+  - [Task Overview](#task-overview-14)
+  - [Step-by-Step Solution](#step-by-step-solution-14)
+    - [1. Create `main.tf`](#1-create-maintf)
+    - [2. Initialize and Apply](#2-initialize-and-apply)
+    - [3. Verification](#3-verification)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used-1)
+    - [TLS Private Key \& AWS Key Pair](#tls-private-key--aws-key-pair)
+    - [EC2 Instance Resource](#ec2-instance-resource)
+    - [Data Sources (Security Groups)](#data-sources-security-groups)
+  - [Troubleshooting](#troubleshooting-10)
+- [Day 097: Create IAM Policy Using Terraform](#day-097-create-iam-policy-using-terraform)
+  - [Task Overview](#task-overview-15)
+  - [Step-by-Step Solution](#step-by-step-solution-15)
+    - [1. Create `main.tf`](#1-create-maintf-1)
+    - [2. Initialize Terraform](#2-initialize-terraform-1)
+    - [3. Plan and Apply](#3-plan-and-apply)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used-2)
+    - [IAM Policy Resource](#iam-policy-resource)
+    - [JSON Policy Document](#json-policy-document)
+  - [Troubleshooting](#troubleshooting-11)
+- [Day 098: Launch EC2 in Private VPC Subnet Using Terraform](#day-098-launch-ec2-in-private-vpc-subnet-using-terraform)
+  - [Task Overview](#task-overview-16)
+  - [Step-by-Step Solution](#step-by-step-solution-16)
+    - [1. Define Variables (`variables.tf`)](#1-define-variables-variablestf)
+    - [2. Define Outputs (`outputs.tf`)](#2-define-outputs-outputstf)
+    - [3. Create Infrastructure (`main.tf`)](#3-create-infrastructure-maintf)
+    - [4. Initialize, Plan, and Apply](#4-initialize-plan-and-apply)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used-3)
+    - [Private Subnets](#private-subnets)
+    - [Security Group Ingress Logic](#security-group-ingress-logic)
+    - [Data Sources for AMIs](#data-sources-for-amis)
+  - [Troubleshooting](#troubleshooting-12)
+- [Day 099: Attach IAM Policy for DynamoDB Access Using Terraform](#day-099-attach-iam-policy-for-dynamodb-access-using-terraform)
+  - [Task Overview](#task-overview-17)
+  - [Step-by-Step Solution](#step-by-step-solution-17)
+    - [1. Define Variables (`variables.tf` \& `terraform.tfvars`)](#1-define-variables-variablestf--terraformtfvars)
+    - [2. Create Infrastructure (`main.tf`)](#2-create-infrastructure-maintf)
+    - [3. Define Outputs (`outputs.tf`)](#3-define-outputs-outputstf)
+    - [4. Initialize and Apply](#4-initialize-and-apply)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used-4)
+    - [DynamoDB Resource](#dynamodb-resource)
+    - [IAM Roles \& Assume Policies](#iam-roles--assume-policies)
+    - [IAM Policies \& JSON Encoding](#iam-policies--json-encoding)
+  - [Troubleshooting](#troubleshooting-13)
+- [Day 100: Create and Configure Alarm Using CloudWatch Using Terraform](#day-100-create-and-configure-alarm-using-cloudwatch-using-terraform)
+  - [Task Overview](#task-overview-18)
+  - [Step-by-Step Solution](#step-by-step-solution-18)
+    - [1. Create Infrastructure (`main.tf`)](#1-create-infrastructure-maintf)
+    - [2. Define Outputs (`outputs.tf`)](#2-define-outputs-outputstf-1)
+    - [3. Initialize and Apply](#3-initialize-and-apply-1)
+  - [Deep Dive: Terraform Concepts Used](#deep-dive-terraform-concepts-used-5)
+    - [SNS Topic Resource](#sns-topic-resource)
+    - [CloudWatch Metric Alarm](#cloudwatch-metric-alarm)
+  - [Troubleshooting](#troubleshooting-14)
+
 
 <br>
 <br>
@@ -6716,6 +7691,8483 @@ This task reinforced the importance of the core `kubectl` commands.
 
 
 ---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 051: Zero-Downtime Updates with Kubernetes Deployments
+
+Today's task was a deep dive into one of the most powerful and critical features of Kubernetes: performing a **rolling update** to an application with **zero downtime**. My objective was to update a running Nginx application, managed by a Deployment, from an older version to a newer one.
+
+This was an incredible, real-world exercise that demonstrated the self-healing and orchestration power of the Kubernetes Deployment controller. I also had a fantastic troubleshooting moment where my initial command failed because I used the wrong container name, teaching me the importance of first investigating the state of a resource with `kubectl describe`. This document is my very detailed, first-person guide to that entire successful process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to perform a rolling update on an existing Kubernetes Deployment. The specific requirements were:
+1.  The target was a Deployment named `nginx-deployment`.
+2.  I had to update the application to use the new image `nginx:1.17`.
+3.  All Pods had to be operational after the update.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved a crucial investigation phase, followed by the update command and verification.
+
+#### Phase 1: The Investigation (The Most Important Step)
+Before I could update the image, I needed to know the exact name of the container inside the Deployment's Pod template.
+1.  I connected to the jump host.
+2.  I used the `describe` command to get all the details of the running Deployment.
+    ```bash
+    kubectl describe deployment nginx-deployment
+    ```
+3.  I carefully examined the "Containers" section of the output:
+    ```
+    Containers:
+     nginx-container:
+      Image:        nginx:1.16
+    ```
+    This was the "aha!" moment. It told me the container's name was `nginx-container`, not a generic name like `httpd-container`, and that it was currently running version `1.16`.
+
+#### Phase 2: The Rolling Update
+With the correct container name, I could now perform the update.
+1.  I used the `kubectl set image` command to tell the Deployment to use the new image.
+    ```bash
+    kubectl set image deployment/nginx-deployment nginx-container=nginx:1.17
+    ```
+    The command responded with `deployment.apps/nginx-deployment image updated`, which kicked off the automated update process.
+
+2.  I immediately used the `rollout status` command to watch the update happen in real-time.
+    ```bash
+    kubectl rollout status deployment/nginx-deployment
+    ```
+    I saw messages as Kubernetes terminated old Pods and brought up new ones, until it finally reported: `deployment "nginx-deployment" successfully rolled out`.
+
+#### Phase 3: Verification
+The final step was to confirm that the application was now running the new version.
+1.  I described the deployment one last time:
+    ```bash
+    kubectl describe deployment nginx-deployment
+    ```
+2.  I looked at the "Containers" section again. The `Image` field now correctly showed `nginx:1.17`. This was the definitive proof of success.
+
+---
+
+<br>
+<br>
+
+### My Troubleshooting Journey: Finding the Correct Container Name
+<a name="my-troubleshooting-journey-finding-the-correct-container-name"></a>
+This task was a perfect lesson in the importance of investigating before acting.
+* **Failure:** My first attempt at the update command failed:
+    ```bash
+    kubectl set image deployment/nginx-deployment httpd-container=nginx:1.17
+    # Output: error: unable to find container named "httpd-container"
+    ```
+* **Diagnosis:** The error message was crystal clear. I was trying to update a container that didn't exist *within that Deployment's template*.
+* **The "Aha!" Moment:** This forced me to take a step back and use `kubectl describe`. This command is the master tool for understanding the exact specification of any Kubernetes resource. It showed me the true container name was `nginx-container`.
+* **The Lesson:** I learned that the `kubectl set image` command is very precise. The container name is not a guess; it's a specific key from the Deployment's Pod template, and `describe` is the way to find it.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Deployment Controller:** This is the Kubernetes object that manages my application. Its most important job is to ensure that the "current state" of the cluster matches the "desired state" I've defined. When I changed the desired image version, the Deployment controller automatically started the process to make it happen.
+-   **Rolling Update:** This is the default strategy that Deployments use to update Pods. It is the key to achieving **zero downtime**. Instead of stopping all the old Pods at once (which would cause an outage) and then starting the new ones, it does it gracefully and incrementally:
+    1.  It creates a new Pod with the new image.
+    2.  It waits for the new Pod to become healthy and "ready."
+    3.  **Only then** does it terminate one of the old Pods.
+    4.  It repeats this process until all Pods are running the new version.
+-   **`kubectl set image`**: This is a powerful *imperative* command. It's a shortcut that directly tells the Kubernetes API, "Find the Deployment named `nginx-deployment` and update the image for its `nginx-container` to `nginx:1.17`." This is often quicker than editing the YAML file and running `kubectl apply` for a simple image change.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: How a Rolling Update Works
+<a name="deep-dive-how-a-rolling-update-works"></a>
+When I used `kubectl describe`, I saw a section called `RollingUpdateStrategy: 25% max unavailable, 25% max surge`. This is the rulebook for the update.
+
+[Image of a Kubernetes rolling update in progress]
+
+-   **`maxUnavailable: 25%`**: This tells Kubernetes that during the update, it must ensure that at least 75% of the desired number of Pods are always available to serve traffic. For my 3 replicas, this meant at least `3 * 0.75 = 2.25`, rounded up to 3, must be available. This setting prioritizes availability.
+-   **`maxSurge: 25%`**: This tells Kubernetes that it's allowed to temporarily create *more* Pods than the desired replica count. For my 3 replicas, this meant it could add `3 * 0.25 = 0.75`, rounded up to 1, extra Pod. So, for a short time, I could have up to 4 Pods running. This setting prioritizes speed, as it allows the new Pod to start before the old one is terminated.
+
+Kubernetes uses these two rules together to perform the update as quickly as possible while always guaranteeing a minimum level of availability.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Using the Wrong Container Name:** As I discovered, this is a very common mistake. The name must be the one defined in the Deployment's Pod template.
+-   **Specifying a Non-Existent Image Tag:** If I had tried to update to `nginx:1.17.nonexistent`, the new Pods would fail to start with an `ImagePullBackOff` error, and the rolling update would get stuck, but the old, working application would remain available.
+-   **Not Monitoring the Rollout:** Just running `kubectl set image` is not enough. If there's a problem with the new image, the rollout will get stuck. Using `kubectl rollout status` is essential to confirm that the update actually completed successfully.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+This task reinforced the importance of the core `kubectl` commands and introduced some new ones.
+
+-   **`kubectl get deployment [dep-name]`**: Gets a quick summary of a Deployment's status.
+-   **`kubectl describe deployment [dep-name]`**: My hero command for this task. It provides a very detailed description of a Deployment, including its labels, replica count, update strategy, and, most importantly, the full template for the Pods it manages (including container names and images).
+-   **`kubectl set image deployment/[dep-name] [container-name]=[new-image]`**: The imperative command to trigger a rolling update by changing the image for a specific container within a Deployment.
+-   **`kubectl rollout status deployment/[dep-name]`**: A crucial command to monitor the real-time progress of a rolling update. It will tell you if the update is in progress, has completed successfully, or has failed.
+-   **`kubectl rollout history deployment/[dep-name]`**: Shows a history of the revisions for a Deployment.
+-   **`kubectl rollout undo deployment/[dep-name]`**: An incredibly powerful command. If I discovered the new `nginx:1.17` image was buggy, I could run this single command to trigger a "rollback," which would perform another rolling update back to the previous, stable version.
+  
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 052: Zero-Downtime Rollbacks in Kubernetes
+
+Today's task was one of the most critical operations in any production environment: rolling back a failed deployment. The scenario was simple but urgent: a new release had introduced a bug, and I needed to revert the application to its previous, stable version as quickly and safely as possible.
+
+This was a fantastic lesson that showcased the power and resilience of the Kubernetes `Deployment` object. I learned how Kubernetes keeps a history of changes and how I can use the `kubectl rollout undo` command to trigger a graceful, zero-downtime rollback. This document is my very detailed, first-person guide to that entire process, written from the perspective of a complete beginner to Kubernetes.
+
+---
+
+
+<br>
+<br>
+
+
+### The Task
+<a name="the-task"></a>
+My objective was to revert a recent update to a Kubernetes Deployment. The specific requirements were:
+1.  The target was an existing Deployment named `nginx-deployment`.
+2.  I had to initiate a rollback to its previous revision.
+3.  All Pods had to be operational after the rollback was complete.
+
+---
+
+
+<br>
+<br>
+
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved a crucial investigation phase, followed by the rollback command and verification.
+
+#### Phase 1: The Investigation (Investigate Before You Act)
+Before rolling back, I needed to understand the current state and the history of the deployment.
+1.  I connected to the jump host.
+2.  I used the `describe` command to see all the details of the running Deployment. This confirmed the current image version was the "bad" one.
+    ```bash
+    kubectl describe deployment nginx-deployment
+    ```
+3.  **This was the most important investigation step.** I used the `rollout history` command to see if there was a previous version to roll back to.
+    ```bash
+    kubectl rollout history deployment/nginx-deployment
+    ```
+    The output showed two revisions, confirming that I had a previous, stable state I could revert to.
+
+#### Phase 2: The Rollback
+With the history confirmed, I could safely perform the rollback.
+1.  I used the `kubectl rollout undo` command to trigger the rollback process.
+    ```bash
+    kubectl rollout undo deployment/nginx-deployment
+    ```
+    The command responded with `deployment.apps/nginx-deployment rolled back`, which kicked off the automated rollback in the background.
+
+2.  I immediately used the `rollout status` command to watch the process happen in real-time.
+    ```bash
+    kubectl rollout status deployment/nginx-deployment
+    ```
+    I saw messages as Kubernetes terminated the new, buggy Pods and brought up new Pods with the old, stable image version, until it finally reported: `deployment "nginx-deployment" successfully rolled out`.
+
+#### Phase 3: Verification
+The final step was to confirm that the application was now running the correct, older version.
+1.  I described the deployment one last time:
+    ```bash
+    kubectl describe deployment nginx-deployment
+    ```
+
+2. I looked at the "Containers" section of the output. The Image field now correctly showed the previous, stable version (e.g., `nginx:1.16`). This was the definitive proof of a successful rollback.
+
+---
+
+
+<br>
+<br>
+
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+
+- **The Problem**: When a new software release introduces a critical bug, the top priority is to restore service for users as quickly as possible. This is called a "rollback."
+
+- **Deployment Revisions**: This is the key concept that makes rollbacks possible. Every time I change a Deployment's Pod template (for example, by using kubectl set image), Kubernetes doesn't just forget the old version. It saves the old configuration as a revision. The kubectl rollout history command lets me see this list of saved revisions.
+
+- **kubectl rollout undo**: This is the magic command. It tells the Deployment controller: "Your current desired state is bad. Please change your desired state back to what it was in the previous revision."
+
+- **A Rollback is just a Rolling Update in Reverse**: This was a huge "aha!" moment for me. When I trigger a rollback, the Deployment controller doesn't just kill all the bad Pods at once. It performs the exact same graceful, zero-downtime rolling update process it used for the initial deployment, but this time, the "new" Pods it creates are based on the old, stable revision. This ensures the application remains available throughout the entire rollback process.
+
+
+
+<br>
+<br>
+
+### Deep Dive: How a rollout undo Works Under the Hood
+<a name="deep-dive-how-a-rollout-undo-works-under-the-hood"></a> I learned that a Deployment manages Pods through an intermediary object called a ReplicaSet.
+
+- **Initial State:** My nginx-deployment is at Revision 2. It is managing a ReplicaSet-v2 which, in turn, is managing 3 Pods running the bad nginx:1.17 image. The old ReplicaSet-v1 (with the good nginx:1.16 template) still exists but has its replica count set to 0.
+
+- **kubectl rollout undo is Executed:** I run the command. The Deployment controller looks up its history and finds that the previous revision was ReplicaSet-v1.
+
+The Rollback Begins: The Deployment controller now performs a rolling update in reverse:
+
+It scales up the old, good ReplicaSet-v1 from 0 to 1. A new Pod with the nginx:1.16 image starts.
+
+It waits for this new "old" Pod to become healthy and ready.
+
+It then scales down the new, bad ReplicaSet-v2 from 3 to 2, terminating one of the buggy Pods.
+
+- **Completion**: This process continues, following the maxSurge and maxUnavailable rules, until ReplicaSet-v1 is managing 3 healthy Pods and ReplicaSet-v2 has been scaled down to 0. The application is now fully reverted to the previous version with zero downtime.
+
+
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+
+- **Forgetting to Check History:** If I run rollout undo on a brand new Deployment that has never been updated, it will fail because there is no previous revision to roll back to.
+
+- **Panic and Manual Deletion:** A common mistake in a crisis is to panic and start manually deleting the "bad" Pods (kubectl delete pod ...). This is a bad idea! The Deployment controller will see that its desired replica count is not met and will immediately create a new, identical "bad" Pod to replace the one I just deleted. You must always manage the application by interacting with the Deployment, not the Pods it controls.
+
+Not Monitoring the Rollout: Just running kubectl rollout undo is not enough. If there's a problem with the old revision (e.g., the old image was deleted from the registry), the rollback will get stuck. Using kubectl rollout status is essential to confirm that the rollback actually completed successfully.
+
+
+
+<br>
+<br>
+
+### Exploring the Essential kubectl Commands
+<a name="exploring-the-essential-kubectl-commands"></a> This task was a masterclass in the rollout subcommand.
+
+- **`kubectl describe deployment [dep-name]`**: My primary investigation tool. It provides a very detailed description of a Deployment, including the current image version.
+
+- **`kubectl rollout history deployment/[dep-name]`**: The command to view the history of revisions for a Deployment. This is essential for understanding what you can roll back to.
+
+You can `add --revision=<number>` to see the full details of a specific revision.
+
+- **`kubectl rollout undo deployment/[dep-name]`**: The main command for this task. It triggers a rollback to the immediately preceding revision.
+
+- **`kubectl rollout undo deployment/[dep-name] --to-revision=<number>:`** A more advanced version of the undo command that allows you to roll back to a specific older revision (e.g., `--to-revision=1`), not just the last one.
+
+- **`kubectl rollout status deployment/[dep-name]`**: A crucial command to monitor the real-time progress of a rolling update or a rollback. It will tell you if the process is ongoing, has completed successfully, or is stuck.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 053: Troubleshooting a Multi-Container Pod in Kubernetes
+
+Today's task was a fantastic, real-world troubleshooting scenario in Kubernetes. My objective was to fix a broken Nginx and PHP-FPM application. The challenge was that the `kubectl get pods` command showed the Pod and both its containers were `Running` perfectly. This was a great lesson that "Running" does not always mean "Working."
+
+This was a deep dive into the inner workings of multi-container pods, shared volumes, and ConfigMaps. I had to play detective, using `kubectl describe`, `logs`, and `edit` to find a subtle but critical misconfiguration in how the two containers were communicating. This document is my very detailed, first-person guide to that entire successful troubleshooting journey.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to investigate and fix a broken Nginx and PHP-FPM setup running in a Kubernetes Pod. The key components were:
+1.  A Pod named `nginx-phpfpm`.
+2.  A ConfigMap named `nginx-config` that held the Nginx configuration.
+3.  After fixing the configuration, I had to copy an `index.php` file from the jump host into the container's document root.
+4.  The final website had to be accessible.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My approach was to systematically investigate each component to find the root cause, apply the fix, and then deploy the final piece of content.
+
+#### Phase 1: The Investigation
+1.  I connected to the jump host. My first command, `kubectl get pods`, showed the `nginx-phpfpm` pod was `2/2 Running`. This was a misleading sign of health.
+2.  The "Website" button showed "File not found" or a 404 error, confirming a problem.
+3.  **This was the first key clue.** I checked the logs of the Nginx container:
+    ```bash
+    kubectl logs nginx-phpfpm -c nginx-container
+    ```
+    The logs contained the error: `FastCGI sent in stderr: "Primary script unknown"`. This told me Nginx was successfully passing a request to PHP-FPM, but PHP-FPM could not find the script file Nginx asked for.
+
+4.  **This was the second key clue.** I used `kubectl describe pod nginx-phpfpm` to inspect the Pod's structure. I looked at the `Mounts` for both containers and found the critical mismatch:
+    -   The `nginx-container` mounted the shared volume at `/var/www/html`.
+    -   The `php-fpm-container` mounted the *same* shared volume at `/usr/share/nginx/html`.
+
+5.  Finally, I inspected the Nginx configuration in the `nginx-config` ConfigMap with `kubectl describe configmap nginx-config`. It showed that Nginx was passing the `SCRIPT_FILENAME` to PHP-FPM using its own document root: `$document_root$fastcgi_script_name`, which resolved to `/var/www/html/index.php`. This confirmed the path mismatch.
+
+#### Phase 2: Applying the Fix
+1.  I edited the ConfigMap directly in the cluster.
+    ```bash
+    kubectl edit configmap nginx-config
+    ```
+2.  Inside the editor, I changed a single line in the `nginx.conf` data. I changed the `fastcgi_pass` parameter to use the correct communication method for containers within the same pod. The original `fastcgi_pass 127.0.0.1:9000;` was replaced. In my successful attempt, I updated the configuration as follows to ensure Nginx and PHP-FPM could communicate and find files correctly.
+    ```nginx
+    # ... inside the location ~ \.php$ block ...
+    fastcgi_param SCRIPT_FILENAME /var/www/html$fastcgi_script_name; # Hardcoded path for PHP-FPM
+    fastcgi_pass localhost:9000;
+    ```
+    *(Note: The exact fix can vary; another valid fix is to change the pod definition so both containers use the same mount path. Editing the config is often faster.)*
+3.  After saving the ConfigMap, I needed to tell the running Nginx container to reload its configuration.
+    ```bash
+    kubectl exec nginx-phpfpm -c nginx-container -- nginx -s reload
+    ```
+
+#### Phase 3: Deploying the Content
+1.  The `kubectl cp` command would fail if the destination directory didn't exist. I first created it inside the container using `exec`.
+    ```bash
+    kubectl exec nginx-phpfpm -c nginx-container -- mkdir -p /var/www/html
+    ```
+2.  Now I could copy the file. I specified the `nginx-container` with the `-c` flag because the Pod has multiple containers.
+    ```bash
+    kubectl cp /home/thor/index.php nginx-phpfpm:/var/www/html/index.php -c nginx-container
+    ```
+3.  Finally, clicking the "Website" button showed the correct output from the `index.php` file.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Multi-Container Pods:** This task was a perfect example of this powerful pattern. Instead of putting Nginx and PHP in the same container (which is an anti-pattern), they are in separate containers within the same Pod. This allows me to manage and update them independently. Because they are in the same Pod, they share a network namespace (so they can talk via `localhost`) and can share volumes.
+-   **Shared `EmptyDir` Volume:** An `EmptyDir` volume is a temporary directory that is created when a Pod starts and is destroyed when the Pod is deleted. Its primary purpose is to provide a shared filesystem for containers running within the same Pod. In my task, it was the shared space where the `nginx-container` would look for `index.php` and the `php-fpm-container` would execute it.
+-   **ConfigMaps**: A ConfigMap is a Kubernetes object used to store non-confidential configuration data in key-value pairs. In this task, the entire `nginx.conf` file was stored in a ConfigMap. This is a crucial best practice because it decouples the configuration from the container image. I was able to fix the Nginx configuration by editing the ConfigMap, and Kubernetes automatically updated the file inside the running container, without me needing to rebuild the image.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Anatomy of a Multi-Container Failure
+<a name="deep-dive-the-anatomy-of-a-multi-container-failure"></a>
+The "Primary script unknown" error was the key. This error comes from PHP-FPM and it means "The web server asked me to run a script, but I can't find that script at the path it gave me." My troubleshooting revealed the exact sequence of this failure.
+
+[Image of a multi-container Kubernetes Pod]
+
+1.  **The Request:** A user request for `index.php` arrives at the Nginx container.
+2.  **Nginx's View:** Nginx is configured with `root /var/www/html`. It sees the request for `/index.php` and combines them. It decides the script's filename is `/var/www/html/index.php`.
+3.  **The Hand-off:** Nginx passes the request to PHP-FPM over the network (`fastcgi_pass localhost:9000`) and includes the parameter `SCRIPT_FILENAME = /var/www/html/index.php`.
+4.  **PHP-FPM's View:** The PHP-FPM container receives this request. It looks in its *own* filesystem for the file at `/var/www/html/index.php`.
+5.  **The Failure Point:** In my `describe` output, I saw that the shared volume was mounted at `/usr/share/nginx/html` inside the PHP-FPM container. The path `/var/www/html/` did not exist in its world.
+6.  **The Error:** Because it couldn't find the file, PHP-FPM returned the "Primary script unknown" error back to Nginx, which in turn sent a `404 Not Found` to the user.
+
+My fix in the ConfigMap—hardcoding the `SCRIPT_FILENAME` path to what Nginx saw—was one way to solve it. An equally valid solution would be to edit the Pod's YAML definition to make both containers mount the shared volume at the exact same path.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **`Running` != `Working`:** My first lesson. A Pod showing `Running` and `2/2 Ready` is a good sign, but it only means the container processes have started. It says nothing about whether the application inside is configured correctly.
+-   **Forgetting the `-c` flag:** When a Pod has multiple containers, you **must** use the `-c <container-name>` flag for commands like `kubectl logs`, `exec`, and `cp` to tell Kubernetes which container you want to interact with.
+-   **Forgetting to Reload Config:** After editing a ConfigMap that's mounted as a file, the application inside the container often needs to be told to reload its configuration. For Nginx, the command `nginx -s reload` does this gracefully without restarting the process.
+-   **`kubectl cp` Destination Must Exist:** The `kubectl cp` command will fail if the parent directory of the destination path does not already exist inside the container. I had to create it first with `kubectl exec ... mkdir -p`.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl get pods`: Lists a summary of all Pods.
+-   `kubectl describe pod [pod-name]`: My primary tool for troubleshooting. It shows the Pod's full configuration, including its container definitions, volume mounts, and recent events.
+-   `kubectl describe configmap [cm-name]`: Shows the data stored inside a ConfigMap.
+-   `kubectl logs [pod-name] -c [container-name]`: Shows the logs from a specific container within a multi-container Pod. This was essential for finding the "Primary script unknown" error.
+-   `kubectl edit configmap [cm-name]`: The command to open a ConfigMap's YAML definition in a text editor to make live changes in the cluster.
+-   `kubectl exec [pod-name] -c [container-name] -- [command]`: Executes a command in a specific container. I used this to reload Nginx and to create the destination directory.
+-   `kubectl cp [source] [pod-name]:[dest] -c [container-name]`: Copies a file from the local machine into a specific container in a Pod.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 054: Shared Volumes in Multi-Container Pods
+
+Today's task was a fantastic dive into a more advanced Kubernetes pattern: the **multi-container Pod**. My objective was to create a single Pod that ran two separate containers and, most importantly, to set up a shared volume that both containers could read from and write to.
+
+This was a critical lesson in how tightly-coupled processes can work together within the Kubernetes ecosystem. I learned how to define a shared `emptyDir` volume at the Pod level and then mount it into each container at different paths. This document is my very detailed, first-person guide to that entire process, written from the perspective of a complete beginner to this concept.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a single Kubernetes Pod with two containers sharing a volume. The specific requirements were:
+1.  The Pod must be named `volume-share-nautilus`.
+2.  It must contain two containers, `volume-container-nautilus-1` and `volume-container-nautilus-2`, both using the `debian:latest` image.
+3.  A shared `emptyDir` volume named `volume-share` must be created.
+4.  This volume must be mounted at `/tmp/news` in the first container and at `/tmp/cluster` in the second container.
+5.  I had to verify the setup by creating a file in one container's mount path and confirming its existence in the other's.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create this complex Pod is with a single YAML manifest file.
+
+#### Phase 1: Writing the Pod Manifest
+1.  I connected to the jump host.
+2.  I created a new file named `shared-volume-pod.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, which defines the shared volume at the Pod level and then mounts it into each container.
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: volume-share-nautilus
+    spec:
+      volumes:
+      - name: volume-share
+        emptyDir: {}
+      containers:
+      - name: volume-container-nautilus-1
+        image: debian:latest
+        command: ["/bin/sh", "-c", "sleep 3600"]
+        volumeMounts:
+        - name: volume-share
+          mountPath: /tmp/news
+      - name: volume-container-nautilus-2
+        image: debian:latest
+        command: ["/bin/sh", "-c", "sleep 3600"]
+        volumeMounts:
+        - name: volume-share
+          mountPath: /tmp/cluster
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to create the Pod from my manifest.
+    ```bash
+    kubectl apply -f shared-volume-pod.yaml
+    ```
+2.  **Verification:** The final part of the task was to prove that the volume was truly shared.
+    -   First, I checked the Pod's status with `kubectl get pods`. The `READY` column showed `2/2`, confirming both containers were running.
+    -   Next, I `exec`'d into the first container to create the test file.
+        ```bash
+        kubectl exec -it volume-share-nautilus -c volume-container-nautilus-1 -- /bin/bash
+        # Inside the container shell:
+        echo "Shared volume test" > /tmp/news/news.txt
+        exit
+        ```
+    -   Finally, I `exec`'d into the second container to look for the file.
+        ```bash
+        kubectl exec -it volume-share-nautilus -c volume-container-nautilus-2 -- /bin/bash
+        # Inside the container shell:
+        ls -l /tmp/cluster/
+        ```
+    The output listed the `news.txt` file. This was the definitive proof that both containers were writing to and reading from the exact same directory, successfully completing the task.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Multi-Container Pods**: This is a powerful Kubernetes pattern. While most Pods have a single container, you can run multiple containers together in one Pod when they are very tightly coupled and need to share resources. The classic example is a "sidecar" container that helps a main application container (e.g., a log shipper that reads the main app's logs and sends them to a central location). Because containers in a Pod share a network, they can communicate via `localhost`.
+-   **Shared Volumes**: This is the key concept of the task. By defining a volume at the Pod level (`spec.volumes`), I create a storage resource that can be accessed by any container within that Pod.
+-   **`emptyDir` Volume**: This is the simplest type of volume in Kubernetes.
+    -   **What it is:** An `emptyDir` is exactly what it sounds like: a new, **empty dir**ectory that is created when the Pod is scheduled on a Node.
+    -   **Lifecycle:** It is ephemeral. It exists only as long as the Pod exists. When the Pod is deleted, the `emptyDir` and all its data are permanently erased.
+    -   **Use Case:** It's perfect for temporary scratch space or, as in my task, for providing a shared filesystem for multiple containers in the same Pod. One container can write data, and the other can immediately read it.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Pod YAML File
+<a name="deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file"></a>
+The YAML for a multi-container pod with a shared volume has two key parts: defining the volume and then mounting it.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-share-nautilus
+spec:
+  # This 'volumes' block is at the Pod's 'spec' level. This is where I DECLARE
+  # all the volumes that will be available to the containers in this Pod.
+  volumes:
+  # The '-' indicates an item in a list. This is my first volume definition.
+  - name: volume-share  # I give the volume a name that I can refer to later.
+    emptyDir: {}       # I specify the TYPE of volume. '{}' means use the defaults.
+
+  # 'containers' is a list of all the containers that will run in this Pod.
+  containers:
+  # This is the definition for the first container.
+  - name: volume-container-nautilus-1
+    image: debian:latest
+    command: ["/bin/sh", "-c", "sleep 3600"] # A command to keep it running.
+    
+    # This 'volumeMounts' block is inside the container's definition.
+    # It tells this specific container how to USE a volume declared above.
+    volumeMounts:
+    - name: volume-share  # This name MUST match the name from the 'volumes' block.
+      mountPath: /tmp/news # This is the path INSIDE this container to mount the volume.
+
+  # This is the definition for the second container.
+  - name: volume-container-nautilus-2
+    image: debian:latest
+    command: ["/bin/sh", "-c", "sleep 3600"]
+    
+    # This container also gets a 'volumeMounts' block.
+    volumeMounts:
+    - name: volume-share  # It refers to the SAME volume by name.
+      mountPath: /tmp/cluster # But it mounts it at a DIFFERENT path inside this container.
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Forgetting the `-c` flag:** When a Pod has more than one container, you **must** use the `-c <container-name>` flag for commands like `kubectl exec` and `kubectl logs` to tell Kubernetes which specific container you want to interact with. Forgetting it will result in an error.
+-   **Confusing `volumes` and `volumeMounts`:** `volumes` is defined once at the Pod level to create the volume. `volumeMounts` is defined inside each container that needs to access that volume.
+-   **Name Mismatch:** The `name` in a container's `volumeMounts` section must exactly match the `name` of a volume defined in the Pod's `volumes` section. A typo will cause the Pod to fail to start.
+-   **Forgetting a `command`:** The `debian` image doesn't have a default command that keeps it running. Without the `command: ["/bin/sh", "-c", "sleep 3600"]`, the containers would start, do nothing, and immediately exit, causing the Pod to go into a `CrashLoopBackOff` state.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get pods`: **Gets** a summary list of all Pods. I used this to check the `READY` status (`2/2`).
+-   `kubectl describe pod [pod-name]`: **Describes** a Pod in great detail. I used this to verify that the volumes and volume mounts were configured correctly for both containers.
+-   `kubectl exec -it [pod-name] -c [container-name] -- [command]`: **Exec**utes a command inside a specific container within a multi-container Pod. This was the essential command for my verification step.
+    -   `-i`: Interactive.
+    -   `-t`: Allocate a TTY.
+    -   `-c`: Specifies the **c**ontainer name.
+    -   `--`: Separates the `kubectl` command from the command to be run inside the container.
+
+
+---
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 055: Implementing the Kubernetes Sidecar Pattern
+
+Today's task was a fantastic dive into an advanced and powerful Kubernetes design pattern: the **Sidecar**. My objective was to create a single Pod that ran two separate containers that worked together. The main container was an Nginx web server, and a "sidecar" container ran alongside it, with the sole purpose of reading and shipping the Nginx logs.
+
+This was a critical lesson in the "separation of concerns" principle and demonstrated how tightly-coupled processes can cooperate within the Kubernetes ecosystem. I learned how to define a shared `emptyDir` volume at the Pod level and then mount it into each container, creating a shared filesystem that allowed them to communicate. This document is my very detailed, first-person guide to that entire process, written from the perspective of a beginner to this concept.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a single Kubernetes Pod with two containers sharing a volume, implementing a log-shipping sidecar pattern. The specific requirements were:
+1.  The Pod must be named `webserver`.
+2.  It must have an `emptyDir` volume named `shared-logs`.
+3.  It must contain two containers:
+    -   `nginx-container`: using the `nginx:latest` image.
+    -   `sidecar-container`: using the `ubuntu:latest` image, running a continuous loop to `cat` the Nginx log files.
+4.  The `shared-logs` volume must be mounted at `/var/log/nginx` in **both** containers.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create this complex Pod is with a single YAML manifest file.
+
+#### Phase 1: Writing the Pod Manifest
+1.  I connected to the jump host.
+2.  I created a new file named `webserver-pod.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, which defines the shared volume at the Pod level and then mounts it into each of the two containers.
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: webserver
+    spec:
+      volumes:
+      - name: shared-logs
+        emptyDir: {}
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/nginx
+      - name: sidecar-container
+        image: ubuntu:latest
+        command: ["/bin/sh", "-c"]
+        args: ["while true; do cat /var/log/nginx/access.log /var/log/nginx/error.log; sleep 30; done"]
+        volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/nginx
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to create the Pod from my manifest.
+    ```bash
+    kubectl apply -f webserver-pod.yaml
+    ```
+2.  **Verification:** The final part of the task was to prove that the sidecar was successfully reading the logs written by the main container.
+    -   First, I checked the Pod's status with `kubectl get pods`. The `READY` column showed `2/2`, confirming both containers were running.
+    -   Next, I generated some log data. I did this by clicking the "Website" button in the lab UI, which sent a request to the Nginx server.
+    -   Finally, I checked the logs of the **sidecar container**.
+        ```bash
+        kubectl logs webserver -c sidecar-container
+        ```
+    The output showed the Nginx access log entry from my website visit. This was the definitive proof that the `nginx-container` wrote a log to the shared volume, and the `sidecar-container` successfully read it.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **The Sidecar Pattern**: This is a powerful design pattern for extending or enhancing the functionality of an existing application container without changing it. The "sidecar" is a helper container that runs alongside the main app in the same Pod.
+-   **Separation of Concerns**: This is the core principle behind the sidecar pattern.
+    -   The `nginx` container's only job is to be a web server. It does one thing, and it does it well. The Nginx developers don't have to build complex log-shipping logic into their application.
+    -   The `sidecar-container`'s only job is to handle logs. It reads the logs and, in a real-world scenario, would forward them to a central logging service like Elasticsearch or Splunk.
+    This separation makes both components simpler, more reusable, and easier to manage and update independently.
+-   **Shared `EmptyDir` Volume**: This is the key that enables the sidecar pattern. An `emptyDir` is a temporary volume that is created when a Pod starts and is destroyed when the Pod is deleted. Its primary purpose is to provide a shared filesystem for containers running within the same Pod. In my task, Nginx writes its log files into this shared directory, and the sidecar container can immediately read those same files from that same directory.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Pod YAML File
+<a name="deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file"></a>
+The YAML for a multi-container pod with a shared volume has two key parts: defining the volume and then mounting it into each container.
+
+[Image of a Kubernetes Sidecar pattern diagram]
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver
+spec:
+  # This 'volumes' block is at the Pod's 'spec' level. This is where I DECLARE
+  # all the volumes that will be available to the containers in this Pod.
+  volumes:
+  # The '-' indicates an item in a list. This is my volume definition.
+  - name: shared-logs  # I give the volume a name that I can refer to later.
+    emptyDir: {}       # I specify the TYPE of volume as an empty directory.
+
+  # 'containers' is a list of all the containers that will run in this Pod.
+  containers:
+  # This is the definition for the first container (the main app).
+  - name: nginx-container
+    image: nginx:latest
+    
+    # This 'volumeMounts' block is inside the container's definition.
+    # It tells this specific container how to USE a volume declared above.
+    volumeMounts:
+    - name: shared-logs  # This name MUST match the name from the 'volumes' block.
+      mountPath: /var/log/nginx # This is the path INSIDE this container to mount the volume.
+
+  # This is the definition for the second container (the sidecar).
+  - name: sidecar-container
+    image: ubuntu:latest
+    # This command runs a continuous loop that reads the log files every 30 seconds.
+    command: ["/bin/sh", "-c"]
+    args: ["while true; do cat /var/log/nginx/access.log /var/log/nginx/error.log; sleep 30; done"]
+    
+    # This container also gets a 'volumeMounts' block.
+    volumeMounts:
+    - name: shared-logs  # It refers to the SAME volume by name.
+      mountPath: /var/log/nginx # It mounts the volume at the SAME path.
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Forgetting the `-c` flag:** When a Pod has more than one container, you **must** use the `-c <container-name>` flag for commands like `kubectl logs` and `kubectl exec` to tell Kubernetes which container you want to interact with.
+-   **Confusing `volumes` and `volumeMounts`:** `volumes` is defined once at the Pod level to create the volume. `volumeMounts` is defined inside each container that needs to access that volume.
+-   **Name Mismatch:** The `name` in a container's `volumeMounts` section must exactly match the `name` of a volume defined in the Pod's `volumes` section. A typo will cause the Pod to fail to start.
+-   **Forgetting a `command`:** The `ubuntu` image doesn't have a default command that keeps it running. Without the `command` and `args` to run the `sleep` loop, the sidecar container would start, do nothing, and immediately exit, causing the Pod to go into a `CrashLoopBackOff` state.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get pods`: **Gets** a summary list of all Pods. I used this to check the `READY` status (should be `2/2`).
+-   `kubectl describe pod [pod-name]`: **Describes** a Pod in great detail. I used this to verify that the volumes and volume mounts were configured correctly for both containers.
+-   `kubectl logs [pod-name] -c [container-name]`: **Shows the logs** from a specific container within a multi-container Pod. This was the essential command for my final verification step. The `-c` flag is mandatory for multi-container pods.
+-   `kubectl exec -it [pod-name] -c [container-name] -- [command]`: **Exec**utes a command inside a specific container. I could have used this to `ls /var/log/nginx` inside both containers to verify the shared volume.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 056: Deploying a Scalable and Accessible Application in Kubernetes
+
+Today's task was a huge leap in my Kubernetes journey. I went from managing single, mortal Pods to deploying a robust, scalable, and highly available application using a **Deployment**. Even more importantly, I learned how to make that application accessible from outside the cluster using a **Service**.
+
+This was a fantastic, real-world exercise that taught me how to combine two of the most fundamental Kubernetes objects to create a complete application stack. I learned how the Deployment ensures my app is always running and how the Service provides a stable entry point for users. This document is my very detailed, first-person guide to that entire process, written from the perspective of a complete beginner to Kubernetes networking.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a scalable and accessible web server deployment. The specific requirements were:
+1.  Create a **Deployment** named `nginx-deployment` using the `nginx:latest` image.
+2.  The container inside the Pods had to be named `nginx-container`.
+3.  The Deployment must run **3 replicas** (copies) of the application.
+4.  Create a **Service** named `nginx-service` of type `NodePort`.
+5.  The Service must expose the application on a `nodePort` of `30011`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create related resources in Kubernetes is to define them in a single YAML manifest file.
+
+#### Phase 1: Writing the Manifest File
+1.  I connected to the jump host.
+2.  I created a new file named `nginx-app.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, using the `---` separator to define both the Deployment and the Service in one file.
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - name: nginx-container
+            image: nginx:latest
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: nginx-service
+    spec:
+      type: NodePort
+      selector:
+        app: nginx
+      ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+          nodePort: 30011
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f nginx-app.yaml
+    ```
+    The command responded with `deployment.apps/nginx-deployment created` and `service/nginx-service created`.
+
+2.  **Verification:** The final step was to confirm that both objects were created and working correctly.
+    -   First, I checked the Deployment and the Pods it created.
+        ```bash
+        kubectl get deployment nginx-deployment
+        kubectl get pods
+        ```
+        The first command showed `READY 3/3`, and the second command listed three separate `nginx-deployment-...` Pods, all in a `Running` state.
+    -   For the definitive proof, I inspected the Service.
+        ```bash
+        kubectl get service nginx-service
+        ```
+    The output clearly showed a `TYPE` of `NodePort` and, most importantly, the port mapping `80:30011/TCP`. This confirmed that the Service was correctly exposing the application on the node's port 30011.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Deployment**: A Deployment is the standard way to run a stateless application in Kubernetes. It's a controller that manages a set of identical Pods (replicas). Its key jobs are:
+    -   **Scalability:** The `replicas: 3` line in my file told the Deployment I wanted three copies of my web server running at all times. This distributes the load and provides redundancy.
+    -   **Self-Healing:** If one of my Nginx Pods were to crash, the Deployment controller would instantly detect it and automatically create a new Pod to replace it, ensuring my application stays available.
+-   **Service**: A Service is a critical networking object that solves a huge problem: **Pods are ephemeral**. Pods can be created and destroyed by a Deployment, and every new Pod gets a new IP address. A **Service** provides a **single, stable endpoint** (a fixed IP address and DNS name) for a group of Pods.
+-   **Labels and Selectors (The Magic Link)**: This is how the Service knows which Pods to send traffic to.
+    1.  In my Deployment's Pod `template`, I gave each Pod a **Label**: `app: nginx`.
+    2.  In my Service's `spec`, I defined a **Selector**: `app: nginx`.
+    3.  Kubernetes continuously watches for all Pods that match the Service's selector and automatically updates the Service's list of endpoints with their IP addresses. This is how the two objects are connected.
+-   **`NodePort` Service**: This is one of several ways to expose a Service to the outside world. When I create a `NodePort` service, Kubernetes does two things:
+    1.  It still creates a stable internal IP address for the Service (the `ClusterIP`).
+    2.  It also opens a specific port (the `nodePort`, `30011` in my case) on **every single Node** in the cluster. Any traffic that arrives at any Node's IP address on that port is then forwarded to the Service, which in turn load-balances it to one of the healthy Nginx Pods.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-yaml-manifest"></a>
+This file defines two separate but connected Kubernetes objects.
+
+[Image of a Kubernetes NodePort Service directing traffic]
+
+```yaml
+# --- DEPLOYMENT DEFINITION ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3 # I desire 3 identical copies of my Pod to be running.
+  selector:
+    matchLabels:
+      app: nginx # This Deployment manages any Pod with the label 'app: nginx'.
+  template: # This is the blueprint for the Pods.
+    metadata:
+      labels:
+        app: nginx # This label is applied to each Pod created by this template. It MUST match the selector above.
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+
+# The '---' is a YAML separator that allows me to define another object in the same file.
+
+# --- SERVICE DEFINITION ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  # 'type: NodePort' tells Kubernetes to expose this service on a static port on each Node.
+  type: NodePort
+  
+  # This is the crucial link. This Service will look for and send traffic to
+  # any Pod that has the label 'app: nginx'.
+  selector:
+    app: nginx
+    
+  # This defines the port mapping for the Service.
+  ports:
+    - protocol: TCP
+      # 'port' is the port on the Service's own internal ClusterIP.
+      port: 80
+      # 'targetPort' is the port on the Pods that the traffic should be sent to.
+      targetPort: 80
+      # 'nodePort' is the static port that will be opened on every Node in the cluster.
+      nodePort: 30011
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Selector/Label Mismatch:** This is the #1 error. If the `selector` in the Service does not exactly match the `labels` in the Deployment's Pod template, the Service will not be able to find any Pods, and its list of endpoints will be empty.
+-   **Forgetting the `---` separator:** When defining multiple resources in one file, this separator is mandatory.
+-   **`nodePort` Range:** The `nodePort` value is not arbitrary. It must be within a configurable range, which by default is **30000-32767**. Choosing a port outside this range will cause the Service creation to fail.
+-   **`port` vs. `targetPort`:** It's easy to get these confused. `targetPort` is the port your container is listening on (port 80 for Nginx). `port` is the port the Service itself listens on within the cluster's internal network.
+
+---
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get all`: A great command to get a quick overview of all the major resources (Pods, Deployments, Services, etc.) in the current namespace.
+-   `kubectl get deployment [dep-name]`: Gets a summary of a Deployment's status, showing the desired vs. current replica count.
+-   `kubectl get service [svc-name]`: Gets a summary of a Service. This is the best way to see its `ClusterIP` and the `NodePort` mapping.
+-   `kubectl describe service [svc-name]`: Describes a Service in detail. The most useful part of this output is the `Endpoints` field, which will show you the actual IP addresses of the Pods that the service is currently sending traffic to. If this is empty, you have a selector/label mismatch.
+
+
+
+----
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 057: One-Off Tasks and Environment Variables in Kubernetes
+
+Today's task was a fantastic lesson in a different kind of Kubernetes workload: a one-off task. Instead of creating a long-running service like a web server, my objective was to create a Pod that would run a single command, print some output, and then exit cleanly.
+
+This was a great exercise for learning three critical concepts: how to inject configuration into a Pod using **environment variables**, how to override a container's default startup command, and how to use a `restartPolicy` to tell Kubernetes that it's okay for the container to finish its job. This document is my very detailed, first-person guide to that entire process, written from the perspective of a complete beginner to these concepts.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a single Kubernetes Pod that would run a simple `echo` command. The specific requirements were:
+1.  The Pod must be named `print-envars-greeting`.
+2.  The container inside must be named `print-env-container` and use the `bash` image.
+3.  Three environment variables must be defined:
+    -   `GREETING` = `Welcome to`
+    -   `COMPANY` = `Stratos`
+    -   `GROUP` = `Industries`
+4.  The container must run the specific command: `["/bin/sh", "-c", 'echo "$(GREETING) $(COMPANY) $(GROUP)"']`.
+5.  The Pod's `restartPolicy` must be set to `Never`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create this Pod is with a YAML manifest file.
+
+#### Phase 1: Writing the Pod Manifest
+1.  I connected to the jump host.
+2.  I created a new file named `print-envars-pod.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, which defines the Pod, its environment variables, the command override, and the restart policy.
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: print-envars-greeting
+    spec:
+      containers:
+      - name: print-env-container
+        image: bash:latest
+        env:
+        - name: GREETING
+          value: "Welcome to"
+        - name: COMPANY
+          value: "Stratos"
+        - name: GROUP
+          value: "Industries"
+        command: ["/bin/sh", "-c", "echo \"$(GREETING) $(COMPANY) $(GROUP)\""]
+      restartPolicy: Never
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f print-envars-pod.yaml
+    ```
+2.  **Verification:** The final part of the task was to confirm that the Pod ran its command successfully.
+    -   First, I checked the status of the Pod. Because this job runs so quickly, by the time I checked, it was already finished.
+        ```bash
+        kubectl get pods
+        ```
+        The output correctly showed `print-envars-greeting` with a `STATUS` of `Completed`. This was the first sign of success.
+    -   For the definitive proof, I checked the logs of the completed Pod.
+        ```bash
+        kubectl logs print-envars-greeting
+        ```
+    The output showed the exact string that the command was supposed to print: `Welcome to Stratos Industries`. This was the final proof that the environment variables were injected and used correctly.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Environment Variables (`env`)**: This is the standard and most common way to pass configuration data into a container. Instead of hardcoding values like database connection strings or API keys into your application, you define them in the Pod's YAML. The application inside the container can then read these values from its operating system environment. This **decouples the application from its configuration**, which is a critical best practice.
+-   **Overriding Container Command (`command`)**: Every Docker image has a default command it runs when it starts (defined by `CMD` or `ENTRYPOINT`). The `command` field in a Pod `spec` allows me to **override** that default. This is incredibly useful for running one-off tasks (like a database migration script) or for debugging purposes. In this task, I overrode the `bash` image's default behavior of starting an interactive shell.
+-   **`restartPolicy: Never`**: This is a crucial setting for any Pod that is designed to run a task and then exit.
+    -   By default, Kubernetes uses `restartPolicy: Always`. This means if a container in a Pod stops, Kubernetes assumes it crashed and immediately restarts it.
+    -   For a task like my `echo` command, the container runs, prints the message, and exits with a success code (0). This is the correct behavior.
+    -   If I had left the restart policy as `Always`, Kubernetes would see the container exit, think it had crashed, and restart it. The container would run the command again, exit again, and get stuck in an endless loop of restarts called a `CrashLoopBackOff`.
+    -   By setting `restartPolicy: Never`, I am telling Kubernetes, "This Pod is supposed to run once and finish. When its container exits successfully, mark the Pod as `Completed` and do not try to restart it." The other option is `OnFailure`, which would only restart the container if it exited with an error.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Pod YAML File
+<a name="deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file"></a>
+The YAML for this task demonstrates three very important concepts in the Pod `spec`.
+
+
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: print-envars-greeting
+spec:
+  # The 'containers' block is a list of containers to run in the Pod.
+  containers:
+  - name: print-env-container
+    image: bash:latest
+    
+    # The 'env' block is a list of environment variables to inject into the container.
+    env:
+    # Each item in the list is a key-value pair.
+    - name: GREETING      # The name of the environment variable.
+      value: "Welcome to" # The value of the environment variable.
+    - name: COMPANY
+      value: "Stratos"
+    - name: GROUP
+      value: "Industries"
+      
+    # The 'command' block overrides the Docker image's default command.
+    # It is a list of strings, where the first string is the executable
+    # and the subsequent strings are its arguments.
+    command: ["/bin/sh", "-c", "echo \"$(GREETING) $(COMPANY) $(GROUP)\""]
+    
+  # The 'restartPolicy' is defined at the Pod 'spec' level.
+  # 'Never' is the correct policy for one-off tasks that should not be restarted
+  # after they complete successfully.
+  restartPolicy: Never
+  ```
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+
+- **Forgetting restartPolicy**: Never: This is the most common mistake for a task-based Pod. It will cause the Pod to get stuck in a CrashLoopBackOff state even though the command is running successfully each time.
+
+- **Incorrectly Quoting the Command**: Shell commands with variables can be tricky to quote correctly in YAML. The format ["`/bin/sh`", "`-c`", "`...`"] is the standard way to ensure the shell correctly interprets the variables.
+
+- **Checking get pods too early**: A beginner might see the Pod in a Completed state and think something is wrong. For this task, Completed is the desired final state.
+
+- **Using describe to check output**: The kubectl describe command is great for seeing configuration and events, but it does not show the output of the container's command. The only way to see the "Welcome..." message is with `kubectl logs`.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential kubectl Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+
+- **`kubectl apply -f [filename.yaml]`**: The standard way to create or update resources from a manifest file.
+
+- **`kubectl get pods`**: Gets a summary list of all Pods. I used this to check for the Completed status.
+
+- **`kubectl logs [pod-name]`**: This was the most important verification command for this task. It shows the standard output (the "logs") from the container that ran inside the Pod, allowing me to see the output of my echo command.
+
+- **`kubectl describe pod [pod-name]`**: Describes a Pod in great detail. I could have used this to verify that the environment variables and the custom command were configured correctly for the container.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 058: Deploying a Grafana Instance on Kubernetes
+
+Today's task was a fantastic, real-world application of the Kubernetes concepts I've been learning. My objective was to deploy a Grafana instance, a popular open-source monitoring and analytics tool. This required me to create both a **Deployment** to manage the application's lifecycle and a **Service** to make it accessible from outside the cluster.
+
+This exercise was the perfect way to solidify my understanding of how to run a complete, scalable, and accessible application on Kubernetes. I learned how to define both of these critical objects in a single YAML file and how the "label-selector" mechanism magically links them together. This document is my very detailed, first-person guide to that entire process, written from the perspective of a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a Grafana instance and make it accessible. The specific requirements were:
+1.  Create a **Deployment** named `grafana-deployment-devops` using a Grafana image.
+2.  Create a **Service** to expose the application using a `NodePort` of `32000`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create related Kubernetes resources is to define them in a single YAML manifest file.
+
+#### Phase 1: Writing the Manifest File
+1.  I connected to the jump host.
+2.  I created a new file named `grafana-app.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, using the `---` separator to define both the Deployment and the Service in one file.
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: grafana-deployment-devops
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: grafana
+      template:
+        metadata:
+          labels:
+            app: grafana
+        spec:
+          containers:
+          - name: grafana
+            image: grafana/grafana:latest
+            ports:
+            - containerPort: 3000
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: grafana-service
+    spec:
+      type: NodePort
+      selector:
+        app: grafana
+      ports:
+        - protocol: TCP
+          port: 3000
+          targetPort: 3000
+          nodePort: 32000
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f grafana-app.yaml
+    ```
+    The command responded with `deployment.apps/grafana-deployment-devops created` and `service/grafana-service created`.
+
+2.  **Verification:** The final step was to confirm that both objects were created and working correctly.
+    -   First, I checked that the Deployment had successfully created its Pod.
+        ```bash
+        kubectl get deployment grafana-deployment-devops
+        kubectl get pods
+        ```
+        The first command showed `READY 1/1`, and the second command listed a `grafana-deployment-devops-...` Pod in a `Running` state.
+    -   For the definitive proof, I inspected the Service.
+        ```bash
+        kubectl get service grafana-service
+        ```
+    The output clearly showed a `TYPE` of `NodePort` and the port mapping `3000:32000/TCP`. This confirmed that the Service was correctly exposing the application on the node's port 32000. Finally, accessing the Grafana login page via the lab's UI button was the ultimate confirmation of success.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Deployment**: A Deployment is the standard way to run a stateless application in Kubernetes. It's a controller that manages a set of identical Pods (replicas). Its key jobs are:
+    -   **Scalability:** I can easily scale my Grafana instance by changing the `replicas` count.
+    -   **Self-Healing:** If my Grafana Pod were to crash, the Deployment controller would instantly detect it and automatically create a new Pod to replace it, ensuring my monitoring dashboard stays available.
+-   **Service**: A Service is a critical networking object that solves a huge problem: **Pods are ephemeral**. Pods can be created and destroyed by a Deployment, and every new Pod gets a new IP address. A **Service** provides a **single, stable endpoint** (a fixed IP address and DNS name) for a group of Pods.
+-   **Labels and Selectors (The Magic Link)**: This is how the Service knows which Pods to send traffic to.
+    1.  In my Deployment's Pod `template`, I gave each Pod a **Label**: `app: grafana`.
+    2.  In my Service's `spec`, I defined a **Selector**: `app: grafana`.
+    3.  Kubernetes continuously watches for all Pods that match the Service's selector and automatically updates the Service's list of endpoints with their IP addresses. This is how the two objects are connected.
+-   **`NodePort` Service**: This is one of several ways to expose a Service to the outside world. When I create a `NodePort` service, Kubernetes does two things:
+    1.  It still creates a stable internal IP address for the Service (the `ClusterIP`).
+    2.  It also opens a specific port (the `nodePort`, `32000` in my case) on **every single Node** in the cluster. Any traffic that arrives at any Node's IP address on that port is then forwarded to the Service, which in turn load-balances it to one of the healthy Grafana Pods.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-yaml-manifest"></a>
+This file defines two separate but connected Kubernetes objects.
+
+[Image of a Kubernetes NodePort Service directing traffic]
+
+```yaml
+# --- DEPLOYMENT DEFINITION ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment-devops
+spec:
+  replicas: 1 # I desire 1 copy of my Pod to be running.
+  selector:
+    matchLabels:
+      app: grafana # This Deployment manages any Pod with the label 'app: grafana'.
+  template: # This is the blueprint for the Pods.
+    metadata:
+      labels:
+        app: grafana # This label is applied to each Pod. It MUST match the selector above.
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        # This tells Kubernetes that the container listens on port 3000.
+        # It's good practice and helps with service discovery.
+        ports:
+        - containerPort: 3000
+
+# The '---' is a YAML separator that allows me to define another object in the same file.
+
+# --- SERVICE DEFINITION ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  # 'type: NodePort' tells Kubernetes to expose this service on a static port on each Node.
+  type: NodePort
+  
+  # This is the crucial link. This Service will look for and send traffic to
+  # any Pod that has the label 'app: grafana'.
+  selector:
+    app: grafana
+    
+  # This defines the port mapping for the Service.
+  ports:
+    - protocol: TCP
+      # 'port' is the port on the Service's own internal ClusterIP.
+      port: 3000
+      # 'targetPort' is the port on the Pods that the traffic should be sent to.
+      # This must match the 'containerPort' in the Deployment.
+      targetPort: 3000
+      # 'nodePort' is the static port that will be opened on every Node in the cluster.
+      nodePort: 32000
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Selector/Label Mismatch:** This is the #1 error. If the `selector` in the Service does not exactly match the `labels` in the Deployment's Pod template, the Service will not be able to find any Pods, and its list of endpoints will be empty.
+-   **`port` vs. `targetPort` vs. `nodePort`:** It's easy to get these confused.
+    -   `targetPort`: The port your container is actually listening on (3000 for Grafana).
+    -   `port`: The port the Service itself listens on *inside* the cluster's private network.
+    -   `nodePort`: The high-numbered port that is opened on the physical server to expose the service externally.
+-   **`nodePort` Range:** The `nodePort` value is not arbitrary. It must be within a configurable range, which by default is **30000-32767**. Choosing a port outside this range will cause the Service creation to fail.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get all`: A great command to get a quick overview of all the major resources (Pods, Deployments, Services, etc.).
+-   `kubectl get deployment [dep-name]`: Gets a summary of a Deployment's status.
+-   `kubectl get service [svc-name]`: Gets a summary of a Service. This is the best way to see its `ClusterIP` and the `NodePort` mapping.
+-   `kubectl describe service [svc-name]`: Describes a Service in detail. The most useful part of this output is the `Endpoints` field, which will show you the actual IP addresses of the Pods that the service is currently sending traffic to. If this is empty, you have a selector/label mismatch.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 059: Troubleshooting a Failing Kubernetes Deployment
+
+Today's task was a masterclass in Kubernetes troubleshooting. I was presented with a failing application where the Pods were stuck in a `ContainerCreating` state and would not start. My objective was to play detective, using Kubernetes's own diagnostic tools to find and fix the underlying configuration errors.
+
+This was an incredible learning experience because the problem wasn't a single error, but **two separate, subtle typos** in the Deployment's definition. I had to go beyond checking logs and dive deep into the Pod's event history to find the root causes. This document is my very detailed, first-person guide to that entire successful detective story.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to fix a broken Redis deployment on the Kubernetes cluster. The key details were:
+1.  The Deployment was named `redis-deployment`.
+2.  The Pods were not reaching a `Running` state.
+3.  I needed to find the errors and fix them to get the application running.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My approach was to follow the classic Kubernetes troubleshooting workflow: start high-level to identify the symptom, and then drill down into the details to find the root cause.
+
+#### Phase 1: The Diagnosis
+1.  I connected to the jump host. My first command gave me a high-level view of the problem.
+    ```bash
+    kubectl get deployment redis-deployment
+    # Output showed READY 0/1, meaning the desired Pod was not healthy.
+    ```
+2.  I then checked the Pods to see their specific status.
+    ```bash
+    kubectl get pods
+    # Output showed the Pod was stuck in a 'ContainerCreating' or 'Pending' state.
+    ```
+    This told me the problem was happening *before* the container could even start. `kubectl logs` was useless at this point because there was no running container to get logs from.
+
+3.  **This was the most critical step.** I used `kubectl describe` on the stuck Pod to get the detailed event history.
+    ```bash
+    kubectl describe pod redis-deployment-54cdf4f76d-cxdzf
+    ```
+4.  The `Events` section at the very bottom of the output contained the "smoking gun" for the first problem:
+    `Warning FailedMount ... MountVolume.SetUp failed for volume "config" : configmap "redis-conig" not found`
+    This was my **first root cause**: a typo in the ConfigMap name (`redis-conig` instead of `redis-config`).
+
+5.  While I was looking at the same `describe` output, I also spotted a second, more subtle bug in the "Containers" section:
+    `Image: redis:alpin`
+    This was my **second root cause**: a typo in the image tag (`alpin` instead of `alpine`). This would have caused an `ImagePullBackOff` error after I fixed the first problem.
+
+#### Phase 2: The Fix
+With both problems identified, I decided the most efficient way to fix them was to edit the live Deployment object directly and correct both typos at once.
+
+1.  I used `kubectl edit` to open the Deployment's live YAML definition in a text editor.
+    ```bash
+    kubectl edit deployment redis-deployment
+    ```
+2.  Inside the editor, I found and corrected both typos:
+    -   Under `spec.template.spec.containers`, I changed `image: redis:alpin` to `image: redis:alpine`.
+    -   Under `spec.template.spec.volumes`, in the `configMap` definition, I changed `name: redis-conig` to `name: redis-config`.
+3.  I saved and quit the editor.
+
+#### Phase 3: Verification
+1.  When I saved the edited file, Kubernetes automatically detected the change to the Pod template and triggered a new rollout.
+2.  I immediately checked the Pods again:
+    ```bash
+    kubectl get pods
+    ```
+3.  The output showed the old, broken Pod in a `Terminating` state and a brand new Pod in a `Running` state with `READY: 1/1`. This was the definitive proof that both issues were resolved and the application was now running correctly.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Kubernetes Troubleshooting**: This task was a masterclass in the standard K8s debugging workflow:
+    1.  Start high-level with `kubectl get` to see the overall status (the "symptom").
+    2.  If something is wrong (a Pod is not `Running`), drill down with `kubectl describe` to get the detailed specification and, most importantly, the **events** (the "cause").
+    3.  If the container is running but the app is failing, *then* use `kubectl logs`.
+-   **Pod Events**: I learned that the `Events` section of the `describe` output is the most valuable source of information when a Pod fails to *start*. It shows the step-by-step actions that the `kubelet` (the agent on the server) took and any errors it encountered, like failing to mount a volume or pull an image.
+-   **ConfigMap Volumes**: A `ConfigMap` is a Kubernetes object for storing configuration data. One of its most powerful features is the ability to be mounted as a **volume** inside a Pod. This allows me to inject configuration files (like a `redis.conf` file) into my container at runtime, decoupling the configuration from the container image. The error I found was that the Pod was trying to mount a ConfigMap that didn't exist due to a typo.
+-   **ImagePullBackOff**: This is the error I *would have* seen if I had only fixed the ConfigMap issue. It's a common status that means Kubernetes tried to pull the specified Docker image (`redis:alpin`) but the image could not be found in the registry. Kubernetes will keep trying, with an increasing "back-off" delay between attempts.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Power of `kubectl describe` and the Events Section
+<a name="deep-dive-the-power-of-kubectl-describe-and-the-events-section"></a>
+For any problem where a Pod is `Pending`, `ContainerCreating`, or `ImagePullBackOff`, `kubectl describe pod` is your best friend. The logs are useless because the container isn't running yet. The real story is in the `Events` section.
+
+[Image of a kubectl describe pod output with events]
+
+-   **What are Events?** Events are objects in Kubernetes that provide insight into what is happening inside the cluster. They are records of actions and errors related to other resources.
+-   **How to Read Them:** The `Events` table at the bottom of the `describe` output is a chronological log of what the system has been doing with your Pod. I looked for events with `Type: Warning`.
+-   **My "Smoking Gun" Event:**
+    `Warning FailedMount ... MountVolume.SetUp failed for volume "config" : configmap "redis-conig" not found`
+    -   **`Warning`**: This immediately told me something was wrong.
+    -   **`FailedMount`**: This told me the problem was with a storage volume.
+    -   **`configmap "redis-conig" not found`**: This was the exact, specific root cause.
+
+I learned that 90% of Pod startup problems can be diagnosed by carefully reading this `Events` section.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Only Checking `get pods`:** A beginner might see `ContainerCreating` and just wait, thinking the system is slow. `ContainerCreating` for more than a minute is almost always a sign of a deeper problem that requires `describe`.
+-   **Trying to Check Logs Too Early:** As I saw, running `kubectl logs` on a Pod that isn't `Running` will result in an error, which can be confusing.
+-   **Fixing Only One Bug:** If I had only fixed the ConfigMap typo and not noticed the image tag typo, the Pod would have been recreated and then immediately failed with a new `ImagePullBackOff` error, leading to more confusion. A thorough `describe` helps you find all the problems at once.
+-   **Editing the Pod Directly:** A common mistake is to try `kubectl edit pod ...`. This is almost always wrong. Since my Pod was managed by a Deployment, any changes I made to the Pod directly would be instantly reverted by the Deployment controller. The fix **must** be applied to the parent object (the `Deployment`).
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl get pods` / `kubectl get deployment`: My high-level tools to check the overall status.
+-   `kubectl describe pod [pod-name]`: My most powerful diagnostic tool. It shows the Pod's full configuration, status, and, most importantly, its event history, which is where I found the root cause.
+-   `kubectl edit deployment [dep-name]`: The command I used to apply the fix. It opens the live YAML definition of a resource in a text editor. When I saved and quit, Kubernetes automatically detected the changes to the Pod template and triggered a new, corrected rollout.
+-   `kubectl set image deployment/[dep-name] [container-name]=[new-image]`: An alternative command I could have used to fix the image tag. However, `kubectl edit` was better here because it allowed me to fix both the image tag and the ConfigMap name in a single operation.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 060: Deploying a Stateful Application with Persistent Storage
+
+Today's task was a massive leap forward in my Kubernetes knowledge. I moved from deploying simple, stateless applications to deploying a **stateful** one. This required me to understand and implement Kubernetes's persistent storage system, a critical component for any application that needs to save data, like a database or a web server with user-uploaded content.
+
+This was an incredible, end-to-end exercise where I built a complete application stack from the ground up, all within a single YAML file. I defined the physical storage (**PersistentVolume**), the request for that storage (**PersistentVolumeClaim**), the application that uses the storage (**Pod**), and the network access to the application (**Service**). This document is my very detailed, first-person guide to that entire process, written from the perspective of a beginner to Kubernetes storage.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a complete, accessible, and stateful `httpd` web server. The task was broken down into four distinct but interconnected resources:
+1.  **PersistentVolume (PV):** Named `pv-devops`, with `4Gi` of `manual` storage from a `hostPath` at `/mnt/finance`.
+2.  **PersistentVolumeClaim (PVC):** Named `pvc-devops`, requesting `1Gi` of `manual` storage.
+3.  **Pod:** Named `pod-devops`, running an `httpd:latest` container named `container-devops`, and mounting the PVC as its web root.
+4.  **Service:** Named `web-devops`, of type `NodePort`, exposing the application on node port `30008`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create these related resources is to define them all in a single YAML manifest file.
+
+#### Phase 1: Writing the Manifest File
+1.  I connected to the jump host.
+2.  I created a new file named `web-app.yaml` using `vi`.
+3.  Inside the editor, I wrote the following complete YAML code, using the `---` separator to define all four Kubernetes objects. I also remembered to add a `label` to my Pod so the Service's `selector` could find it.
+    ```yaml
+    apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: pv-devops
+    spec:
+      storageClassName: manual
+      capacity:
+        storage: 4Gi
+      accessModes:
+        - ReadWriteOnce
+      hostPath:
+        path: "/mnt/finance"
+    ---
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: pvc-devops
+    spec:
+      storageClassName: manual
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+    ---
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: pod-devops
+      labels:
+        app: httpd-app # This label is critical for the Service
+    spec:
+      containers:
+        - name: container-devops
+          image: httpd:latest
+          volumeMounts:
+            - name: storage
+              mountPath: /usr/local/apache2/htdocs
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: pvc-devops
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: web-devops
+    spec:
+      type: NodePort
+      selector:
+        app: httpd-app # This selector matches the Pod's label
+      ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+          nodePort: 30008
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f web-app.yaml
+    ```
+    The command responded by confirming that all four objects (`persistentvolume`, `persistentvolumeclaim`, `pod`, and `service`) were created.
+
+2.  **Verification:** The final step was to confirm that the entire chain of resources was correctly linked and running.
+    -   First, I checked the storage.
+        ```bash
+        kubectl get pv,pvc
+        ```
+        The output showed both my `pv-devops` and `pvc-devops` with a `STATUS` of `Bound`.
+    -   Next, I checked the application and network.
+        ```bash
+        kubectl get pod,service
+        ```
+    The output showed my `pod-devops` was `Running` and my `web-devops` service was correctly exposing port `30008`. This was the definitive proof of success.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **The Problem of Stateful Applications:** A standard Pod's filesystem is **ephemeral**. If the Pod crashes and is recreated, all the data inside it is lost. This is fine for stateless web servers, but a disaster for a database or a CMS where users upload files.
+-   **The PV/PVC Abstraction (The Core Lesson):** Kubernetes solves this with a two-part abstraction. This is a brilliant design that decouples the application from the physical storage.
+    1.  **`PersistentVolume` (PV):** This represents a piece of **physical storage** in the cluster. It's the "supply." An administrator is responsible for creating PVs. The PV I created was of type `hostPath`, meaning the "physical" storage was just a directory (`/mnt/finance`) on one of the cluster's nodes.
+    2.  **`PersistentVolumeClaim` (PVC):** This is a **request for storage** made by a user or an application. It's the "demand." The PVC says, "I need 1Gi of storage that can be mounted by one pod at a time (`ReadWriteOnce`)."
+-   **The Binding Process:** When I created my PVC, the Kubernetes control plane looked for an available PV that could satisfy my claim. It saw my `pv-devops` was a match (correct `storageClassName`, sufficient size, and correct `accessMode`) and automatically **bound** the PVC to the PV.
+-   **Using the Claim in a Pod:** My Pod's definition did **not** refer to the PV directly. It referred to the **PVC**. This is the power of the abstraction. The Pod just says, "Give me the storage that `pvc-devops` claimed." Kubernetes handles the rest, ensuring the underlying PV is mounted into the Pod.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest"></a>
+This file defines the four interconnected objects that make up my application.
+
+[Image of the Kubernetes PV, PVC, and Pod relationship]
+
+```yaml
+# --- PERSISTENT VOLUME (The Supply) ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-devops
+spec:
+  # 'storageClassName' is a label for the type of storage. 'manual' means I created it myself.
+  storageClassName: manual
+  capacity:
+    storage: 4Gi # The total size of this physical storage piece.
+  # 'accessModes' defines how the volume can be mounted.
+  # 'ReadWriteOnce' means it can be mounted as read-write by a single Node.
+  accessModes:
+    - ReadWriteOnce
+  # 'hostPath' is the type of volume. It uses a directory on the host Node's filesystem.
+  hostPath:
+    path: "/mnt/finance"
+---
+# --- PERSISTENT VOLUME CLAIM (The Demand) ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-devops
+spec:
+  # The storageClassName must match the PV for a successful binding.
+  storageClassName: manual
+  # The accessModes must also be a subset of what the PV supports.
+  accessModes:
+    - ReadWriteOnce
+  # 'resources.requests' is how much storage I am requesting.
+  resources:
+    requests:
+      storage: 1Gi
+---
+# --- POD (The Application) ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-devops
+  labels:
+    app: httpd-app # This label is critical for the Service to find the Pod.
+spec:
+  containers:
+    - name: container-devops
+      image: httpd:latest
+      # This block tells the container how to use a volume.
+      volumeMounts:
+        - name: storage # This name must match a volume defined in the 'volumes' block below.
+          mountPath: /usr/local/apache2/htdocs # The path inside the container.
+  # This 'volumes' block defines the volumes available to the Pod.
+  volumes:
+    - name: storage # A local name for the volume.
+      # This is the key link: I am telling this volume to use the storage that was
+      # claimed by the PVC named 'pvc-devops'.
+      persistentVolumeClaim:
+        claimName: pvc-devops
+---
+# --- SERVICE (The Network Access) ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-devops
+spec:
+  type: NodePort
+  # The selector that links the Service to the Pod.
+  selector:
+    app: httpd-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30008
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Selector/Label Mismatch:** Forgetting to add a `label` to the Pod that matches the `selector` in the Service is the #1 reason a Service fails to connect.
+-   **PV/PVC Mismatch:** The `storageClassName` and `accessModes` must be compatible between the PV and PVC for a successful binding. If they don't match, the PVC will remain in a `Pending` state forever.
+-   **`claimName` Mismatch:** A typo in the `claimName` in the Pod's `volumes` section will cause the Pod to fail to start, as it won't be able to find the storage it needs.
+-   **`hostPath` Issues:** In a multi-node cluster, using `hostPath` can be problematic. A Pod might be scheduled on `node-1`, write data to `/mnt/finance`, then crash and be rescheduled on `node-2`, where `/mnt/finance` is a completely different, empty directory. For real stateful applications, you would use a network-based storage solution like AWS EBS or a StorageClass.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update all the resources from my manifest file.
+-   `kubectl get pv [pv-name]`: Gets a summary of a PersistentVolume. I used this to check its `STATUS` (`Bound`).
+-   `kubectl get pvc [pvc-name]`: Gets a summary of a PersistentVolumeClaim. I used this to check its `STATUS` (`Bound`).
+-   `kubectl get pod [pod-name]`: Gets a summary of my Pod's status.
+-   `kubectl get service [svc-name]`: Gets a summary of my Service, which I used to confirm the `NodePort`.
+-   `kubectl describe ...`: I could have used `describe` on any of these objects to get far more detail, such as the events that show the successful binding of the PV and PVC, and the successful mounting of the volume into the Pod.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 061: Pre-requisite Tasks with Kubernetes Init Containers
+
+Today's task was a deep dive into a powerful and elegant Kubernetes pattern: the **Init Container**. My objective was to create a Pod where a special "setup" container would run and prepare a file *before* the main application container started. This main container would then use the file created by the init container.
+
+This was a fantastic lesson in managing application dependencies and pre-requisite tasks in a clean, decoupled way. I learned how to define an `initContainers` block in my Deployment manifest and how it interacts with shared volumes to prepare an environment for the main application. This document is my very detailed, first-person guide to that entire process, written from the perspective of a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a Kubernetes Deployment that used an init container. The specific requirements were:
+1.  Create a **Deployment** named `ic-deploy-devops` with 1 replica.
+2.  The Pods created must have the label `app: ic-devops`.
+3.  The Pod must have an **Init Container** named `ic-msg-devops` using the `debian:latest` image. This container must run a command to write the string "Init Done - Welcome to xFusionCorp Industries" to a file at `/ic/beta`.
+4.  The Pod must have a **main container** named `ic-main-devops` using the `debian:latest` image. This container must run a continuous loop that reads and prints the content of the `/ic/beta` file.
+5.  Both containers must share an `emptyDir` volume named `ic-volume-devops`, mounted at `/ic`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create this complex Pod is with a single YAML manifest file for the Deployment.
+
+#### Phase 1: Writing the Deployment Manifest
+1.  I connected to the jump host.
+2.  I created a new file named `ic-deployment.yaml` using `vi`.
+3.  Inside the editor, I wrote the following YAML code, which defines the shared volume, the init container that writes to it, and the main container that reads from it.
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: ic-deploy-devops
+      labels:
+        app: ic-devops
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: ic-devops
+      template:
+        metadata:
+          labels:
+            app: ic-devops
+        spec:
+          initContainers:
+          - name: ic-msg-devops
+            image: debian:latest
+            command: ["/bin/bash", "-c", "echo Init Done - Welcome to xFusionCorp Industries > /ic/beta"]
+            volumeMounts:
+            - name: ic-volume-devops
+              mountPath: /ic
+          containers:
+          - name: ic-main-devops
+            image: debian:latest
+            command: ["/bin/bash", "-c", "while true; do cat /ic/beta; sleep 5; done"]
+            volumeMounts:
+            - name: ic-volume-devops
+              mountPath: /ic
+          volumes:
+          - name: ic-volume-devops
+            emptyDir: {}
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to create the Deployment from my manifest.
+    ```bash
+    kubectl apply -f ic-deployment.yaml
+    ```
+2.  **Verification:** The final part of the task was to prove that the init container ran first and successfully prepared the file for the main container.
+    -   First, I watched the Pod startup process.
+        ```bash
+        kubectl get pods -w
+        ```
+        I saw the status change from `Pending` -> `Init:0/1` -> `PodInitializing` -> `Running`. The `Init:0/1` status was the key, showing my init container was running.
+    -   For the definitive proof, I checked the logs of the **main container**. I first had to get the full name of the pod created by the deployment.
+        ```bash
+        POD_NAME=$(kubectl get pods -l app=ic-devops -o jsonpath='{.items[0].metadata.name}')
+        kubectl logs $POD_NAME -c ic-main-devops
+        ```
+    The output showed the exact string `Init Done - Welcome to xFusionCorp Industries`. This was the final proof that the init container had run to completion, and *then* the main container had started and was successfully reading the file it created.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **The Problem of Prerequisites:** Many applications can't start until some pre-flight checks or setup tasks are completed. For example, a web app might need to wait for a database to be available, or it might need a specific configuration file to be in place before it launches.
+-   **Init Containers (The Solution):** An Init Container is a special type of container in a Pod that is designed to solve this problem. It's a container that **runs and must complete successfully** *before* the main application containers are started.
+-   **The Lifecycle:**
+    1.  The Pod is scheduled to a Node.
+    2.  The Init Containers are started in the order they are defined in the manifest.
+    3.  Each Init Container runs its command and must exit with a success code (0). If it fails, Kubernetes will restart it according to the Pod's `restartPolicy`. The main containers will **not** start until all init containers have succeeded.
+    4.  Once all Init Containers are complete, the main application containers are started.
+-   **Separation of Concerns:** This pattern is a perfect example of this important design principle.
+    -   The `ic-msg-devops` container had one job: prepare the environment (create the `beta` file).
+    -   The `ic-main-devops` container had one job: run the main application logic (read the file).
+    This keeps the main application container clean and focused, separating setup logic from runtime logic.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Deployment YAML File
+<a name="deep-dive-a-line-by-line-explanation-of-my-deployment-yaml-file"></a>
+The key to this task was understanding the `initContainers` block and how it relates to the `containers` and `volumes` blocks.
+
+[Image of a Kubernetes Pod with an Init Container]
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ic-deploy-devops
+  labels:
+    app: ic-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ic-devops
+  template:
+    metadata:
+      labels:
+        app: ic-devops
+    spec:
+      # This 'initContainers' block is the new and most important part.
+      # It's a list of containers that will run to completion in order before the main containers start.
+      initContainers:
+      - name: ic-msg-devops
+        image: debian:latest
+        # This command runs once, creates the file, and then the container exits successfully.
+        command: ["/bin/bash", "-c", "echo Init Done - Welcome to xFusionCorp Industries > /ic/beta"]
+        # It mounts the shared volume so it can write the file.
+        volumeMounts:
+        - name: ic-volume-devops
+          mountPath: /ic
+
+      # This is the standard 'containers' block for the main application.
+      containers:
+      - name: ic-main-devops
+        image: debian:latest
+        # This command runs a continuous loop to read the file created by the init container.
+        command: ["/bin/bash", "-c", "while true; do cat /ic/beta; sleep 5; done"]
+        # It mounts the SAME shared volume so it can read the file.
+        volumeMounts:
+        - name: ic-volume-devops
+          mountPath: /ic
+
+      # This 'volumes' block at the Pod level defines the volume that is shared.
+      volumes:
+      - name: ic-volume-devops
+        # 'emptyDir' is a temporary directory that is created with the Pod and
+        # destroyed when the Pod is deleted. It's perfect for sharing files
+        # between containers in the same Pod.
+        emptyDir: {}
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Init Container Fails to Complete:** If the command in my init container had an error and exited with a non-zero code, it would get stuck in a restart loop (`Init:CrashLoopBackOff`), and my main container would *never* start.
+-   **Confusing `initContainers` and `containers`:** The two blocks look very similar, but they have different purposes and lifecycles. It's important to put the setup logic in the `initContainers` section.
+-   **Volume Name Mismatch:** The `name` in a container's `volumeMounts` section must exactly match the `name` of a volume defined in the Pod's `volumes` section. A typo will cause the Pod to fail to start.
+-   **Forgetting to Verify with `logs`:** The only way to know for sure that the main container is seeing the result of the init container's work is to check its logs. `kubectl get pods` only shows that it's running, not that it's functioning correctly.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get pods -w`: Gets a list of Pods and **w**atches for changes. This is incredibly useful for observing the startup sequence of a Pod, including the `Init` state.
+-   `kubectl describe pod [pod-name]`: Describes a Pod in great detail. I could have used this to see the status of the init container and the main container separately.
+-   `kubectl logs [pod-name] -c [container-name]`: Shows the logs from a specific container within a multi-container Pod. This was the essential command for my final verification step.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 062: Managing Secrets in Kubernetes
+
+Today's task was a deep dive into one of the most critical aspects of running applications in any environment: managing sensitive data. My objective was to use a **Kubernetes Secret** to store a piece of confidential data (like a password or license key) and then securely make it available to an application running in a Pod.
+
+This was a fantastic lesson in cloud-native security practices. I learned that you should never hardcode secrets in your configuration files or container images. Instead, you use a dedicated object like a Secret to decouple sensitive data from your application code. This document is my very detailed, first-person guide to that entire process, from creating the Secret to consuming it as a file inside a container.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a Kubernetes Secret and consume it in a Pod. The specific requirements were:
+1.  Create a `generic` Secret named `blog` from the contents of the file `/opt/blog.txt` on the jump host.
+2.  Create a Pod named `secret-xfusion`.
+3.  The Pod must run a container named `secret-container-xfusion` using the `ubuntu:latest` image.
+4.  The container must be kept running (using a `sleep` command).
+5.  The `blog` Secret must be mounted as a volume into the container at the path `/opt/games`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved an imperative command to create the Secret and a declarative manifest to create the Pod that uses it.
+
+#### Phase 1: Creating the Secret
+1.  I connected to the jump host.
+2.  I used a single, imperative `kubectl create secret` command to generate the Secret directly from the file. This is the most efficient way to handle this.
+    ```bash
+    kubectl create secret generic blog --from-file=/opt/blog.txt
+    ```
+    The command responded with `secret/blog created`, which was my first confirmation of success.
+
+#### Phase 2: Creating the Pod to Consume the Secret
+1.  I created a new file named `secret-pod.yaml` using `vi`.
+2.  Inside the editor, I wrote the following YAML code, which defines the Pod and, most importantly, the `volumes` and `volumeMounts` sections that link the container to the Secret.
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: secret-xfusion
+    spec:
+      containers:
+      - name: secret-container-xfusion
+        image: ubuntu:latest
+        command: ["/bin/sh", "-c", "sleep 3600"]
+        volumeMounts:
+        - name: secret-volume
+          mountPath: "/opt/games"
+          readOnly: true
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: blog
+    ```
+3.  I saved the file and used `kubectl` to create the Pod from my manifest.
+    ```bash
+    kubectl apply -f secret-pod.yaml
+    ```
+
+#### Phase 3: Verification
+The final part of the task was to prove that the secret data was correctly mounted inside the running container.
+1.  First, I checked the Pod's status with `kubectl get pods` to ensure it was `Running`.
+2.  Then, I used `kubectl exec` to get an interactive shell inside the container.
+    ```bash
+    kubectl exec -it secret-xfusion -- /bin/bash
+    ```
+3.  **This was the definitive proof:** Once inside the container, I listed the contents of the mount path.
+    ```bash
+    # Inside the container shell:
+    ls -l /opt/games
+    ```
+    The output showed a file named `blog.txt`. This file was created by Kubernetes from the data in my `blog` Secret.
+4.  I then viewed the contents of the file:
+    ```bash
+    cat /opt/games/blog.txt
+    ```
+    The output was the license number from the original file on the jump host. This confirmed the entire workflow was successful.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **The Problem of Secrets:** The absolute worst thing I can do is hardcode sensitive data like passwords, API keys, or license numbers directly into my `Dockerfile` or my Pod's YAML file. This would commit my secrets to my Git repository, making them visible to anyone with access.
+-   **Kubernetes `Secret` (The Solution):** A `Secret` is a dedicated Kubernetes object designed specifically to hold a small amount of sensitive data.
+    -   **How it's stored:** The data is stored in the Kubernetes cluster's database (etcd) as **base64-encoded** strings. This is **not encryption**, but it prevents someone from accidentally seeing the secret just by looking at a YAML file. Real security is provided by Kubernetes's Role-Based Access Control (RBAC), which controls who can read or create Secret objects.
+    -   **Decoupling:** The key benefit is that it **decouples my application from its secrets**. My Pod's definition just says, "I need the secret named `blog`." It doesn't know or care what the secret's value is. This means I can update the secret in the cluster without having to rebuild my application's image or change its deployment file.
+-   **Consuming Secrets as Volumes (This Task's Method):** This is one of two ways a Pod can use a Secret. I told my Pod to create a volume whose source was the `blog` Secret. Kubernetes then created a temporary, in-memory filesystem and populated it with files. For each key-value pair in the Secret, it created a file where the filename was the key and the file's content was the value. This is often considered more secure than using environment variables, as the secret data is never exposed in the container's environment.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Pod YAML File
+<a name="deep-dive-a-line-by-line-explanation-of-my-pod-yaml-file"></a>
+The YAML for this task demonstrates the powerful link between `volumes` and `volumeMounts`.
+
+[Image of a Kubernetes Secret being mounted into a Pod]
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-xfusion
+spec:
+  containers:
+  - name: secret-container-xfusion
+    image: ubuntu:latest
+    command: ["/bin/sh", "-c", "sleep 3600"]
+    
+    # This 'volumeMounts' block is inside the container's definition.
+    # It tells this specific container HOW to USE a volume that is declared below.
+    volumeMounts:
+    - name: secret-volume # This name MUST match a volume defined in the 'volumes' block.
+      mountPath: "/opt/games" # This is the path INSIDE this container to mount the volume.
+      readOnly: true # It's a best practice to mount secrets as read-only.
+
+  # This 'volumes' block is at the Pod's 'spec' level. This is where I DECLARE
+  # all the volumes that will be available to the containers in this Pod.
+  volumes:
+  # The '-' indicates an item in a list. This is my volume definition.
+  - name: secret-volume # I give the volume a name that I can refer to in 'volumeMounts'.
+    
+    # This 'secret' block tells Kubernetes that the source for this volume
+    # is a Secret object.
+    secret:
+      # This specifies the name of the Secret to use.
+      secretName: blog
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Creating the Secret Incorrectly:** The `kubectl create secret generic` command is very powerful. If I had used `--from-literal` instead of `--from-file`, the value of the secret would have been the literal string "/opt/blog.txt" instead of the file's content.
+-   **Name Mismatch:** A typo in the `secretName` in the Pod's `volumes` section, or in the `name` of the `volumeMounts`, will cause the Pod to fail to start because it won't be able to find the storage it needs.
+-   **Confusing `describe secret` and `get secret`:** Running `kubectl describe secret blog` shows metadata but not the secret's content. To see the base64-encoded content, you would use `kubectl get secret blog -o yaml`. To see the decoded content, you need to use more advanced commands.
+-   **Forgetting to Verify Inside the Container:** The only way to be 100% sure the secret was mounted correctly is to `kubectl exec` into the container and `cat` the file.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl create secret generic [secret-name] --from-file=[file-path]`: An **imperative** command to create a generic secret. This is the fastest way to create a secret from a file's contents. The filename becomes the "key" in the secret's data.
+-   `kubectl apply -f [filename.yaml]`: The standard **declarative** way to create or update resources from a manifest file. I used this for my Pod.
+-   `kubectl get pods`: Lists a summary of all Pods.
+-   `kubectl describe secret [secret-name]`: Describes a Secret's metadata (name, labels, data keys) but does not show the actual secret values.
+-   `kubectl exec -it [pod-name] -- /bin/bash`: My primary verification tool. It gave me an **i**nteractive **t**erminal shell inside my running container.
+-   `ls` and `cat` (inside the container): The standard Linux commands I used to list the contents of the mounted directory and view the secret data to confirm the task was successful.
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 063: Deploying a Full Two-Tier Application on Kubernetes
+
+Today's task was the most comprehensive Kubernetes deployment I've done yet. It was a complete, end-to-end setup of a **two-tier application**, consisting of a frontend web gallery and a backend database. This wasn't just about creating a single Pod; it was about orchestrating an entire application stack with multiple, interconnected components.
+
+I had to create a dedicated **Namespace** for isolation, two separate **Deployments** to manage the web and database Pods, and two different types of **Services** to handle internal and external communication. This was a fantastic, real-world exercise that tied together almost every core concept of Kubernetes application management. This document is my very detailed, first-person guide to that entire process, written from the perspective of a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a two-tier "iron gallery" application in a new namespace. This required creating five distinct Kubernetes objects:
+
+1.  **Namespace:** `iron-namespace-datacenter` to house all the application's resources.
+2.  **Web Deployment:** `iron-gallery-deployment-datacenter` for the frontend, with 1 replica, resource limits, and two `emptyDir` volumes.
+3.  **DB Deployment:** `iron-db-deployment-datacenter` for the backend, with 1 replica, environment variables for database setup, and an `emptyDir` volume.
+4.  **DB Service:** `iron-db-service-datacenter`, a `ClusterIP` type service for internal communication.
+5.  **Web Service:** `iron-gallery-service-datacenter`, a `NodePort` type service to expose the application externally on port `32678`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to create these related resources is to define them all in a single YAML manifest file.
+
+#### Phase 1: Writing the Manifest File
+1.  I connected to the jump host.
+2.  I created a new file named `iron-gallery-app.yaml` using `vi`.
+3.  Inside the editor, I wrote the following complete YAML code, using the `---` separator to define all five Kubernetes objects.
+    ```yaml
+    # 1. The Namespace to isolate our application
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: iron-namespace-datacenter
+    ---
+    # 2. The Deployment for the frontend web application
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: iron-gallery-deployment-datacenter
+      namespace: iron-namespace-datacenter
+      labels:
+        run: iron-gallery
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          run: iron-gallery
+      template:
+        metadata:
+          labels:
+            run: iron-gallery
+        spec:
+          containers:
+          - name: iron-gallery-container-datacenter
+            image: kodekloud/irongallery:2.0
+            resources:
+              limits:
+                memory: "100Mi"
+                cpu: "50m"
+            volumeMounts:
+            - name: config
+              mountPath: /usr/share/nginx/html/data
+            - name: images
+              mountPath: /usr/share/nginx/html/uploads
+          volumes:
+          - name: config
+            emptyDir: {}
+          - name: images
+            emptyDir: {}
+    ---
+    # 3. The Deployment for the backend database
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: iron-db-deployment-datacenter
+      namespace: iron-namespace-datacenter
+      labels:
+        db: mariadb
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          db: mariadb
+      template:
+        metadata:
+          labels:
+            db: mariadb
+        spec:
+          containers:
+          - name: iron-db-container-datacenter
+            image: kodekloud/irondb:2.0
+            env:
+            - name: MYSQL_DATABASE
+              value: "database_host"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "ComplexRootPass123!"
+            - name: MYSQL_USER
+              value: "kodekloud_user"
+            - name: MYSQL_PASSWORD
+              value: "ComplexUserPass456@"
+            volumeMounts:
+            - name: db
+              mountPath: /var/lib/mysql
+          volumes:
+          - name: db
+            emptyDir: {}
+    ---
+    # 4. The Service for the database (internal access)
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: iron-db-service-datacenter
+      namespace: iron-namespace-datacenter
+    spec:
+      type: ClusterIP
+      selector:
+        db: mariadb
+      ports:
+        - protocol: TCP
+          port: 3306
+          targetPort: 3306
+    ---
+    # 5. The Service for the web app (external access)
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: iron-gallery-service-datacenter
+      namespace: iron-namespace-datacenter
+    spec:
+      type: NodePort
+      selector:
+        run: iron-gallery
+      ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+          nodePort: 32678
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f iron-gallery-app.yaml
+    ```
+    The command responded by confirming that all five objects were created.
+
+2.  **Verification:** The final step was to confirm that all the objects were created correctly and were running in the new namespace.
+    ```bash
+    kubectl get all -n iron-namespace-datacenter
+    ```
+    The output of this single command was the definitive proof of success. It showed me:
+    -   The two Pods (one for the gallery, one for the DB), both in a `Running` state.
+    -   The two Services (`iron-db-service-datacenter` as `ClusterIP` and `iron-gallery-service-datacenter` as `NodePort`).
+    -   The two Deployments, both with `1/1` ready replicas.
+    This confirmed that my entire application stack was up and running as designed.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Namespaces**: A Namespace is a **virtual cluster** within my physical Kubernetes cluster. It's the primary way to provide isolation. By creating `iron-namespace-datacenter` and placing all my resources inside it, I keep my "iron gallery" application completely separate from any other applications running in other namespaces. This is critical for organizing a multi-tenant or multi-environment cluster.
+-   **Deployments**: A Deployment is the manager for my application's Pods. It provides **self-healing** (recreating Pods if they crash) and **scalability**. I created two separate Deployments, one for the frontend and one for the backend, which is a standard practice that allows me to scale them independently.
+-   **Services**: A Service provides a stable network endpoint for my ephemeral Pods. I used two different types for two different purposes:
+    -   **`ClusterIP` Service:** This is the **default** type. It creates a stable IP address and DNS name that is **only reachable from inside the cluster**. This is perfect for my database (`iron-db-service-datacenter`). I don't want the database to be exposed to the public internet, but my web application (running inside the cluster) needs a reliable way to connect to it. The web app can simply connect to the hostname `iron-db-service-datacenter`.
+    -   **`NodePort` Service:** This service type exposes the application to the **outside world**. It opens a static port (`32678` in my case) on every Node in the cluster. Any traffic sent to any Node's IP on that port is forwarded to my web Pods.
+-   **Labels and Selectors**: This is the "glue" that connects everything. The `selector` in each Service (`selector: {db: mariadb}` or `selector: {run: iron-gallery}`) tells it which Pods to send traffic to, based on the `labels` defined in the Pod templates of the Deployments.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest"></a>
+This multi-document YAML file is the blueprint for my entire application.
+
+[Image of a two-tier application on Kubernetes]
+
+-   **`Namespace`:** A very simple object. It just needs a `name`. All other objects in this file have `namespace: iron-namespace-datacenter` in their `metadata` to ensure they are created in the right place.
+-   **`Deployments`:** Both Deployments follow the standard structure:
+    -   `replicas`: How many copies of the Pod to run.
+    -   `selector`: How the Deployment finds the Pods it manages.
+    -   `template`: The blueprint for the Pods, which includes `metadata.labels` that **must match the selector**, and the `spec` which defines the containers, volumes, etc.
+-   **`ClusterIP` Service:**
+    -   `type: ClusterIP`: Makes this service internal-only.
+    -   `selector: {db: mariadb}`: The crucial link. It tells the service to find all Pods with the label `db: mariadb`.
+    -   `port: 3306` / `targetPort: 3306`: The service listens on port 3306 and forwards traffic to port 3306 on the Pods.
+-   **`NodePort` Service:**
+    -   `type: NodePort`: Makes this service accessible from outside the cluster.
+    -   `selector: {run: iron-gallery}`: The link to my frontend Pods.
+    -   `port: 80`: The port the service listens on internally.
+    -   `targetPort: 80`: The port on the Nginx container to send traffic to.
+    -   `nodePort: 32678`: The static port that is opened on every Node.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Forgetting the Namespace:** If I forgot to add `namespace: iron-namespace-datacenter` to any of my resources, it would be created in the `default` namespace by mistake, and my application would not be properly isolated.
+-   **Selector/Label Mismatch:** This is the #1 error. If the `selector` in a Service does not exactly match the `labels` in the Deployment's Pod template, the Service will not be able to find any Pods, and it will not work.
+-   **`emptyDir` for Databases:** My use of an `emptyDir` volume for the database is a major anti-pattern for production. Because an `emptyDir` is ephemeral, if the database Pod were to be deleted or rescheduled to another Node, **all the data would be lost**. In a real-world scenario, I would always use a `PersistentVolumeClaim` for a database.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update all the resources from my manifest file.
+-   `kubectl get all -n iron-namespace-datacenter`: The most useful command for this task.
+    -   `get all`: Shows a summary of all the most common resource types (Pods, Deployments, ReplicaSets, Services).
+    -   `-n iron-namespace-datacenter`: The `-n` or `--namespace` flag is crucial. It tells `kubectl` to perform the action in my specific namespace, not the `default` one.
+-   `kubectl get ns`: A simple command to **g**et **n**ame**s**paces, which I could use to verify my new namespace was created.
+-   `kubectl describe ... -n [namespace]`: I could use `describe` on any of my objects (e.g., `kubectl describe deployment iron-gallery-deployment-datacenter -n iron-namespace-datacenter`) to get far more detail and troubleshoot any issues.
+
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 064: Troubleshooting a Failing Kubernetes Deployment
+
+Today's task was a masterclass in Kubernetes troubleshooting. I was presented with a failing Python application where the Pods were not becoming `Ready`. This required me to follow a systematic debugging process, using Kubernetes's own diagnostic tools to uncover not one, but **two separate misconfigurations**: an incorrect image name in the `Deployment` and a wrong `targetPort` in the `Service`.
+
+This was an incredible learning experience because it showed me how to read the cluster's "vital signs" to pinpoint the root cause of a problem. I learned that `kubectl describe` is my most powerful tool for diagnosing startup issues. This document is my very detailed, first-person guide to that entire detective story, from the initial `ImagePullBackOff` error to the final, successful application launch.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to fix a broken Python application deployment on the Kubernetes cluster. The key details were:
+1.  The Deployment was named `python-deployment-nautilus`.
+2.  The application was not coming up, and the Pods were not in a `Ready` state.
+3.  I needed to find and fix the issues to make the application accessible on the specified `nodePort` (`32345`).
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My approach was to follow the classic Kubernetes troubleshooting workflow: start high-level and drill down into the details.
+
+#### Phase 1: Diagnosing the Pod Failure
+1.  I connected to the jump host. My first command gave me a high-level view of the problem.
+    ```bash
+    kubectl get deployment python-deployment-nautilus
+    # Output showed READY 0/1, meaning the desired Pod was not healthy.
+    ```
+2.  I then checked the Pods to see their specific status.
+    ```bash
+    kubectl get pods
+    # Output showed the Pod was stuck in 'ImagePullBackOff' state.
+    ```
+    This told me the problem was that the container image could not be downloaded.
+
+3.  **This was the most critical step.** I used `kubectl describe` on the stuck Pod to get the detailed event history.
+    ```bash
+    kubectl describe pod <pod-name-from-get-pods>
+    ```
+4.  The `Events` section at the bottom of the output contained the "smoking gun":
+    `Warning Failed ... Failed to pull image "poroko/flask-app-demo": ... repository does not exist`
+    This was my **first root cause**: a typo in the image name. The prompt stated the image should be `poroko/flask-demo-app`, but the deployment was using `poroko/flask-app-demo`.
+
+#### Phase 2: Fixing the Deployment and Diagnosing the Service
+1.  I used `kubectl edit` to open the Deployment's live YAML definition.
+    ```bash
+    kubectl edit deployment python-deployment-nautilus
+    ```
+2.  Inside the editor, I found the `image:` line and corrected the typo from `poroko/flask-app-demo` to `poroko/flask-demo-app`.
+3.  After saving the file, Kubernetes automatically created a new Pod. I checked with `kubectl get pods` and saw the new Pod was `1/1 Running`. Success!
+
+4.  However, the application was still not accessible. This told me there was a second problem at the networking layer. I inspected the Service.
+    ```bash
+    kubectl describe service python-service-nautilus
+    ```
+5.  The output showed the port configuration: `Port: 8080/TCP`, `TargetPort: 8080/TCP`, `NodePort: 32345/TCP`. This was my **second root cause**. The `targetPort` was `8080`, but a standard Python Flask app listens on port `5000`. The Service was sending traffic to the wrong port on the Pod.
+
+#### Phase 3: Fixing the Service and Verifying
+1.  I edited the Service to correct the port.
+    ```bash
+    kubectl edit service python-service-nautilus
+    ```
+2.  Inside the editor, I found the `targetPort:` line and changed its value from `8080` to `5000`.
+3.  I saved the file. The change was applied instantly.
+4.  Finally, I tested the application from the jump host using the NodePort.
+    ```bash
+    curl http://<node-ip>:32345
+    ```
+    I received the success message from the Python application, confirming both issues were resolved.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Kubernetes Troubleshooting Workflow**: This task was a masterclass in the standard K8s debugging workflow:
+    1.  Start high-level with `kubectl get` to see the overall status (the "symptom").
+    2.  If a Pod is not `Running` (e.g., `ImagePullBackOff`, `CrashLoopBackOff`, `Pending`), drill down with `kubectl describe pod` to read the **Events** (the "cause").
+    3.  If a Pod is `Running` but the app is inaccessible, the problem is likely in the `Service`. Use `kubectl describe service` to check selectors and ports.
+-   **`ImagePullBackOff`**: This is a very common Pod status. It means the `kubelet` on the Node tried to pull the specified Docker image from the registry but failed. Kubernetes will keep trying, with an increasing "back-off" delay. The most common causes are:
+    1.  A typo in the image name or tag (my issue).
+    2.  The image is in a private repository, and the cluster doesn't have the necessary credentials.
+-   **`Service` and `targetPort`**: A Service acts as an internal load balancer that forwards traffic to Pods. The `targetPort` is the most critical setting. It specifies the **port on the Pod** where the application container is actually listening for connections. If this is wrong, the Service will send traffic to a closed door, and the connection will fail.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: `port` vs. `targetPort` vs. `nodePort` in a Service
+<a name="deep-dive-port-vs-targetport-vs-nodeport-in-a-service"></a>
+My `describe service` output showed three different ports. Understanding the difference is key to Kubernetes networking.
+
+[Image of a Kubernetes NodePort Service directing traffic]
+
+-   **`targetPort`**: The port that my application container is **listening on**. For Flask, this is `5000`. The `targetPort` of the Service **must match this value**.
+-   **`port`**: The port that the Service itself exposes **inside the cluster's virtual network**. Other Pods inside the cluster can connect to my application on this port using the service's internal DNS name (e.g., `http://python-service-nautilus:8080`).
+-   **`nodePort`**: The high-numbered port (`32345` in my case) that is opened on the **physical Node's IP address** to expose the service to the outside world.
+
+The flow of traffic is: `Outside World` -> `NodeIP:32345` -> `ServiceIP:8080` -> `PodIP:5000`.
+
+My mistake was that the final step, `ServiceIP:8080` -> `PodIP:8080`, was failing because my app was listening on `PodIP:5000`.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Typo in Image Name:** As I discovered, a simple typo in the image name is a very common cause of `ImagePullBackOff`.
+-   **Confusing `port` and `targetPort`:** This is the most common Service configuration error. Always remember that `targetPort` must match the port your application container is listening on.
+-   **Editing the Pod Directly:** A beginner might try `kubectl edit pod ...` to fix the image name. This is wrong. Since my Pod was managed by a Deployment, any changes I made to the Pod directly would be instantly reverted. The fix **must** be applied to the parent `Deployment`.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl get pods` / `kubectl get deployment`: My high-level tools to check the overall status.
+-   `kubectl describe pod [pod-name]`: My most powerful diagnostic tool for Pod startup failures. The `Events` section showed me the exact `ErrImagePull` reason.
+-   `kubectl describe service [svc-name]`: My primary tool for diagnosing networking issues. It clearly showed me the incorrect `targetPort`.
+-   `kubectl edit deployment [dep-name]` / `kubectl edit service [svc-name]`: The command to open a live YAML definition of a resource in a text editor. I used this to apply my fixes directly to the live objects in the cluster.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 065: Deploying a Configured Redis Cache on Kubernetes
+
+Today's task was a fantastic, real-world example of deploying a stateful service—a Redis cache—on Kubernetes. This went far beyond just running a container; I had to manage its configuration externally using a **ConfigMap**, provide it with storage volumes, and define its resource requirements.
+
+This was a brilliant exercise that taught me how to take an off-the-shelf Docker image (`redis:alpine`) and customize its runtime behavior without modifying the image itself. I learned how to create a ConfigMap, mount it as a file into a Pod, and override the container's startup command to use that new configuration file. This document is my very detailed, first-person guide to that entire process, written for a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a customized Redis instance using a Kubernetes Deployment. The specific requirements were:
+1.  Create a **ConfigMap** named `my-redis-config` containing a key `redis-config` with the value `maxmemory 2mb`.
+2.  Create a **Deployment** named `redis-deployment` with 1 replica and the label `app: redis`.
+3.  The container had to be named `redis-container`, use the `redis:alpine` image, and request `1` CPU.
+4.  It required two volumes:
+    -   An `emptyDir` volume named `data` mounted at `/redis-master-data`.
+    -   A `ConfigMap` volume named `redis-config` (using the ConfigMap I created) mounted at `/redis-master`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved an imperative command to create the ConfigMap and a declarative manifest to create the Deployment that uses it.
+
+#### Phase 1: Creating the ConfigMap
+First, I needed to create the configuration object that my Redis container would later consume.
+1.  I connected to the jump host.
+2.  I used a single, imperative `kubectl create configmap` command to generate the ConfigMap with the required key-value data.
+    ```bash
+    kubectl create configmap my-redis-config --from-literal=redis-config="maxmemory 2mb"
+    ```
+    The command responded with `configmap/my-redis-config created`.
+
+#### Phase 2: Writing the Deployment Manifest
+1.  I created a new file named `redis-deployment.yaml` using `vi`.
+2.  Inside the editor, I wrote the following YAML code. This defines the Deployment, its container, the volumes, and critically, overrides the container's command to use my custom config.
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: redis-deployment
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: redis
+      template:
+        metadata:
+          labels:
+            app: redis
+        spec:
+          containers:
+          - name: redis-container
+            image: redis:alpine
+            command: ["redis-server"]
+            args: ["/redis-master/redis-config"]
+            ports:
+            - containerPort: 6379
+            resources:
+              requests:
+                cpu: "1"
+            volumeMounts:
+            - name: data
+              mountPath: /redis-master-data
+            - name: redis-config
+              mountPath: /redis-master
+          volumes:
+          - name: data
+            emptyDir: {}
+          - name: redis-config
+            configMap:
+              name: my-redis-config
+    ```
+3.  I saved and quit the file.
+
+#### Phase 3: Applying the Manifest and Verifying
+1.  I used `kubectl` to create the Deployment from my manifest.
+    ```bash
+    kubectl apply -f redis-deployment.yaml
+    ```
+2.  **Verification:** The final part of the task was to prove that the Redis server was actually using my custom configuration.
+    -   First, I checked that the Pod was `Running` with `kubectl get pods`.
+    -   **This was the definitive proof:** I `exec`'d into the running container and used the Redis command-line interface (`redis-cli`) to inspect its live configuration.
+        ```bash
+        # Get the full name of the pod
+        POD_NAME=$(kubectl get pods -l app=redis -o jsonpath='{.items[0].metadata.name}')
+        # Exec into the pod and run redis-cli
+        kubectl exec -it $POD_NAME -- redis-cli
+        ```
+    -   Inside the Redis prompt, I ran the command:
+        ```
+        127.0.0.1:6379> CONFIG GET maxmemory
+        ```
+    The output was `2097152` (2 megabytes), which proved that my `maxmemory 2mb` setting from the ConfigMap was successfully loaded and applied by the Redis server.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Redis**: Redis is an extremely fast, in-memory key-value data store. It's most commonly used as a **cache** to speed up applications by reducing the load on slower, disk-based databases. It's also used for real-time analytics, session management, and as a message broker.
+-   **ConfigMap Volume**: This is a core Kubernetes pattern for **decoupling configuration from your application image**.
+    -   **The Problem:** I could have built a custom Docker image with a `redis.conf` file inside it, but what if I need to change the `maxmemory` setting later? I would have to rebuild the entire image.
+    -   **The Solution:** I stored my configuration (`maxmemory 2mb`) in a Kubernetes **ConfigMap**. Then, I told my Pod to mount this ConfigMap as a volume. Kubernetes creates a file named `redis-config` (the key from the ConfigMap) inside the `/redis-master` directory in my container. This way, I can update the ConfigMap in the cluster, and the new configuration will be available to the Pod without needing an image rebuild.
+-   **Overriding Container `command` and `args`**: This was the crucial step to make the ConfigMap useful. The default `redis:alpine` image just runs the `redis-server` command. By setting the `command` and `args` in my Pod spec, I overrode that default. I told the container to run `redis-server /redis-master/redis-config`, which explicitly instructs the Redis server to start up using my custom configuration file.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Deployment YAML
+<a name="deep-dive-a-line-by-line-explanation-of-my-deployment-yaml"></a>
+This YAML manifest is a great example of how to configure a custom application.
+
+[Image of a Kubernetes Deployment with ConfigMap and emptyDir volumes]
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis-container
+        image: redis:alpine
+        
+        # This 'command' and 'args' block overrides the image's default startup command.
+        # It tells the container to run the 'redis-server' executable...
+        command: ["redis-server"]
+        # ...and to pass '/redis-master/redis-config' as an argument to it.
+        # This instructs Redis to load our custom config file.
+        args: ["/redis-master/redis-config"]
+
+        ports:
+        - containerPort: 6379 # The default Redis port.
+        
+        # This block defines the resource requests for the container.
+        resources:
+          requests:
+            cpu: "1" # Requesting 1 full CPU core.
+            
+        # This block defines where to mount the volumes inside the container.
+        volumeMounts:
+        - name: data # This name must match a volume below.
+          mountPath: /redis-master-data
+        - name: redis-config # This name must match a volume below.
+          mountPath: /redis-master
+
+      # This block defines the volumes that are available to this Pod.
+      volumes:
+      # The first volume is a temporary scratch space.
+      - name: data
+        emptyDir: {}
+      # The second volume's source is our ConfigMap.
+      - name: redis-config
+        configMap:
+          # This must be the name of the ConfigMap I created earlier.
+          name: my-redis-config
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Forgetting to Override the Command:** If I had forgotten the `command` and `args` block, the Redis container would have started, but it would have used its default, built-in configuration, ignoring my `maxmemory` setting completely.
+-   **ConfigMap Name Mismatch:** A typo in the `configMap.name` in the Deployment's `volumes` section would cause the Pod to fail to start with a `CreateContainerConfigError` because it couldn't find the specified ConfigMap.
+-   **Key/File Mismatch:** The `args` path (`/redis-master/redis-config`) works because the volume is mounted at `/redis-master` and the key in the ConfigMap is `redis-config`. If the key in the ConfigMap was different, the filename inside the container would be different, and the `redis-server` command would fail.
+-   **`exec` into the wrong tool:** For my verification, I had to use `redis-cli`, the specific client for Redis. Just getting a shell (`/bin/bash`) would not have been enough to query the live configuration.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl create configmap [name] --from-literal=[key]=[value]`: An imperative command to create a ConfigMap directly from a key-value pair on the command line. This is very fast for simple configurations.
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update resources from a manifest file.
+-   `kubectl get pods` / `kubectl get deployment`: My high-level tools to check the overall status.
+-   `kubectl describe pod [pod-name]`: My primary tool for troubleshooting startup issues. It would have shown me errors if the ConfigMap volume failed to mount.
+-   `kubectl exec -it [pod-name] -- redis-cli`: The most important verification command. It gave me an **i**nteractive **t**erminal with the `redis-cli` tool inside my running container, allowing me to directly query the live application's state.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 066: Deploying a Stateful Database on Kubernetes
+
+Today's task was the most comprehensive Kubernetes deployment I've ever done. It was the complete, end-to-end process of deploying a **stateful application**—a MySQL database. This was a massive step up from the simple stateless web servers I've worked with before, as it required me to manage data persistence and sensitive secrets.
+
+I had to create and connect five distinct Kubernetes objects: `Secrets` to hold passwords, a `PersistentVolume` (PV) to define the physical storage, a `PersistentVolumeClaim` (PVC) to request that storage, a `Deployment` to run the database, and a `Service` to expose it. This document is my very detailed, first-person guide to that entire process, written from the perspective of a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a MySQL database on Kubernetes with a complete stack of supporting resources. The specific requirements were:
+1.  **Secrets:** Create three secrets: `mysql-root-pass` (for the root password), `mysql-db-url` (for the database name), and `mysql-user-pass` (for the application user's credentials).
+2.  **PersistentVolume (PV):** Create `mysql-pv` with `250Mi` of `manual` storage using a `hostPath` at `/mnt/finance`.
+3.  **PersistentVolumeClaim (PVC):** Create `mysql-pv-claim` to request `250Mi` of `manual` storage.
+4.  **Deployment:** Create `mysql-deployment` with 1 replica using a `mysql` image. It needed to:
+    -   Consume the secrets as environment variables (`MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`).
+    -   Mount the PVC at the database's data path (`/var/lib/mysql`).
+5.  **Service:** Create `mysql` as a `NodePort` service, exposing the database on node port `30007`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution required two phases: an *imperative* phase to safely create the secrets and a *declarative* phase to define the rest of the infrastructure.
+
+#### Phase 1: Creating the Secrets (Imperative Commands)
+I started by creating the secrets from the command line. This is the best practice as it prevents me from saving plain-text passwords in my YAML file.
+```bash
+# On the jump host:
+# 1. Create the root password secret
+kubectl create secret generic mysql-root-pass \
+  --from-literal=password='YUIidhb667'
+
+# 2. Create the user and password secret
+kubectl create secret generic mysql-user-pass \
+  --from-literal=username='kodekloud_sam' \
+  --from-literal=password='LQfKeWWxWD'
+
+# 3. Create the database name secret
+kubectl create secret generic mysql-db-url \
+  --from-literal=database='kodekloud_db2'
+```
+
+#### Phase 2: Writing the Manifest File (`mysql-app.yaml`)
+I created a single YAML file to define all the other interconnected resources.
+```yaml
+# 1. The PersistentVolume (PV) - The "Supply" of Storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 250Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/finance"
+---
+# 2. The PersistentVolumeClaim (PVC) - The "Demand" for Storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 250Mi
+---
+# 3. The Deployment - The Application Manager
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            # Injecting the environment variables from the Secrets
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-pass
+                  key: password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-db-url
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user-pass
+                  key: password
+          volumeMounts:
+            # Mount the persistent storage into the container
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        # This volume links the Pod to the PersistentVolumeClaim
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+---
+# 4. The Service - The Network Access Point
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  selector:
+    app: mysql # This matches the Pod's label
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      nodePort: 30007
+```
+
+#### Phase 3: Applying the Manifest and Verifying
+1.  I applied the manifest to the cluster:
+    ```bash
+    kubectl apply -f mysql-app.yaml
+    ```
+
+2. I then verified that everything was created and connected: 
+- `kubectl get secrets`: Confirmed my three secrets were created. 
+- `kubectl get pv,pvc`: Showed both `mysql-pv` and `mysql-pv-claim` in the Bound state. 
+- `kubectl get all`: Showed the `mysql-deployment` Pod Running, and the `mysql` Service was correctly exposing port 30007.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+
+- **Stateful vs. Stateless**: A web server is "stateless"—I can delete it and create a new one without losing anything. A database is "stateful"—its entire purpose is to store data. If I delete the database Pod, the data must not be lost. This task was all about managing a stateful application.
+
+- **Secret**: This is the correct way to handle sensitive data. I used kubectl create secret generic to create three of them. The official mysql image is smart; it's programmed to look for environment variables like MYSQL_ROOT_PASSWORD on its first run to automatically set itself up.
+
+- **Persistent Storage (PV/PVC)**: This is the most important concept for stateful apps.
+
+- **PersistentVolume (PV)**: I learned to think of this as the "supply" of storage. It's an administrator's job to define a piece of storage that is available to the cluster. In my case, I used hostPath to point to a directory on the server, but this could also be a cloud disk like an AWS EBS volume.
+
+- **PersistentVolumeClaim (PVC)**: I learned to think of this as the "demand" for storage. An application (my Deployment) doesn't know or care about the physical storage. It just "claims" what it needs.
+
+- **The Binding Process**: Kubernetes's magic is to automatically find a PV that matches the request from a PVC and "bind" them together.
+
+- **The Pod volumes Section**: This is how the Pod gets the storage. The Pod's manifest says, "I need a volume, and the source for it is my claim named mysql-pv-claim." Kubernetes then mounts the bound PV into the container at the specified path (/var/lib/mysql), which is the exact location where MySQL stores its data.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest"></a> My mysql-app.yaml file defined the four core components of a stateful service.
+
+- **`kind`**: PersistentVolume (The "Supply")
+
+- **`storageClassName: manual`**: I'm telling Kubernetes that I created this PV manually. It won't be automatically managed.
+- **`
+capacity: {storage: 250Mi}`**: Defining the total size of this storage.
+
+- **`accessModes: [ReadWriteOnce]`**: Defines how the volume can be used. ReadWriteOnce (RWO) means it can only be mounted as read-write by a single Node at a time. This is standard for a database.
+
+- **`hostPath: {path: "/mnt/finance"}`**: Defines the type of storage. It's a simple directory on the host machine.
+
+- **`kind`**: PersistentVolumeClaim (The "Demand")
+
+- **`storageClassName: manual:`** This must match the storageClassName of the PV I want to bind to.
+
+- **`accessModes: [ReadWriteOnce]`**: This must also match the PV.
+
+- **`resources: {requests: {storage: 250Mi}}`**: I am requesting 250Mi of storage. Kubernetes will find a PV that can satisfy this request.
+
+- **`kind`**: Deployment (The Application)
+
+- **`replicas: 1:`** A database can't typically be scaled this way, so 1 replica is correct.
+
+- **`selector: {matchLabels: {app: mysql}}`**: The "glue" that connects this Deployment to its Pods.
+
+- **`template: {metadata: {labels: {app: mysql}}}`**: The "blueprint" for the Pods, giving them the label that the Deployment (and the Service) will look for.
+
+- **`env:`**: This is where I defined the environment variables for the MySQL container.
+
+- **`valueFrom: {secretKeyRef: ...}`**: This is the most secure part. Instead of a plain-text value:, I'm telling the container, "Go to the Secret named mysql-root-pass and get the value from the key named password."
+
+- **`volumeMounts:`**: This tells the container where to mount the storage inside its filesystem.
+
+- **`volumes:`**: This is at the Pod level. It defines the mysql-persistent-storage volume and links it to my PersistentVolumeClaim by its claimName.
+
+- **`kind`**: Service (The Network)
+
+- **`type: NodePort`**: Exposes the service on a static port on the host Node.
+
+- **`selector: {app: mysql}`**: The crucial link. This tells the Service to send traffic to any Pod with the label app: mysql.
+
+- **`port: 3306`**: The port the Service listens on inside the cluster.
+
+- **`targetPort: 3306`**: The port the container is listening on.
+
+- **`nodePort: 30007`**: The static port opened on the Node for external access.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+
+- **Pending PVC**: A PersistentVolumeClaim that is stuck in a Pending state is the most common storage problem. It almost always means Kubernetes couldn't find a PersistentVolume that matched its requirements (either the storageClassName was wrong, the accessModes were incompatible, or no PV had enough capacity).
+
+- **CrashLoopBackOff Pod**: My Pod could have gotten stuck in a crash loop if I had made a typo in the secret names. The MySQL image, upon starting, would look for the MYSQL_ROOT_PASSWORD environment variable. If it was missing, the process would fail, exit, and Kubernetes would restart it, creating an endless loop.
+
+- **emptyDir for Databases**: The task specifically uses an emptyDir for the database. In a real-world scenario, this would be a terrible idea, as all data would be lost if the Pod restarted. My use of hostPath for the PV is a step up, but the true professional solution is to use a cloud-specific storage class (like aws-ebs-sc) that can dynamically provision a persistent disk.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential kubectl Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+
+- **`kubectl create secret generic [name] --from-literal=[key]=[value]`**: The imperative command to quickly create a secret from plain text on the command line. This is much safer than writing a YAML manifest for secrets and saving passwords in your code.
+
+- **`kubectl apply -f [filename.yaml]`**: The standard way to create or update all the resources from my manifest file.
+
+- **`kubectl get all`**: A great command to get a quick overview of all the major resources (Pods, Deployments, Services, etc.).
+
+- **`kubectl get pv`**: Lists all PersistentVolumes in the cluster and their status (e.g., Available or Bound).
+
+- **`kubectl get pvc`**: Lists all PersistentVolumeClaims and their status (e.g., Pending or Bound).
+
+- **`kubectl describe pod [pod-name]`**: My primary tool for troubleshooting a Pending or CrashLoopBackOff Pod. The Events section at the bottom would tell me if a volume failed to mount or if the container failed its startup.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 067: Deploying a Three-Tier Microservices App on Kubernetes
+
+Today's task was the most complex and realistic Kubernetes deployment I've ever done. My objective was to deploy a complete **three-tier application**—the classic "guestbook" app. This involved orchestrating a frontend web server, a primary (master) database, and multiple read-only (slave) database replicas.
+
+This was a fantastic exercise that brought all the core Kubernetes concepts together. I had to create three separate **Deployments** to manage each component, and three corresponding **Services** to handle the networking between them. I learned the critical difference between a `NodePort` service (for external access) and a `ClusterIP` service (for internal communication). This document is my very detailed, first-person guide to that entire process, written for a Kubernetes beginner.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to deploy a full guestbook application by creating six distinct Kubernetes resources:
+
+1.  **Redis Master Deployment:** `redis-master` (1 replica) using the `redis` image.
+2.  **Redis Master Service:** `redis-master` (a `ClusterIP`) to provide a stable endpoint for write operations.
+3.  **Redis Slave Deployment:** `redis-slave` (2 replicas) using the `gcr.io/google_samples/gb-redisslave:v3` image.
+4.  **Redis Slave Service:** `redis-slave` (a `ClusterIP`) to provide a load-balanced endpoint for read operations.
+5.  **Frontend Deployment:** `frontend` (3 replicas) using the `gcr.io/google-samples/gb-frontend` image.
+6.  **Frontend Service:** `frontend` (a `NodePort`) to expose the application to the outside world on port `30009`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The professional way to deploy such an interconnected application is to define all six resources in a single YAML manifest file.
+
+#### Phase 1: Writing the Manifest File
+1.  I connected to the jump host.
+2.  I created a new file named `guestbook-app.yaml` using `vi`.
+3.  Inside the editor, I wrote the following complete YAML code, using the `---` separator to define all six Kubernetes objects. I created my own clear labels (`app: guestbook, tier: ...`) to link the services.
+    ```yaml
+    # --- 1. REDIS MASTER (BACKEND) ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: redis-master
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: guestbook
+          tier: backend
+          role: master
+      template:
+        metadata:
+          labels:
+            app: guestbook
+            tier: backend
+            role: master
+        spec:
+          containers:
+          - name: master-redis-devops
+            image: redis:latest
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "100Mi"
+            ports:
+            - containerPort: 6379
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis-master
+    spec:
+      selector:
+        app: guestbook
+        tier: backend
+        role: master
+      ports:
+        - protocol: TCP
+          port: 6379
+          targetPort: 6379
+    
+    ---
+    # --- 2. REDIS SLAVE (BACKEND) ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: redis-slave
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: guestbook
+          tier: backend
+          role: slave
+      template:
+        metadata:
+          labels:
+            app: guestbook
+            tier: backend
+            role: slave
+        spec:
+          containers:
+          - name: slave-redis-devops
+            image: gcr.io/google_samples/gb-redisslave:v3
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "100Mi"
+            env:
+            - name: GET_HOSTS_FROM
+              value: "dns"
+            ports:
+            - containerPort: 6379
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis-slave
+    spec:
+      selector:
+        app: guestbook
+        tier: backend
+        role: slave
+      ports:
+        - protocol: TCP
+          port: 6379
+          targetPort: 6379
+
+    ---
+    # --- 3. FRONTEND (WEB) ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: frontend
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: guestbook
+          tier: frontend
+      template:
+        metadata:
+          labels:
+            app: guestbook
+            tier: frontend
+        spec:
+          containers:
+          - name: php-redis-devops
+            image: gcr.io/google-samples/gb-frontend@sha256:a908df8486ff66f2c4daa0d3d8a2fa09846a1fc8efd65649c0109695c7c5cbff
+            resources:
+              requests:
+                cpu: "100m"
+                memory: "100Mi"
+            env:
+            - name: GET_HOSTS_FROM
+              value: "dns"
+            ports:
+            - containerPort: 80
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: frontend
+    spec:
+      type: NodePort
+      selector:
+        app: guestbook
+        tier: frontend
+      ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+          nodePort: 30009
+    ```
+4.  I saved and quit the file.
+
+#### Phase 2: Applying the Manifest and Verifying
+1.  I used `kubectl` to send my manifest to the Kubernetes API server.
+    ```bash
+    kubectl apply -f guestbook-app.yaml
+    ```
+    The command responded by confirming that all six objects were created.
+
+2.  **Verification:** The final step was to confirm that the entire application stack was up and running.
+    ```bash
+    kubectl get all
+    ```
+    The output of this single command was the definitive proof of success. It showed me:
+    -   `pod/frontend-...` (3 Pods)
+    -   `pod/redis-master-...` (1 Pod)
+    -   `pod/redis-slave-...` (2 Pods)
+    -   `service/frontend` (as `NodePort`)
+    -   `service/redis-master` (as `ClusterIP`)
+    -   `service/redis-slave` (as `ClusterIP`)
+    -   `deployment.apps/frontend` (with `3/3` ready)
+    -   `deployment.apps/redis-master` (with `1/1` ready)
+    -   `deployment.apps/redis-slave` (with `2/2` ready)
+    
+    Finally, I clicked the "App" button in the lab, which opened the `frontend` service's `NodePort`, and I saw the live Guestbook application.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why" for a K8s Beginner)
+<a name="why-did-i-do-this-the-what--why-for-a-k8s-beginner)"></a>
+-   **Microservices Architecture:** This is a classic example. My application was not one giant program; it was broken into three separate, independent services: a frontend, a write-database (`redis-master`), and a read-database (`redis-slave`). Kubernetes is designed to manage exactly this kind of architecture.
+-   **Deployments**: The `Deployment` is the controller that provides **self-healing** and **scalability**. By setting `replicas: 3` for my frontend, I told Kubernetes, "I always want three copies of my web server running." If one crashes, the Deployment will instantly create a new one to replace it.
+-   **Labels and Selectors (The "Glue")**: This is the magic that connects everything. I defined labels in my Deployments' Pod templates (e.g., `app: guestbook, tier: frontend`). Then, in my Service, I used a `selector` that looked for those exact labels (`selector: {app: guestbook, tier: frontend}`). This is how my `frontend` Service knew to send traffic *only* to my `frontend` Pods.
+-   **Service Discovery (`ClusterIP` vs. `NodePort`)**: This was the most important networking lesson.
+    -   **`ClusterIP` (Internal):** The `redis-master` and `redis-slave` services are of this type (it's the default). It creates a stable IP address and DNS name (e.g., `redis-master`) that is **only reachable from inside the cluster**. This is perfect for backend services. My frontend Pods can find the database simply by connecting to the hostname `redis-master`, without ever needing to know its IP.
+    -   **`NodePort` (External):** The `frontend` service needed to be accessible from outside the cluster. By setting `type: NodePort`, I told Kubernetes to open a high-numbered port (`30009`) on the physical cluster Nodes, allowing external users to access my application.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: A Line-by-Line Explanation of My Full-Stack YAML Manifest
+<a name="deep-dive-a-line-by-line-explanation-of-my-full-stack-yaml-manifest"></a>
+My `guestbook-app.yaml` file defined six objects, separated by `---`.
+
+[Image of a three-tier Kubernetes application]
+
+-   **`kind: Deployment`:**
+    -   `replicas: 3`: Told Kubernetes I want 3 copies of my frontend Pods.
+    -   `selector: {matchLabels: ...}`: The Deployment's "search query" to find the Pods it manages.
+    -   `template:`: The blueprint for the Pods to be created.
+    -   `template.metadata.labels:`: The "nametag" given to each Pod, which **must match** the Deployment's selector.
+    -   `env: {name: GET_HOSTS_FROM, value: "dns"}`: This tells the application inside the container to find other services (like `redis-master`) using the cluster's internal DNS, which is the standard K8s service discovery method.
+-   **`kind: Service`:**
+    -   `selector:`: The "search query" for the Service to find the Pods it should send traffic to. This **must match** the Pods' labels.
+    -   `type: NodePort`: Makes the Service accessible from outside the cluster.
+    -   `port: 80`: The port the Service itself listens on *inside* the cluster's private network.
+    -   `targetPort: 80`: The port the application *container* is listening on.
+    -   `nodePort: 30009`: The static port that is opened on every Node.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls for Beginners
+<a name="common-pitfalls-for-beginners"></a>
+-   **Selector/Label Mismatch:** This is the #1 error. If the `selector` in my `frontend` Service was `app: my-app` but my Pods had the label `app: frontend`, the Service would not find any endpoints and the connection would fail.
+-   **`port` vs. `targetPort`:** It's easy to get these confused. `targetPort` must match the `containerPort` on the Pods. `port` is the port the Service listens on internally. `nodePort` is the port for external access.
+-   **Forgetting `---`:** When defining multiple resources in one file, this separator is mandatory.
+-   **Using `NodePort` for a Database:** Exposing a database directly to the outside world with a `NodePort` is a major security risk. The correct pattern, which I used, is to keep it internal with the default `ClusterIP` type.
+
+---
+
+<br>
+<br>
+
+### Exploring the Essential `kubectl` Commands
+<a name="exploring-the-essential-kubectl-commands"></a>
+-   `kubectl apply -f [filename.yaml]`: The standard way to create or update all the resources from my manifest file.
+-   `kubectl get all`: This was the most useful command for this task. It shows a summary of all the key resources (Pods, Deployments, ReplicaSets, Services) in the current namespace, giving me a complete overview of my application.
+-   `kubectl get svc`: A quick command to list just the services and see their types and port mappings.
+-   `kubectl describe svc [service-name]`: My primary tool for debugging a Service. The `Endpoints` field at the bottom is critical. If it says `<none>`, I know I have a selector/label mismatch.
+-   `kubectl describe pod [pod-name]`: My tool for debugging a single Pod if it was failing to start.
+
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 068: Installing and Configuring a Jenkins CI/CD Server
+
+Today's task was to build the very foundation of a modern DevOps environment: the Jenkins automation server. This is the "engine" that will run all our future CI/CD pipelines. The objective was a two-part process: first, install and run the Jenkins software on the server's command line, and second, complete the initial security setup and user creation through the web UI.
+
+This was a fantastic real-world exercise because the installation process is notoriously famous for failing due to prerequisite issues, like missing tools or incorrect Java versions. This document is my detailed, first-person account of the entire journey, including the common failures I've learned to look for and the final, successful setup.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to set up a new, fully functional Jenkins server. The requirements were:
+1.  **Server-Side:** Connect to the `jenkins` server as `root`, install Jenkins using `yum`, and start the service.
+2.  **Client-Side (UI):** Access the Jenkins web UI, unlock the server, and create a new admin user with the following details:
+    -   Username: `theadmin`
+    -   Password: `Adm!n321`
+    -   Full name: `Jim`
+    -   Email: `jim@jenkins.stratos.xfusioncorp.com`
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My successful process involved proactively handling the dependencies that I know can cause this installation to fail.
+
+#### Phase 1: Server-Side Installation (Command Line)
+I performed these steps as the `root` user on the Jenkins server.
+
+1.  **Connect to the Jenkins Server:** From the jump host, I connected as `root`.
+    ```bash
+    ssh root@jenkins.stratos.xfusioncorp.com
+    # Entered password: S3curePass
+    ```
+
+2.  **Install Prerequisites:** I've learned that a minimal server often lacks two key things: a download tool (`wget`) and the *correct* version of Java.
+    ```bash
+    # Install wget, which is needed to download the repository file
+    yum install -y wget
+    
+    # Jenkins now requires Java 17 or 21. The default (Java 11) will fail.
+    # I installed Java 17 to be safe.
+    yum install -y java-17-openjdk-devel
+    ```
+
+3.  **Add the Jenkins Repository:** I told `yum` where to find the official Jenkins package.
+    ```bash
+    # Import the official GPG key for security
+    rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+    
+    # Download the repository definition file to the correct location
+    wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    ```
+
+4.  **Install Jenkins:** Now that the prerequisites and repository were ready, I could safely install Jenkins.
+    ```bash
+    yum install -y jenkins
+    ```
+
+5.  **Start and Enable Jenkins:** I started the service and enabled it to launch on boot.
+    ```bash
+    systemctl start jenkins
+    systemctl enable jenkins
+    ```
+
+6.  **Retrieve Initial Password:** I ran a quick `systemctl status jenkins` to ensure it was `active (running)`. Then, I retrieved the one-time password needed for the UI setup.
+    ```bash
+    cat /var/lib/jenkins/secrets/initialAdminPassword
+    ```
+    I copied the long alphanumeric string that this command printed.
+
+#### Phase 2: Initial Setup (Web UI)
+With the server running, I switched to my browser.
+1.  I clicked the **Jenkins** button in the lab UI to open the web page.
+2.  On the "Unlock Jenkins" screen, I pasted the password from Phase 1.
+3.  I chose **"Install suggested plugins"** and waited for all the standard plugins to install.
+4.  On the "Create First Admin User" screen, I entered the exact details from the task:
+    -   Username: `theadmin`
+    -   Password: `Adm!n321`
+    -   Full name: `Jim`
+    -   E-mail: `jim@jenkins.stratos.xfusioncorp.com`
+5.  I clicked "Save and Continue," confirmed the instance URL on the next page, and finally clicked "Start using Jenkins." I was then logged into the main Jenkins dashboard as `theadmin`, successfully completing the task.
+
+---
+
+<br>
+<br>
+
+### Common Failures & Troubleshooting
+<a name="common-failures--troubleshooting"></a>
+This installation can fail in two main places, both of which I've learned to check for.
+
+* **Failure 1: `wget: command not found`**
+    -   **Symptom:** The command to add the Jenkins repo fails.
+    -   **Diagnosis:** The server is a minimal install and doesn't have the `wget` download utility.
+    -   **Solution:** `sudo yum install -y wget`.
+
+* **Failure 2: `Job for jenkins.service failed...` (The Big One)**
+    -   **Symptom:** `systemctl start jenkins` fails immediately. `systemctl status jenkins` shows `Active: failed`.
+    -   **Diagnosis:** This is almost always a Java problem. The best way to confirm is to check the system logs for Jenkins:
+        ```bash
+        journalctl -xeu jenkins.service
+        ```
+    -   By reading the log, I would find the "smoking gun" error: `Running with Java 11 ... which is older than the minimum required version (Java 17)`.
+    -   **Solution:** The version of Jenkins I installed requires Java 17 or 21. The server's default Java 11 is too old. The fix is to install a compatible version **before** starting the service: `sudo yum install -y java-17-openjdk-devel`.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Jenkins**: This is an open-source automation server that acts as the heart of a **CI/CD pipeline**. CI/CD (Continuous Integration / Continuous Deployment) is the practice of automating the software delivery process. Jenkins can watch my code repository, and whenever a developer pushes a change, it can automatically build, test, and deploy the application.
+-   **Java Prerequisite**: Jenkins is a Java application, meaning it's written in the Java programming language. It cannot run without a **Java Runtime Environment (JRE)** or **Java Development Kit (JDK)** installed on the server. My troubleshooting proved how critical it is to have the *correct version* of this dependency.
+-   **`yum` and Repositories**: `yum` is the package manager for this server. By default, it only knows about a standard set of software. To install third-party software like Jenkins, I first had to add the official Jenkins "repository" to `yum`'s list of sources. This tells `yum` where to find and download the Jenkins package.
+-   **Initial Admin Password**: This is a crucial security feature. When Jenkins is first installed, it's in an unlocked state. It generates a long, random, one-time-use password and stores it on the server. This ensures that only someone with file-system access to the server can perform the initial setup and secure the instance.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Two-Part Jenkins Setup
+<a name="deep-dive-the-two-part-jenkins-setup"></a>
+This task showed me that a Jenkins setup is a two-phase process:
+
+[Image of the Jenkins installation process]
+
+1.  **Server-Side Installation (The "Engine"):** This is what I did on the command line as `root`. My job was to be the **System Administrator**. I installed the software, managed the system dependencies (Java), and started the `systemd` service. My deliverable was a running Jenkins service.
+2.  **Client-Side Configuration (The "Cockpit"):** This is what I did in the web browser. My job was to be the **Jenkins Administrator**. I used the one-time password to access the setup wizard, installed the necessary plugins, and created the first permanent admin user. My deliverable was a secured and usable Jenkins dashboard.
+
+---
+
+<br>
+<br>
+
+### Exploring the Commands and UI I Used
+<a name="exploring-the-commands-and-ui-i-used"></a>
+#### **Server-Side Commands**
+-   `ssh root@...`: Connects to the server as the `root` user.
+-   `yum install -y [package]`: Installs a software package and its dependencies. I used it for `wget` and `java-17-openjdk-devel`.
+-   `rpm --import [url]`: Imports a GPG key to verify the authenticity of a software repository.
+-   `wget -O [file] [url]`: Downloads a file from a URL and saves it to a specific location (`-O`).
+-   `systemctl start/enable jenkins`: The standard commands to start a service and configure it to launch on boot.
+-   `systemctl status jenkins`: My verification command to check if the service was `active (running)`.
+-   `journalctl -xeu jenkins.service`: The essential troubleshooting command to see *why* a service failed to start.
+-   `cat /var/lib/jenkins/secrets/initialAdminPassword`: Displays the content of the initial password file.
+
+#### **Client-Side (Web UI) Steps**
+-   **Unlock Jenkins:** Pasted the password from the `cat` command.
+-   **Install suggested plugins:** The one-click button to install the standard suite of plugins.
+-   **Create First Admin User:** The web form where I entered the new user's details (`theadmin`, `Jim`, etc.) as required by the task.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 069: Managing Plugins and Conquering "Dependency Hell"
+
+<img src="diagrams/jenkins_02.png">
+
+Today's task was my first experience with managing the heart of Jenkins: its plugins. The goal was to extend Jenkins' capabilities by installing plugins for Git and GitLab, which are essential for any code-based CI/CD pipeline.
+
+This turned into an incredibly valuable, real-world troubleshooting exercise. My first attempt at installation failed spectacularly due to a complex web of dependency conflicts—a situation often called "dependency hell." This document details my journey of diagnosing the root cause from the error logs and executing a multi-step solution to fix the environment and successfully install the required plugins.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to add new functionality to my recently installed Jenkins server. The requirements were:
+1.  Log into the Jenkins UI.
+2.  Install two specific plugins: **Git** and **GitLab**.
+3.  Restart Jenkins to ensure the new plugins were correctly loaded and activated.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My path to success was not direct and required a significant troubleshooting phase. The final, correct process involved fixing the Jenkins environment first and then performing the installation.
+
+#### Phase 1: Fixing the Dependency Issues
+The initial installation failed, so I had to perform these corrective steps first.
+
+1.  **Manual Restart:** I first logged into the Jenkins server via SSH (`ssh root@jenkins...`) and performed a manual restart to clear the failed state.
+    ```bash
+    sudo systemctl restart jenkins
+    ```
+2.  **Update Plugin Metadata:** After logging back into the UI, I went to `Manage Jenkins` > `Plugins` > `Advanced settings` and clicked the **"Check now"** button at the bottom. This forced Jenkins to download the latest list of plugins and their dependencies, which is key to resolving conflicts.
+3.  **Install All Available Updates:** I navigated to the `Updates` tab in the Plugin Manager, selected all available updates, and installed them with a restart. This brought all my existing plugins to their latest versions, satisfying the requirements of the new plugins I wanted to install.
+
+#### Phase 2: Installing the Required Plugins
+With the environment now healthy, I could proceed with the original task.
+
+1.  **Login and Navigate:** I logged into the Jenkins UI (`admin` / `Adm!n321`) and went to `Manage Jenkins` > `Plugins`.
+2.  **Select Plugins:** I clicked on the `Available plugins` tab and used the search bar to find and select the checkboxes for the **Git** and **GitLab** plugins.
+3.  **Install and Restart:** I clicked the install button and, on the installation page, I checked the crucial box: **"Restart Jenkins when installation is complete and no jobs are running."**
+4.  **Verification:** After Jenkins restarted and I logged back in, I went to `Manage Jenkins` > `Plugins` > `Installed plugins`. I searched for `Git` and `GitLab`, and seeing them in this list was the final confirmation of success.
+
+---
+
+<br>
+<br>
+
+### My Troubleshooting Journey: A Detective Story
+<a name="my-troubleshooting-journey-a-detective-story"></a>
+This task was a perfect example of how a simple action can fail due to complex underlying issues.
+
+* **Failure: A Cascade of Errors**
+    -   **Symptom:** When I tried to install the Git and GitLab plugins, the installation page showed a long list of `Failure` statuses for many different plugins, not just the ones I selected.
+    -   **Diagnosis:** I carefully read through the error logs provided on the page. I found the "smoking gun" in the details for the `Jersey 2 API` plugin:
+        `Update required: JavaBeans Activation Framework (JAF) API (javax-activation-api 1.2.0-7) to be updated to 1.2.0-8 or higher`
+    -   **Conclusion:** This single message told the whole story. The installation failed because of a "dependency conflict." The `Jersey 2 API` plugin (which GitLab needs) required a newer version of the `JAF API` plugin than what was currently installed. This one failure caused a chain reaction, leading all dependent plugins to fail as well. This is classic "dependency hell."
+
+* **Solution:** My solution was to stop fighting the installer and instead prepare the environment for it. By manually restarting, forcing an update check, and then installing all available updates for my *existing* plugins, I brought my Jenkins instance up to a healthy, up-to-date state. When I then tried to install Git and GitLab again, their dependency requirements were already met, and the installation completed without any issues.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Jenkins Plugins**: Jenkins' power comes from its massive library of plugins. These are add-ons that allow Jenkins to integrate with virtually any other tool in the DevOps toolchain (like Git, Docker, AWS, etc.). A fresh Jenkins installation is just a blank canvas; plugins are the paint.
+-   **Git and GitLab Plugins**:
+    -   The **Git Plugin** is non-negotiable for a modern CI/CD pipeline. It provides the fundamental ability for Jenkins to `clone` source code from a Git repository to perform builds and tests.
+    -   The **GitLab Plugin** provides deeper, specific integration with GitLab. It enables features like "webhooks," where GitLab can instantly notify Jenkins to start a build the moment a developer pushes new code, making the CI process truly continuous.
+-   **Dependency Management**: Plugins don't exist in a vacuum. Many plugins (like `GitLab`) rely on other, more fundamental plugins (like `Git`, `Jersey 2 API`, etc.) to do their job. Jenkins' Plugin Manager tries to handle these dependencies automatically, but as I saw, it can sometimes get stuck if the existing environment is out of date.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: Understanding Jenkins Plugin Dependencies
+<a name="deep-dive-understanding-jenkins-plugin-dependencies"></a>
+My troubleshooting journey was a crash course in how Jenkins handles its components.
+
+[Image of a Jenkins plugin dependency graph]
+
+-   **A Web of Dependencies:** A high-level plugin like `GitLab` doesn't just have one dependency; it has a whole tree of them. `GitLab` needs `Git`, which needs `Git Client`, which needs `SSH Credentials`, and so on.
+-   **The Point of Failure:** The entire system is only as strong as its weakest link. In my case, a single, low-level API plugin (`JAF API`) was out of date. This prevented an intermediate plugin (`Jersey 2 API`) from installing, which in turn prevented the high-level plugin I actually wanted (`GitLab`) from installing.
+-   **The "Update Center":** The `Check now` button I used is a powerful tool. It forces Jenkins to download the latest `update-center.json` file from the Jenkins update servers. This file is a giant catalog of all available plugins and, crucially, their exact dependency requirements. By forcing this update, I gave my Jenkins instance the "map" it needed to correctly resolve the conflicts.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Ignoring Dependency Errors:** It's tempting to just see the "Failure" message and try again. The key to solving the problem was to actually click on the "Details" and read the error log to find the specific dependency conflict.
+-   **Network Issues:** If the Jenkins server cannot connect to `updates.jenkins.io`, it won't be able to download plugins or resolve dependencies. This can sometimes be a corporate firewall or network configuration issue.
+-   **Forgetting to Restart:** Many plugins require a restart to function correctly. Forgetting to check the "Restart" box can lead to strange behavior where the UI shows a plugin as installed, but it doesn't actually work yet.
+
+---
+
+<br>
+<br>
+
+### Exploring the Commands and UI Used
+<a name="exploring-the-commands-and-ui-used"></a>
+-   **`Manage Jenkins` > `Plugins`**: The central hub in the UI for adding, updating, and removing all plugins.
+-   **`Available plugins` tab**: Where I went to find and select new plugins to install.
+-   **`Updates` tab**: Where I went to update my existing plugins, which was the key to solving my dependency issues.
+-   **`Installed plugins` tab**: My final verification step to confirm that the plugins were successfully installed and active.
+-   `sudo systemctl restart jenkins`: The command-line tool I used to perform a clean, manual restart of the Jenkins service to clear the failed installation state.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 070: Granular User Permissions with Matrix Authorization
+
+Today's Jenkins task was a deep dive into security and user management. I moved beyond the initial setup to configuring Jenkins for a team environment. The goal was to create a new user and give them very specific, limited permissions, which is a fundamental requirement for any real-world Jenkins server.
+
+This was a fantastic exercise because it taught me the importance of the "Principle of Least Privilege." I learned how to install a new plugin to enable more powerful security options and then configure permissions at both the global (whole server) level and the project (specific job) level.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to securely configure my Jenkins server for a new developer, `rose`. The specific requirements were:
+1.  Install the **Matrix Authorization Strategy Plugin**.
+2.  Create a new user named `rose` with a specific password and full name.
+3.  Switch the server's security to use the **Project-based Matrix Authorization Strategy**.
+4.  Configure **Global Permissions**:
+    -   `rose` should only have `Overall/Read`.
+    -   `admin` must retain full `Overall/Administer` permissions.
+    -   `Anonymous Users` should have no permissions at all.
+5.  Configure **Project Permissions** for the existing job:
+    -   `rose` should only have `Job/Read` permission.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+This entire task was performed through the Jenkins web UI.
+
+#### Phase 1: Installing the Security Plugin
+First, I needed to install the plugin that would enable the required security configuration.
+1.  I logged into Jenkins as `admin` and navigated to `Manage Jenkins` > `Plugins`.
+2.  In the `Available plugins` tab, I searched for `Matrix Authorization Strategy`, selected the plugin, and clicked to install.
+3.  On the installation screen, I checked the box to **"Restart Jenkins when installation is complete..."** and waited for the server to restart and bring me back to the login page.
+
+#### Phase 2: Creating the New User
+With the necessary plugin installed, I created the new developer's account.
+1.  After logging back in as `admin`, I navigated to `Manage Jenkins` > `Users`.
+2.  I clicked `Create User` and filled in the details exactly as required:
+    -   Username: `rose`
+    -   Password: `8FmzjvFU6S`
+    -   Full name: `Rose`
+3.  I clicked `Create User` to save the new account.
+
+#### Phase 3: Configuring Security
+This was the most critical part of the task, involving two levels of permissions.
+
+1.  **Configure Global Security:** I went to `Manage Jenkins` > `Security`.
+    -   Under **Authorization**, I selected the **"Project-based Matrix Authorization Strategy"** radio button.
+    -   In the permissions grid that appeared, I added both `admin` and `rose`.
+    -   For the `admin` user, I checked the master checkbox for `Overall/Administer` to ensure I didn't lock myself out.
+    -   For the `rose` user, I checked **only** the box for `Overall/Read`.
+    -   I double-checked that the `Anonymous Users` row had no permissions checked.
+    -   I clicked **Save**.
+
+2.  **Configure Project Security:** I went back to the main dashboard and clicked on the existing job.
+    -   From the job's menu, I clicked `Configure`.
+    -   I checked the box for **"Enable project-based security"**.
+    -   In the new permissions grid for the job, I added the user `rose`.
+    -   I checked the box for `Job/Read` for `rose` and nothing else.
+    -   I clicked **Save**.
+
+My final verification was to log out as `admin` and log in as `rose` to confirm that the permissions were working exactly as intended. I could see the job but couldn't configure or build it, which was the proof of success.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Authorization Strategy**: This is the core of Jenkins security. It's the set of rules that determines "who can do what." The default, "Logged-in users can do anything," is fine for a personal server but completely insecure for a team.
+-   **Matrix Authorization Strategy Plugin**: The default Jenkins options are limited. This plugin provides a much more powerful and flexible way to manage permissions. It gives you a grid (a "matrix") where you can visually assign specific permissions to different users or groups.
+-   **Project-based vs. Global Security**: This is a key concept.
+    -   **Global Security (`Manage Jenkins` > `Security`):** This is the baseline security for the entire server. The `Overall/Read` permission I gave `rose` allows her to log in and see the dashboard, but that's it.
+    -   **Project-based Security (Inside a Job's Configuration):** This allows me to get more specific. Even though `rose` only has read access globally, I can grant her extra permissions on a specific job. In this case, I gave her `Job/Read`, which allows her to see the details of that one job. This is how you can give different teams access to only their own projects.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Principle of Least Privilege in Jenkins
+<a name="deep-dive-the-principle-of-least-privilege-in-jenkins"></a>
+This entire task was a practical exercise in implementing the **Principle of Least Privilege**. This security concept dictates that a user should only have the absolute minimum permissions required to perform their job, and nothing more.
+
+
+
+-   **Why is this important?**
+    -   **Reduces Accidents:** If a junior developer only has read access, they can't accidentally delete a critical production job.
+    -   **Enhances Security:** If a user's account is compromised, the damage an attacker can do is limited by that user's permissions. If `rose`'s account was stolen, the attacker could only *look* at one job; they couldn't run malicious code, steal secrets (credentials), or damage the Jenkins server.
+-   **How I Implemented It:**
+    1.  **Removed Anonymous Access:** I started by ensuring that people who aren't logged in can't see anything. This is the first line of defense.
+    2.  **Established a Low Baseline:** I gave the `rose` user the lowest possible useful permission globally: `Overall/Read`.
+    3.  **Granted Specific Permissions:** I then went to the *specific resource* (the job) and granted the *specific permission* (`Job/Read`) that the user needed.
+
+This approach is the opposite of the default "everyone can do everything" model and is the standard for any professionally managed Jenkins instance.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Locking Yourself Out:** The most dangerous mistake is to enable Matrix Authorization but forget to give the `admin` user the `Overall/Administer` permission. If you click save, you will be instantly locked out of all administrative functions, which can be difficult to recover from.
+-   **Installing the Wrong Plugin:** There are several security plugins. It was important to install the exact `Matrix Authorization Strategy Plugin` to get the required features.
+-   **Confusing Global vs. Project Permissions:** A user might be confused why they can't see a job's details. This is often because they have been granted `Overall/Read` but not the specific `Job/Read` permission on that project.
+-   **Forgetting to Restart:** After installing the plugin, a restart is required. Forgetting to check the restart box would mean the "Project-based Matrix Authorization Strategy" option wouldn't be available in the security settings.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+This task was entirely UI-based. The key navigation paths were:
+-   **`Manage Jenkins` > `Plugins`**: My starting point for extending Jenkins' functionality. I used the `Available plugins` tab to find and install the new security plugin.
+-   **`Manage Jenkins` > `Users`**: The area for creating, deleting, and managing user accounts.
+-   **`Manage Jenkins` > `Security`**: The central location for configuring the global security settings, including the Authorization Strategy.
+-   **`[Job Name]` > `Configure`**: The configuration page for a specific job. This is where I enabled and configured the project-based permissions.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 071: The CI/CD "Remote Control"
+
+Today's task was a huge leap forward in my Jenkins journey. I moved from managing Jenkins itself to using Jenkins to manage *other servers*. The goal was to create a reusable, parameterized job that could install any software package on a remote storage server.
+
+This was a fantastic, multi-layered task that taught me about some of the most powerful features in Jenkins: parameters, remote execution via SSH, and secure credential management. It was also a masterclass in real-world troubleshooting, as my initial job failed not because of a Jenkins issue, but because of a permissions problem on the remote server. This document is my detailed story of that entire process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a flexible Jenkins job to automate package installation on the remote storage server. The requirements were:
+1.  Create a new Freestyle project named `install-packages`.
+2.  The job must be **parameterized** with a String Parameter named `PACKAGE`.
+3.  The job must connect to the **storage server** via SSH and execute a command to install the package specified by the `$PACKAGE` parameter.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My path to success required configuring both Jenkins and the remote server.
+
+#### Phase 1: Preparing Jenkins
+First, I had to prepare Jenkins with the necessary plugins, credentials, and global configuration.
+
+1.  **Install SSH Plugin:** I logged into Jenkins as `admin`, went to `Manage Jenkins` > `Plugins` > `Available plugins`, searched for `SSH Plugin`, and installed it with a restart.
+2.  **Add Credentials:** I went to `Manage Jenkins` > `Credentials` > `(global)` > `Add Credentials`. I created a `Username with password` credential for the `natasha` user on the storage server, giving it the ID `storage-server-creds`.
+3.  **Configure Global SSH Site:** This was a critical step I missed on my first try. I went to `Manage Jenkins` > `System`, scrolled to the **"SSH remote hosts"** section, and added a new site. I entered the hostname `ststor01`, selected the `storage-server-creds` credential, and used the **"Test Connection"** button to confirm it worked.
+
+#### Phase 2: Preparing the Remote Server
+This was the solution to my second failure. The Jenkins job was failing because the `natasha` user couldn't run `sudo` without a password.
+1.  I connected to the **storage server** (`ststor01`) as an admin user.
+2.  I safely edited the `sudoers` file using `sudo visudo`.
+3.  At the bottom of the file, I added the following line to grant password-less `yum` access to the `natasha` user:
+    ```
+    natasha ALL=(ALL) NOPASSWD: /usr/bin/yum
+    ```
+
+#### Phase 3: Creating and Configuring the Jenkins Job
+With both Jenkins and the remote server prepared, I could now create the job.
+1.  From the dashboard, I created a `New Item`, named it `install-packages`, and chose `Freestyle project`.
+2.  In the job configuration, I checked **"This project is parameterized"** and added a **String Parameter** named `PACKAGE` with a default value of `tree`.
+3.  Under **"Build Steps"**, I added **"Execute shell script on remote host using ssh"**.
+4.  From the **"SSH Site"** dropdown, I selected the `natasha@ststor01:22` site that I had configured globally.
+5.  In the **"Command"** box, I entered the script:
+    ```bash
+    sudo yum install -y $PACKAGE
+    ```
+6.  I saved the job, ran it with the default parameter, and checked the console output. It was a success!
+
+---
+
+<br>
+<br>
+
+### My Troubleshooting Journey: A Two-Part Problem
+<a name="my-troubleshooting-journey-a-two-part-problem"></a>
+This task was a perfect example of how a CI/CD problem can span multiple systems.
+
+* **Failure 1: The Missing "SSH Site"**
+    -   **Symptom:** When I first tried to configure the job's build step, the "SSH Site" dropdown was empty, and Jenkins showed an error `SSH Site not specified`.
+    -   **Diagnosis:** I realized that the build step is for *selecting* a pre-configured server, not for *defining* one. I hadn't told Jenkins about the storage server yet.
+    -   **Solution:** I fixed this by going to `Manage Jenkins` > `System`, adding the `ststor01` host in the "SSH remote hosts" section, and linking it to my credential. After this, the server appeared in the job's dropdown menu.
+
+* **Failure 2: The `sudo: a password is required` Error**
+    -   **Symptom:** My job connected to the remote server, but the build failed. The console output showed `sudo: a terminal is required to read the password` and `sudo: a password is required`.
+    -   **Diagnosis:** This was not a Jenkins error. This was the remote operating system on `ststor01` telling me that the `natasha` user tried to use `sudo`, but since the script was running in a non-interactive session, there was no way for Jenkins to enter the password.
+    -   **Solution:** The fix had to be made on the **storage server**. I edited the `/etc/sudoers` file (using `visudo`) to add a rule that specifically allowed the `natasha` user to run the `yum` command without being prompted for a password.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Parameterized Builds**: This is a core concept for making Jenkins jobs reusable. Instead of creating a separate job for every package I might want to install, I created one flexible job. The **String Parameter** `PACKAGE` acts as a variable that I can change every time I run the build.
+-   **Remote Execution via SSH**: Jenkins is an orchestrator. Its job is to tell other servers what to do. The **SSH Plugin** is the tool that gives Jenkins this "remote control" capability, allowing it to securely connect to other machines and run scripts.
+-   **Jenkins Credentials Manager**: Hardcoding a password in a job's configuration is a terrible security practice. The **Credentials Manager** is Jenkins's secure vault. I stored the `natasha` user's password there once. Jenkins encrypts it and protects it. My job then only refers to the credential by its ID (`storage-server-creds`), never exposing the actual secret in the job's configuration or logs.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: Password-less `sudo` and the `/etc/sudoers` File
+<a name="deep-dive-password-less-sudo-and-the-etcsudoers-file"></a>
+The solution to my second failure was the most advanced and interesting part of this task. It involved configuring `sudo` permissions on the remote server.
+
+-   **What is the `/etc/sudoers` file?** This file is the master configuration for the `sudo` command. It contains a list of rules that define which users can run which commands with which privileges.
+-   **Why use `visudo`?** You should **never** edit the `/etc/sudoers` file directly with `vi` or `nano`. The `visudo` command is a special, safe editor. It locks the file so no one else can edit it at the same time, and most importantly, it performs a **syntax check** before saving. This prevents you from making a typo that could break `sudo` for the entire system, locking you out of your server.
+-   **Breaking down my `sudoers` rule:**
+    ```
+    natasha   ALL=(ALL)   NOPASSWD: /usr/bin/yum
+    ```
+    -   **`natasha`**: The user this rule applies to.
+    -   **`ALL=`**: The rule applies when the user is logged in from **any** host.
+    -   **`(ALL)`**: The user can run the command as **any** user (e.g., as `root`).
+    -   **`NOPASSWD:`**: The critical part. This tells `sudo` **not** to ask for a password when the user runs the specified command.
+    -   **`/usr/bin/yum`**: The specific command that this rule applies to. I gave `natasha` password-less access only to the `yum` command, not to everything. This is another example of the Principle of Least Privilege.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Configuring SSH in the Job:** As I first discovered, trying to configure the SSH connection inside the job's build step is wrong. The SSH site must be defined globally first in `Manage Jenkins` > `System`.
+-   **The `sudo` Password Prompt:** Forgetting that CI/CD tools run in non-interactive sessions is a common mistake. Any command that prompts for input will cause the build to fail. This is why password-less `sudo` is a requirement for this kind of automation.
+-   **Not Using `visudo`:** Editing `/etc/sudoers` directly is very dangerous. A single syntax error could make it impossible to use `sudo` on the server again.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI and Commands Used
+<a name="exploring-the-ui-and-commands-used"></a>
+-   **`Manage Jenkins` > `Plugins`**: Where I went to install the `SSH Plugin`.
+-   **`Manage Jenkins` > `Credentials`**: The secure vault where I stored the password for the `natasha` user.
+-   **`Manage Jenkins` > `System`**: The main configuration page where I had to globally define the "SSH remote host" for the storage server.
+-   **`[Job Name]` > `Configure`**: The page where I configured the job's parameters and build steps.
+-   **`sudo visudo` (on the remote host)**: The safe command for editing the `/etc/sudoers` file.
+-   **`sudo yum install -y $PACKAGE` (in the Jenkins job)**: The final command executed remotely by Jenkins. The `$PACKAGE` variable is automatically replaced by Jenkins with the value I provide when I start the build.
+  
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 072: Creating a Parameterized Build
+
+Today's task was a fantastic step up in my Jenkins journey. I moved beyond creating simple, static jobs to building a **parameterized job**. This is one of the most powerful features in Jenkins, as it transforms a single-purpose job into a flexible, reusable automation tool that can adapt to user input.
+
+I learned how to add different types of parameters—a free-form `String Parameter` and a restrictive `Choice Parameter`—and then how to use those parameters as variables within my build script. This document is my detailed, first-person guide to that entire process, explaining the concepts and the UI steps I took.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a new, flexible Jenkins job. The specific requirements were:
+1.  Create a Freestyle project named `parameterized-job`.
+2.  The job must be **parameterized**.
+3.  Add a **String Parameter** named `Stage` with a default value of `Build`.
+4.  Add a **Choice Parameter** named `env` with three choices: `Development`, `Staging`, and `Production`.
+5.  Configure a build step to run a shell script that prints the values of both parameters.
+6.  Run the job at least once, selecting `Staging` for the `env` parameter.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The entire process was performed through the Jenkins web UI.
+
+#### Phase 1: Creating the Job and Defining Parameters
+1.  I logged into Jenkins as `admin` and from the dashboard, I clicked **`New Item`**.
+2.  I entered the name `parameterized-job`, selected **`Freestyle project`**, and clicked **OK**.
+3.  On the configuration page, under the "General" section, I checked the crucial box: **"This project is parameterized"**.
+4.  I clicked the **"Add Parameter"** dropdown and selected **"String Parameter"**. I configured it with:
+    -   Name: `Stage`
+    -   Default Value: `Build`
+5.  I clicked **"Add Parameter"** again and selected **"Choice Parameter"**. I configured it with:
+    -   Name: `env`
+    -   Choices (one per line):
+        ```
+        Development
+        Staging
+        Production
+        ```
+
+#### Phase 2: Configuring the Build Step
+1.  I scrolled down to the **"Build Steps"** section, clicked **"Add build step"**, and chose **"Execute shell"**.
+2.  In the command box, I wrote a simple script to print the values of the parameters. Jenkins makes these available as environment variables, so I accessed them with a `$`.
+    ```bash
+    echo "The selected stage is: $Stage"
+    echo "The selected environment is: $env"
+    ```
+3.  I clicked **Save**.
+
+#### Phase 3: Running and Verifying
+1.  On the job's page, the "Build Now" link was now **"Build with Parameters"**. I clicked it.
+2.  This took me to a build screen where I could input my parameters. As required, I selected **`Staging`** from the `env` dropdown menu.
+3.  I clicked the **"Build"** button.
+4.  I then clicked on the new build number in the "Build History" and went to its **"Console Output"**. The log showed the correct output, proving my success:
+    ```
+    + echo 'The selected stage is: Build'
+    The selected stage is: Build
+    + echo 'The selected environment is: Staging'
+    The selected environment is: Staging
+    Finished: SUCCESS
+    ```
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Parameterized Builds**: This is a core feature that makes Jenkins jobs reusable and flexible. Instead of creating a hardcoded job that can only do one thing, a parameterized job accepts user input each time it's run. This is essential for CI/CD. For example, instead of separate jobs for deploying to different environments, I can have one "Deploy" job with an `env` parameter to choose the target.
+-   **`String Parameter`**: This parameter type creates a simple text input box. It's perfect for when the user needs to provide free-form text, like a Git branch name to build, a version number, or a custom message.
+-   **`Choice Parameter`**: This parameter type creates a dropdown menu with a pre-defined list of options. This is much better than a string parameter when the user must select from a limited set of valid options. It prevents typos and ensures that the job only receives input it can understand (e.g., `Production`, not `prod` or `production`).
+
+---
+
+<br>
+<br>
+
+### Deep Dive: How Jenkins Exposes Parameters to the Build
+<a name="deep-dive-how-jenkins-exposes-parameters-to-the-build"></a>
+This was the most important concept for me to grasp. How does the value I select in the UI get into my shell script?
+
+
+
+-   **Environment Variables:** When Jenkins starts a build, it takes all the parameters defined for the job and **injects them into the build's environment as environment variables**.
+-   **The Magic of `$VARIABLE`:** The shell automatically substitutes variables that start with a `$` with their value from the environment.
+    -   When my script ran `echo "The selected environment is: $env"`, the shell saw `$env`.
+    -   It looked in its environment, found a variable named `env` that Jenkins had set to `Staging` (the value I selected).
+    -   It then substituted the variable, so the final command that was actually executed was `echo "The selected environment is: Staging"`.
+-   **Universality:** This principle applies to almost all build tools Jenkins integrates with. Whether I'm writing a shell script, a Maven command, a Gradle build, or an Ansible playbook, I can access the Jenkins parameters as environment variables, making them universally accessible.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Forgetting to Check "This project is parameterized"**: If this box isn't checked, the "Add Parameter" button won't appear, and the job won't be parameterized.
+-   **Variable Name Mismatch:** Jenkins parameter names are **case-sensitive**. If I had named my parameter `Stage` but tried to access it as `$stage` in my script, the variable would have been empty.
+-   **Incorrectly Formatting Choices:** For a Choice Parameter, the options must be entered one per line in the configuration.
+-   **Not Quoting Variables:** While not an issue in my simple `echo` command, in a more complex script, it's a best practice to wrap variables in double quotes (e.g., `echo "$env"`). This prevents the shell from misinterpreting spaces or special characters that might be in the parameter's value.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+This task was entirely UI-based. The key navigation paths and sections were:
+-   **`Dashboard` > `New Item`**: The starting point for creating my Freestyle project.
+-   **`[Job Name]` > `Configure`**: The main configuration page for the job, where I used:
+    -   **`General` > `This project is parameterized`**: The checkbox to enable parameters.
+    -   **`Add Parameter` Dropdown**: The menu where I selected the `String Parameter` and `Choice Parameter` types.
+    -   **`Build Steps` > `Execute shell`**: The section where I defined the shell script that would be run.
+-   **`[Job Name]` > `Build with Parameters`**: The new button on the job's page that appears for parameterized jobs. It takes you to the screen where you can input the parameter values before starting the build.
+-   **`[Build Number]` > `Console Output`**: The page I used to check the logs of my build and verify that the parameters were being used correctly.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 073: Automating a Multi-Server Log Collection Job
+
+Today's task was a fantastic real-world scenario that perfectly demonstrated Jenkins's power as a central orchestrator. My objective was to create an automated, scheduled job to collect Apache log files from an application server and transfer them to a dedicated storage server.
+
+This was more than just a simple script; it required me to configure Jenkins to communicate with two different remote hosts and to handle a multi-step workflow. The solution I implemented, using a single remote execution step with `sshpass`, was a clever and efficient way to solve the potential networking challenges between the servers. This document is my very detailed, first-person guide to that entire successful process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a scheduled Jenkins job named `copy-logs` to automate a multi-server log collection process. The requirements were:
+1.  Connect to **App Server 1** and copy its Apache logs (`access_log` and `error_log`).
+2.  The logs needed to be transferred to the **Storage Server** into the `/usr/src/devops` directory.
+3.  The entire job had to be scheduled to run every 5 minutes (`*/5 * * * *`).
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My successful solution involved preparing Jenkins to communicate with both servers and then writing a clever, two-part script within a single build step.
+
+#### Phase 1: Preparing Jenkins
+Before creating the job, I had to configure Jenkins to securely connect to both the App Server and the Storage Server.
+1.  **Install SSH Plugin:** I logged into Jenkins as `admin`, went to `Manage Jenkins` > `Plugins`, and installed the **`SSH Plugin`** with a restart.
+2.  **Add Credentials:** I went to `Manage Jenkins` > `Credentials` and added two `Username with password` credentials:
+    -   One for App Server 1 (`tony`/`Ir0nM@n`), with ID `app-server-1-creds`.
+    -   One for the Storage Server (`natasha`/`Bl@kW`), with ID `storage-server-creds`.
+3.  **Configure Global SSH Sites:** I went to `Manage Jenkins` > `System` and, in the "SSH remote hosts" section, added both `stapp01` and `ststor01`, linking them to their respective credentials and using the "Test Connection" button for each to confirm success.
+
+#### Phase 2: The Jenkins Job Configuration
+1.  I created a `Freestyle project` named `copy-logs`.
+2.  In the **"Build Triggers"** section, I checked "Build periodically" and entered the schedule: `*/5 * * * *`.
+3.  **This was the core of my solution:** In the **"Build Steps"** section, I added a single **"Execute shell script on remote host using ssh"** step.
+    -   For the **SSH Site**, I selected the App Server: `tony@stapp01:22`.
+    -   In the **Command** box, I wrote a script that would run entirely on App Server 1. This script first finds the log files and then *pushes* them to the storage server using `sshpass`.
+        ```bash
+        # Use sshpass to provide the password for the 'natasha' user non-interactively
+        # and scp to push the files.
+        # The password for the 'natasha' user on the storage server is 'Bl@kW'.
+        # The -o option is to avoid the first-time host key check prompt.
+        sshpass -p 'Bl@kW' scp -o StrictHostKeyChecking=no /var/log/httpd/* natasha@ststor01:/usr/src/devops
+        ```
+4.  I saved the job, ran it manually once, and checked the console output, which showed `Finished: SUCCESS`. A final check on the storage server confirmed the log files were there.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Jenkins as an Orchestrator**: This task perfectly demonstrated Jenkins's role as a central controller. It didn't just run a script; it connected to one server and coordinated a file transfer to a second server, all on an automated schedule.
+-   **Log Aggregation**: Collecting logs from multiple application servers and storing them in a centralized location (like my storage server) is a fundamental practice in DevOps. It's the first step towards building a centralized logging system (like an ELK stack) where logs can be searched, analyzed, and visualized.
+-   **`sshpass`**: This is a utility that allows you to provide a password for an SSH or SCP connection non-interactively from the command line. This was the key to my solution, as it allowed the app server to connect to the storage server without being prompted for a password, which would have caused the automated Jenkins job to fail.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The "Push" Strategy and the `sshpass` Workaround
+<a name="deep-dive-the-push-strategy-and-the-sshpass-workaround"></a>
+My first instinct might have been to use two separate Jenkins build steps: one on the app server to find the logs, and a second on the storage server to `scp` and "pull" the files. However, this often fails in complex lab environments due to firewall rules that might block one server from initiating a connection to another.
+
+The solution I implemented is a more robust **"push" strategy**:
+1.  Jenkins connects to the App Server.
+2.  The App Server does all the work: it finds the local log files and then *initiates* the connection to the Storage Server to push them.
+This often works better because outbound connections are less likely to be blocked by firewalls than inbound ones.
+
+[Image of Jenkins orchestrating a multi-server backup]
+
+The key to making this "push" strategy work was `sshpass`.
+-   **The Problem:** The `scp` command, when run in a script, will still prompt for a password, which Jenkins cannot provide.
+-   **The `sshpass` Solution:**
+    ```bash
+    sshpass -p 'Bl@kW' scp ...
+    ```
+    -   `sshpass`: This utility acts as a wrapper around the `scp` command.
+    -   `-p 'Bl@kW'`: The `-p` flag tells `sshpass` to provide the specified password to the command it is running.
+-   **Security Note:** While `sshpass` is incredibly useful for labs and simple automation, it is a **major security risk in production**. The password is a plain-text string in my Jenkins job configuration, which is not ideal. The most secure method is always to use **password-less SSH Key Authentication**, but `sshpass` is a fantastic and quick workaround for this kind of environment.
+-   **`-o StrictHostKeyChecking=no`**: This is another important piece. It tells the `scp` command to automatically trust the host key of the storage server if it's the first time connecting, preventing the interactive "Are you sure you want to continue connecting?" prompt that would also cause the job to fail.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Inter-Server Connectivity:** The biggest issue is often a firewall blocking the connection between the servers. The "push" strategy helps mitigate this, but it's always the first thing to check if a remote command fails.
+-   **Missing `sshpass`:** The `sshpass` utility is not always installed by default. My script would have failed if I hadn't first manually installed it on the app server (`sudo yum install -y sshpass`).
+-   **Incorrect Log Path:** I first had to SSH into the app server to confirm the Apache log directory (`/var/log/httpd`), as it can be different on different operating systems.
+-   **Permissions on Destination:** The `natasha` user needed write permissions on the `/usr/src/devops` directory on the storage server. If they didn't have it, the `scp` command would have failed.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI and Commands I Used
+<a name="exploring-the-ui-and-commands-i-used"></a>
+-   **`Manage Jenkins` > `System`**: Where I globally configured the "SSH remote hosts" for both servers.
+-   **`[Job Name]` > `Configure`**:
+    -   **`Build Triggers` > `Build periodically`**: Where I set the cron schedule (`*/5 * * * *`).
+    -   **`Build Steps` > `Execute shell script on remote host...`**: Where I selected the app server and provided my `sshpass` script.
+-   `sshpass -p '[pass]' scp -o StrictHostKeyChecking=no [source] [dest]`: The core of my solution. It uses `sshpass` to provide a password to the `scp` command non-interactively, allowing a fully automated, cross-server file transfer.
+-   `whereis access_log` / `ls -la /var/log/httpd`: The investigation commands I used on the app server to find the exact location of the Apache log files.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 074: Automating a Multi-Server Database Backup
+
+Today's task was a fantastic, real-world challenge that perfectly showcased the power of Jenkins as an orchestrator. My objective was to create an automated, scheduled job that would take a database backup from one server and store it on a separate backup server.
+
+This was more than just a simple shell script; it required me to configure Jenkins to securely communicate with two different remote hosts and to handle a multi-step workflow. The solution I found, using a single remote execution step with `sshpass`, was a clever and efficient way to solve the problem. This document is my very detailed, first-person guide to that entire successful process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a scheduled Jenkins job named `database-backup` to automate a multi-server backup process. The requirements were:
+1.  Connect to the **Database server** and create a `mysqldump` of the `kodekloud_db01` database.
+2.  The dump file had to be named dynamically with the current date (e.g., `db_2025-10-14.sql`).
+3.  This dump file then had to be copied to the **Backup Server** into the `/home/clint/db_backups` directory.
+4.  The entire job had to be scheduled to run every 10 minutes (`*/10 * * * *`).
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+My successful solution involved preparing Jenkins to communicate with both servers and then writing a clever, two-part script within a single build step.
+
+#### Phase 1: Preparing Jenkins
+Before creating the job, I had to configure Jenkins to securely connect to both the DB and Backup servers.
+1.  **Install SSH Plugin:** I logged into Jenkins as `admin`, went to `Manage Jenkins` > `Plugins`, and installed the **`SSH Plugin`** with a restart.
+2.  **Add Credentials:** I went to `Manage Jenkins` > `Credentials` and added two `Username with password` credentials:
+    -   One for the DB server (`peter`/`Sp!dy`), with ID `db-server-creds`.
+    -   One for the Backup server (`clint`/`H@wk3y3`), with ID `backup-server-creds`.
+3.  **Configure Global SSH Sites:** I went to `Manage Jenkins` > `System` and, in the "SSH remote hosts" section, added both `stdb01` and `stbkp01`, linking them to their respective credentials and testing the connection for each.
+
+#### Phase 2: The Jenkins Job Configuration
+1.  I created a `Freestyle project` named `database-backup`.
+2.  In the **"Build Triggers"** section, I checked "Build periodically" and entered the schedule: `*/10 * * * *`.
+3.  **This was the core of my solution:** In the **"Build Steps"** section, I added a single **"Execute shell script on remote host using ssh"** step.
+    -   For the **SSH Site**, I selected the DB server: `peter@stdb01:22`.
+    -   In the **Command** box, I wrote a script that would run entirely on the DB server. This script first creates the backup and then *pushes* it to the backup server using `sshpass`.
+        ```bash
+        # Define the dynamic filename
+        DUMP_FILE="db_$(date +%F).sql"
+        
+        # Create the database dump locally on the DB server
+        mysqldump -u kodekloud_roy -p'asdfgdsd' kodekloud_db01 > /tmp/$DUMP_FILE
+        
+        # Use sshpass to provide the password non-interactively and scp to push the file
+        # The password for the 'clint' user on the backup server is 'H@wk3y3'
+        sshpass -p 'H@wk3y3' scp -o StrictHostKeyChecking=no /tmp/$DUMP_FILE clint@stbkp01:/home/clint/db_backups/
+        
+        # Clean up the temporary file from the DB server
+        rm /tmp/$DUMP_FILE
+        ```
+4.  I saved the job, ran it manually once, and checked the console output, which showed `Finished: SUCCESS`. A final check on the backup server confirmed the file was there.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Jenkins as an Orchestrator**: This task perfectly demonstrated Jenkins's role as a central controller. It didn't just run a script; it connected to one server, performed a task, and then coordinated a file transfer to a second server.
+-   **`mysqldump`**: This is the standard command-line utility for creating a logical backup (a `.sql` script) of a MySQL or MariaDB database. It's the foundation of most database backup strategies.
+-   **Dynamic Filenames**: Hardcoding a backup filename is a bad practice, as each run would overwrite the previous backup. By using `db_$(date +%F).sql`, I created a new, uniquely named file for each day's backup (e.g., `db_2025-10-14.sql`), which is essential for maintaining a history of backups.
+-   **`sshpass`**: This is a utility that allows you to provide a password for an SSH or SCP connection non-interactively. This was the key to my solution. It allowed the DB server to connect to the backup server without being prompted for a password, which would have caused the automated Jenkins job to fail.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The "Push" Backup Strategy and `sshpass`
+<a name="deep-dive-the-push-backup-strategy-and-sshpass"></a>
+My initial thought was to use two Jenkins build steps: one on the DB server to create the dump, and a second on the backup server to `scp` and "pull" the file. However, this often fails in lab environments due to complex network firewall rules between servers.
+
+[Image of Jenkins orchestrating a multi-server backup]
+
+The solution I implemented is a more robust **"push" strategy**:
+1.  Jenkins connects to the DB server.
+2.  The DB server does all the work: it creates the dump and then *initiates* the connection to the backup server to push the file.
+This often works better because outbound connections are less likely to be blocked by firewalls than inbound ones.
+
+The key to making this work was `sshpass`.
+-   **The Problem:** The `scp` command, when run in a script, will still prompt for a password, which Jenkins cannot provide.
+-   **The `sshpass` Solution:**
+    ```bash
+    sshpass -p 'H@wk3y3' scp ...
+    ```
+    -   `sshpass`: This utility acts as a wrapper around the `scp` command.
+    -   `-p 'H@wk3y3'`: The `-p` flag tells `sshpass` to provide the specified password to the command it is running.
+-   **Security Note:** While `sshpass` is incredibly useful for labs and simple automation, it is a **security risk in production**. The password is a plain-text string in my Jenkins job configuration, which is not ideal. The most secure method is always to use **password-less SSH Key Authentication**, but `sshpass` is a fantastic and quick workaround.
+-   **`-o StrictHostKeyChecking=no`**: This is another important piece. It tells the `scp` command to automatically trust the host key of the backup server if it's the first time connecting, preventing the interactive "Are you sure you want to continue connecting?" prompt that would also cause the job to fail.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Inter-Server Connectivity:** The biggest issue is often a firewall blocking the connection between the DB and backup servers. The "push" strategy helps mitigate this but doesn't solve all network issues.
+-   **Missing `sshpass`:** The `sshpass` utility is not always installed by default. My script would have failed if I hadn't first manually installed it on the DB server (`sudo yum install -y sshpass`).
+-   **Incorrect Passwords or Usernames:** A simple typo in the `mysqldump` credentials or the `sshpass` password would cause the script to fail.
+-   **Incorrect Cron Syntax:** The schedule `*/10 * * * *` must be exact to run every 10 minutes.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI and Commands I Used
+<a name="exploring-the-ui-and-commands-i-used"></a>
+-   **`Manage Jenkins` > `System`**: Where I globally configured the "SSH remote hosts" for both servers.
+-   **`[Job Name]` > `Configure`**:
+    -   **`Build Triggers` > `Build periodically`**: Where I set the cron schedule.
+    -   **`Build Steps` > `Execute shell script on remote host...`**: Where I selected the DB server and provided my multi-line script.
+-   **`mysqldump -u [user] -p'[pass]' [db] > [file]`**: The command to create a database backup. Note the lack of a space between `-p` and the password.
+-   `sshpass -p '[pass]' scp -o StrictHostKeyChecking=no [source] [dest]`: The core of my solution. It uses `sshpass` to provide a password to the `scp` command non-interactively.
+-   `rm [file]`: The standard command to **r**e**m**ove the temporary dump file from the DB server after it has been copied.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 075: Distributed Builds with Jenkins Agent Nodes
+
+Today's task was a crucial step in scaling a CI/CD infrastructure. I moved away from running everything on the single Jenkins server (the "Master" or "Controller") and set up a **Distributed Build Architecture**. I connected three external application servers to Jenkins as **Agent Nodes** (often called Slaves) using SSH.
+
+This allows Jenkins to offload work. Instead of the Jenkins server compiling code, running tests, and deploying apps itself, it delegates these heavy tasks to the agents (`stapp01`, `stapp02`, `stapp03`). This improves performance, security, and isolation. This document is my detailed guide to configuring these nodes via the Jenkins UI, including a fix for the common "Java not found" error.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to add three new agent nodes to the Jenkins environment. The requirements were:
+1.  **App Server 1:** Name `App_server_1`, Label `stapp01`, Root Dir `/home/tony/jenkins`.
+2.  **App Server 2:** Name `App_server_2`, Label `stapp02`, Root Dir `/home/steve/jenkins`.
+3.  **App Server 3:** Name `App_server_3`, Label `stapp03`, Root Dir `/home/banner/jenkins`.
+4.  Ensure all nodes are connected via SSH and are online.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The entire process involved both command-line preparation and Jenkins UI configuration.
+
+#### Phase 1: Prerequisites & Plugin Check
+1.  I logged into Jenkins as `admin` (`Adm!n321`).
+2.  I navigated to **Manage Jenkins** > **Plugins** to ensure the **"SSH Agent Plugin"** or **"SSH Build Agents"** plugin was installed.
+
+#### Phase 2: Adding Credentials
+Before creating the nodes, I added the credentials for the users on the remote servers.
+1.  I went to **Manage Jenkins** > **Credentials** > **(global)** > **Add Credentials**.
+2.  I added three separate "Username with password" credentials:
+    * **Tony:** User `tony`, Password `Ir0nM@n`, ID `tony-creds`.
+    * **Steve:** User `steve`, Password `Am3ric@`, ID `steve-creds`.
+    * **Banner:** User `banner`, Password `BigGr33n`, ID `banner-creds`.
+
+#### Phase 3: Configuring App Server 1
+1.  I went to **Manage Jenkins** > **Nodes** (or "Manage Nodes and Clouds").
+2.  I clicked **"New Node"**.
+3.  **Node Name:** `App_server_1`.
+4.  **Type:** Selected **"Permanent Agent"** and clicked Create.
+5.  I configured the node details:
+    * **Remote root directory:** `/home/tony/jenkins`
+    * **Labels:** `stapp01`
+    * **Usage:** "Use this node as much as possible"
+    * **Launch method:** "Launch agents via SSH"
+    * **Host:** `stapp01`
+    * **Credentials:** Selected the `tony` credential I created earlier.
+    * **Host Key Verification Strategy:** Selected **"Non verifying Verification Strategy"**.
+6.  I clicked **Save**.
+
+#### Phase 4: Configuring App Servers 2 & 3
+I repeated the exact same process for the other two servers, ensuring I swapped the details correctly.
+
+* **App_server_2:**
+    * Remote root: `/home/steve/jenkins`
+    * Label: `stapp02`
+    * Host: `stapp02`
+    * Credentials: `steve`
+
+* **App_server_3:**
+    * Remote root: `/home/banner/jenkins`
+    * Label: `stapp03`
+    * Host: `stapp03`
+    * Credentials: `banner`
+
+---
+
+<br>
+<br>
+
+### Troubleshooting: Agent Launch Failure (Java Not Found)
+<a name="troubleshooting-agent-launch-failure-java-not-found"></a>
+When I first tried to launch the agents, they failed to connect. Checking the logs revealed the following error:
+```
+[SSH] Starting agent process: cd "/home/banner/jenkins" && java -jar remoting.jar ...
+bash: line 1: java: command not found
+Agent JVM has terminated. Exit code=127
+```
+
+**The Problem:** Jenkins agents run as a Java application (`remoting.jar`). The remote server MUST have a Java Runtime Environment (JRE) installed for the agent to run. The app servers in this lab did not have Java pre-installed.
+
+**The Fix:**
+I had to manually install Java on all three app servers.
+
+1.  **SSH into each app server:**
+    ```bash
+    ssh tony@stapp01  # password: Ir0nM@n
+    ssh steve@stapp02 # password: Am3ric@
+    ssh banner@stapp03 # password: BigGr33n
+    ```
+2.  **Install Java:**
+    ```bash
+    sudo yum install -y java-17-openjdk
+    ```
+3.  **Relaunch the Agent:** Back in the Jenkins UI, I clicked "Launch agent" for each node. This time, they connected successfully.
+
+**Verification:** I refreshed the nodes list. All three servers showed free disk space and no red "X" marks, indicating they were online and ready to accept build tasks.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Scalability:** A single Jenkins server can only run so many builds at once before it runs out of CPU or RAM. By adding agents, I can run dozens or hundreds of builds in parallel.
+-   **Security & Isolation:** It is a security best practice to **not** run builds on the Jenkins controller itself. If a build script is malicious or simply messy (deleting system files), it could destroy the Jenkins server. Running builds on agents isolates this risk to a replaceable worker node.
+-   **Environment Specifics:** Different projects need different tools. I might need one agent with Java 17 for a backend project and another agent with Node.js and Chrome for a frontend project. Agents allow me to create specialized environments without polluting the main server.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Jenkins Master/Agent Architecture
+<a name="deep-dive-the-jenkins-masteragent-architecture"></a>
+This task established the fundamental architecture of enterprise Jenkins.
+
+[Image of Jenkins Master-Slave architecture diagram]
+
+1.  **The Controller (Master):** This is the brain. It handles the UI, scheduling, user permissions, and orchestration. It tells the agents *what* to do.
+2.  **The Agent (Slave):** This is the muscle. It receives instructions from the controller, executes the build steps (shell scripts, maven builds, etc.), and reports the results back.
+3.  **Communication via SSH:** In this lab, the Controller connects to the Agents ("pushes" the connection). It logs in via SSH, copies a small `agent.jar` file to the `Remote root directory`, and starts it using Java. This Java process then communicates back to the Controller.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Java Version Mismatch:** The agent machine *must* have a compatible version of Java installed (usually Java 11 or 17). If the app servers didn't have Java, the connection would fail immediately.
+-   **Host Key Verification:** If you choose "Known hosts file verification strategy" but the Jenkins server hasn't SSH'd into the agent before, the connection will fail because the host key isn't trusted. "Non verifying" is safer for quick labs.
+-   **Directory Permissions:** The user (`tony`, `steve`, etc.) must have write permissions to the `Remote root directory`. If `/home/tony/jenkins` couldn't be created, the agent would fail to launch.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Manage Jenkins` > `Nodes`**: The control center for your build fleet.
+-   **`New Node`**: The wizard for registering a new agent.
+-   **`Launch agents via SSH`**: The specific launch method configuration where you define the Host IP/Hostname and select the Credentials.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 076: Configuring Job-Level Security
+
+Today's task was an advanced lesson in Jenkins security administration. Unlike previous tasks where I set global permissions, this time I had to configure Access Control Lists (ACLs) at the **Job Level**.
+
+The goal was to grant two developers, `sam` and `rohan`, specific access to a single project named `Packages`, without giving them full administrative control over the entire Jenkins server. I utilized the **Project-based Matrix Authorization Strategy** to achieve this granular control. This document is my detailed guide to that process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to configure permissions for the `Packages` job. The requirements were:
+1.  Ensure the users `sam` and `rohan` exist (or creating them if not).
+2.  Configure the `Packages` job to use "Project-based security".
+3.  Set the **Inheritance Strategy** to "Inherit permissions from parent ACL".
+4.  Assign specific permissions:
+    -   **sam:** Build, Configure, Read.
+    -   **rohan:** Build, Cancel, Configure, Read, Update, Tag.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The process involved ensuring the global security strategy allowed for project-based configuration, and then editing the specific job.
+
+#### Phase 1: Global Security Configuration
+Before I could configure the job, I had to make sure Jenkins was using the correct authorization strategy globally.
+1.  I logged into Jenkins as `admin` (`Adm!n321`).
+2.  I navigated to **Manage Jenkins** > **Security**.
+3.  Under the **Authorization** section, I selected **"Project-based Matrix Authorization Strategy"**.
+    * *Critical Step:* I added `admin` to the matrix and granted `Overall/Administer` permission. Without this, I would have locked myself out.
+    * *Optional:* I also added `sam` and `rohan` here and gave them `Overall/Read` permission so they can at least log in and see the dashboard.
+4.  I clicked **Save**.
+
+#### Phase 2: Job-Level Configuration
+Now I could configure the specific `Packages` job.
+1.  From the Dashboard, I clicked on the **`Packages`** job.
+2.  I clicked **Configure** in the left menu.
+3.  I scrolled down to the **General** section and checked the box **"Enable project-based security"**.
+4.  This opened the Matrix Authorization panel specific to this job.
+5.  **Inheritance Strategy:** I verified that the dropdown was set to **"Inherit permissions from parent ACL"** (this is usually the default, but required by the task).
+6.  **Adding User `sam`:**
+    -   I clicked "Add user or group...", typed `sam`, and clicked OK.
+    -   In the matrix row for `sam`, I checked the following boxes:
+        -   **Job/Build**
+        -   **Job/Configure**
+        -   **Job/Read**
+7.  **Adding User `rohan`:**
+    -   I clicked "Add user or group...", typed `rohan`, and clicked OK.
+    -   In the matrix row for `rohan`, I checked the following boxes:
+        -   **Job/Build**
+        -   **Job/Cancel**
+        -   **Job/Configure**
+        -   **Job/Read**
+        -   **SCM/Tag** (If available, otherwise looked for Tag under Job)
+        -   *Note: "Update" is often synonymous with Configure in older versions, or specific to Workspace. I ensured all explicitly named permissions were checked.*
+8.  I clicked **Save**.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why"></a>
+-   **Project-Based Matrix Authorization:** This is the standard way to handle security in a shared Jenkins environment. In a large company, you have many teams (Frontend, Backend, Mobile). You don't want the Mobile team accidentally canceling the Backend team's builds.
+-   **Granularity:** Global security is a sledgehammer (you are either an admin or you aren't). Project-based security is a scalpel. It allows me to say, "Sam can *configure* this specific job, but he can't even *see* the other jobs."
+-   **Separation of Duties:** By giving `sam` only "Build" and "Read" but giving `rohan` "Cancel" and "Tag", I am implementing specific roles. Perhaps Rohan is a senior developer or a release manager who is trusted to cancel bad builds and tag releases, while Sam is a junior developer who just needs to run builds and edit the script.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: Inheritance Strategy
+<a name="deep-dive-inheritance-strategy"></a>
+The "Inheritance Strategy" setting is crucial and often misunderstood.
+
+[Image of Jenkins Inheritance Strategy dropdown]
+
+* **Inherit permissions from parent ACL:** This means the permissions set at the **Global Security** level cascade down to this job. If I gave `sam` "Read" access globally, he automatically has "Read" access to this job, plus whatever extra permissions I add here. This is the additive approach and is usually the safest.
+* **Do not inherit permissions:** This blocks all global permissions (except for Super Admins). Even if `sam` has global read access, if I select this option, he cannot see this job unless I explicitly add him again in this job's matrix. This is useful for highly sensitive projects (e.g., "HR Payroll System") that should be hidden from the general development team.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Forgetting Global Read:** If you give a user permissions on a Job but don't give them `Overall/Read` permission in the Global Security settings, they won't be able to log in to see the job you gave them access to.
+-   **"Update" Permission Confusion:** Jenkins permissions can be granular. Sometimes a requirement asks for "Update," but the UI only shows "Configure." "Configure" generally covers updating the job definition.
+-   **Lockout:** As always with Matrix Authorization, the biggest risk is saving the configuration without giving the `admin` user full control. Always check `admin` -> `Administer` first.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Manage Jenkins` > `Security`**: Where the authorization strategy is switched from "Logged-in users can do anything" to "Project-based Matrix Authorization Strategy".
+-   **`[Job Name]` > `Configure` > `Enable project-based security`**: The specific toggle that reveals the permission matrix for an individual job.
+-   **Permission Categories**:
+    -   **Job**: Contains Read, Build, Configure, Cancel, Workspace, Delete.
+    -   **Run**: Contains Delete, Update, Replay.
+    -   **SCM**: Contains Tag.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 077: Deploying a Static Website with a Jenkins Pipeline
+
+Today's task was a major milestone: creating a **Jenkins Pipeline** to automate the deployment of a real application. I moved beyond simple "Freestyle" jobs and wrote a Groovy-based pipeline script that integrates with a Git repository (Gitea) and deploys code to a remote server.
+
+The goal was to deploy a static website from a Gitea repository to an Apache web server running on a specific storage node. This required me to configure a new agent node in Jenkins, understand the application's architecture (where files are stored vs. where they are served), and write a pipeline script to orchestrate the deployment. This document is my detailed guide to that entire process.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a Jenkins pipeline job named `devops-webapp-job`. The requirements were:
+1.  **Source Code:** Use the `web_app` repository hosted on the internal Gitea server (user `sarah`).
+2.  **Agent Node:** Add the `Storage Server` (`ststor01`) as a Jenkins agent, as this server has the repository cloned and the web root mounted.
+3.  **Deployment Target:** Deploy the code to `/var/www/html` on the `Storage Server`.
+4.  **Pipeline:** Use a single stage named `Deploy` (case-sensitive).
+5.  **Verification:** The app must be accessible at the main URL `https://<LBR-URL>` (not a sub-directory).
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved configuring the agent node first, and then creating the pipeline job.
+
+#### Phase 1: Configuring the Agent Node
+Before creating the job, I had to register the Storage Server as a worker node so Jenkins could run commands on it.
+1.  I logged into Jenkins as `admin` (`Adm!n321`).
+2.  I went to **Manage Jenkins** > **Nodes** > **New Node**.
+3.  **Node Name:** `Storage Server`, Type: **Permanent Agent**.
+4.  I configured the node details:
+    -   **Remote root directory:** `/var/www/html` (This is crucial as it's the deployment target).
+    -   **Labels:** `ststor01` (This is how my pipeline will select this specific node).
+    -   **Launch method:** "Launch agents via SSH".
+    -   **Host:** `ststor01`.
+    -   **Credentials:** I added a new "Username with password" credential for `natasha` (password `Bl@kW`).
+    -   **Host Key Verification Strategy:** "Non verifying Verification Strategy".
+5.  I clicked **Save**.
+
+#### Phase 2: Creating the Pipeline Job
+1.  From the Dashboard, I clicked **New Item**.
+2.  **Name:** `devops-webapp-job`.
+3.  **Type:** `Pipeline`.
+4.  I clicked **OK**.
+
+#### Phase 3: Writing the Pipeline Script
+In the job configuration, I scrolled down to the **Pipeline** section. I chose **"Pipeline script"** and wrote the following Groovy code. Note that I also added credentials for Gitea (`sarah`/`Sarah_pass123`) with ID `git-creds` before this step.
+
+```groovy
+pipeline {
+    agent {
+        label 'ststor01' // Runs this pipeline on the Storage Server agent
+    }
+    stages {
+        stage('Deploy') { // The required stage name
+            steps {
+                // Checkout code from Gitea to the workspace on the agent
+                git url: '[http://git.stratos.xfusioncorp.com/sarah/web_app.git](http://git.stratos.xfusioncorp.com/sarah/web_app.git)',
+                    credentialsId: 'git-creds',
+                    branch: 'master'
+
+                // Copy the files from the workspace to the Apache document root
+                // The workspace is inside /var/www/html (because that's the node's root dir)
+                // We use sudo if needed, or ensure permissions are correct (see Troubleshooting below)
+                sh 'cp -r * /var/www/html/' 
+            }
+        }
+    }
+}
+```
+
+#### Phase 4: Execution and Verification
+1.  I clicked **Save** and then **Build Now**.
+2.  I watched the stage view showing the "Deploy" stage turning green.
+3.  I verified by clicking the **App** button. The website loaded at the root URL (e.g., `https://.../index.html`), not inside a `/web_app` subfolder, confirming the copy command worked correctly.
+
+---
+
+<br>
+<br>
+
+### Troubleshooting: Agent Permission Denied
+<a name="troubleshooting-agent-permission-denied"></a>
+If the agent fails to launch with `java.io.IOException: Could not copy remoting.jar` and `Permission denied`, it means the user (`natasha`) cannot write to the remote root directory (`/var/www/html`).
+
+**The Fix:**
+1.  **SSH into the Storage Server:**
+    ```bash
+    ssh natasha@ststor01
+    # Password: Bl@kW
+    ```
+2.  **Change Directory Ownership:** Give `natasha` ownership of the web root so Jenkins can write its agent files there.
+    ```bash
+    sudo chown -R natasha:natasha /var/www/html
+    ```
+3.  **Relaunch Agent:** Go back to Jenkins -> Nodes, click `Storage Server`, and click **Launch agent**. It should now connect.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Jenkins Pipeline:** This is the modern way to define CI/CD jobs. Unlike Freestyle jobs (which are UI-based configuration), Pipelines are defined as code (Groovy). This allows the build process to be versioned, reviewed, and managed just like the application code itself.
+-   **Agent Labels:** By labeling the node `ststor01` and using `agent { label 'ststor01' }`, I explicitly told Jenkins *where* to run this job. This is critical in this architecture because the Storage Server is the only machine that has the shared storage mounted. If the job ran on the Jenkins master or another node, the copy command would fail or copy files to the wrong place.
+-   **Shared Storage Architecture:** This task relied on a common NFS-style setup. The Storage Server holds the files at `/var/www/html`. The App Servers (where Apache runs) mount that directory. By deploying code to the Storage Server, I automatically updated all App Servers simultaneously.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Jenkins Pipeline Script
+<a name="deep-dive-the-jenkins-pipeline-script"></a>
+This is the declarative pipeline syntax I used.
+
+
+```groovy
+pipeline {
+    agent {
+        label 'ststor01' // 1. Select the correct worker node
+    }
+    stages {
+        stage('Deploy') { // 2. Define the stage (Case Sensitive Name!)
+            steps {
+                // 3. The Git Step: Downloads the code from Gitea
+                git url: '[http://git.stratos.xfusioncorp.com/sarah/web_app.git](http://git.stratos.xfusioncorp.com/sarah/web_app.git)',
+                    credentialsId: 'git-creds', // ID of the credentials I added
+                    branch: 'master'
+
+                // 4. The Shell Step: Deploys the code
+                // Because the node's root dir is /var/www/html, Jenkins puts the code in
+                // /var/www/html/workspace/job-name/
+                // We copy it UP two levels to /var/www/html/ to be served by Apache.
+                sh 'cp -rf ./* /var/www/html/'
+            }
+        }
+    }
+}
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Agent Root Directory:** Setting the agent's remote root directory to `/var/www/html` is dangerous if not handled carefully. Jenkins will create workspace folders there. If you run a command like `rm -rf *` in the wrong place, you could wipe the entire web server root.
+-   **Sub-directory Deployment:** A common mistake is copying the *folder* `web_app` instead of its *contents*. If you do `cp -r web_app /var/www/html`, the site loads at `.../web_app/`, which violates the requirement. Using `cp -r *` (contents) ensures it loads at the root URL.
+-   **Case Sensitivity:** The requirement for the stage name `Deploy` is strict. Naming it `deploy` or `Deployment` would cause the task verification to fail.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Manage Jenkins` > `Nodes`**: Where I added the specific `Storage Server` agent.
+-   **`New Item` > `Pipeline`**: The job type selection.
+-   **`Pipeline` section**: The text area in the job configuration where I wrote the Groovy script. This replaces the "Build Steps" section of Freestyle jobs.
+-   **`Pipeline Syntax` generator**: A link at the bottom of the script editor. It's an incredibly useful tool that helps write valid Groovy code for steps like `git` or `sh` without having to memorize the syntax.
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 078: Conditional Deployments with Jenkins Pipelines
+
+Today's task was an advanced exercise in Jenkins Pipeline scripting. I built upon my knowledge of pipelines and agent nodes to create a **parameterized deployment job**.
+
+The challenge was to create a single pipeline that could deploy *either* the `master` branch *or* the `feature` branch of a web application, depending on a choice made by the user at runtime. This required me to combine three key concepts: **Pipeline Parameters**, **Conditional Logic** (using `if/else` in Groovy), and **Git Branch Selection**.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a Jenkins pipeline job named `nautilus-webapp-job`. The requirements were:
+1.  **Source Code:** Use the `web_app` repository hosted on Gitea (user `sarah`).
+2.  **Agent Node:** Use the `Storage Server` (`ststor01`) agent, deploying to `/var/www/html`.
+3.  **Parameter:** The job must accept a String Parameter named `BRANCH`.
+4.  **Condition:**
+    -   If `BRANCH` is `master`, deploy the `master` branch.
+    -   If `BRANCH` is `feature`, deploy the `feature` branch.
+5.  **Verification:** The app must be accessible at the main URL `https://<LBR-URL>`.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved configuring the agent (if not already done), adding credentials, and writing the conditional pipeline script.
+
+#### Phase 1: Configuring the Agent Node (Prerequisite)
+*If the Storage Server node was not already configured from the previous task:*
+1.  I logged into Jenkins as `admin`.
+2.  I went to **Manage Jenkins** > **Nodes** > **New Node**.
+3.  **Node Name:** `Storage Server`, **Type:** Permanent Agent.
+4.  **Remote root directory:** `/var/www/html`.
+5.  **Labels:** `ststor01`.
+6.  **Launch method:** SSH, Host: `ststor01`, Credentials: `natasha` (`Bl@kW`).
+7.  I verified the agent launched successfully.
+
+#### Phase 2: Creating the Credentials
+1.  I went to **Manage Jenkins** > **Credentials**.
+2.  I added a new Username with Password credential for Gitea:
+    -   **Username:** `sarah`
+    -   **Password:** `Sarah_pass123`
+    -   **ID:** `git-creds` (This ID is referenced in my script).
+
+#### Phase 3: Creating the Pipeline Job
+1.  I created a new **Pipeline** job named `nautilus-webapp-job`.
+2.  In the configuration, I checked **"This project is parameterized"**.
+3.  I added a **String Parameter**:
+    -   **Name:** `BRANCH`
+    -   **Default Value:** `master` (A safe default).
+
+#### Phase 4: Writing the Conditional Pipeline Script
+I scrolled down to the Pipeline script section and wrote the following Groovy code. This script uses the `params.BRANCH` variable to dynamically select the branch and includes debug steps.
+
+```groovy
+pipeline{
+    agent{
+        label 'ststor01'
+    }
+    
+    stages{
+        stage('Deploy'){
+            steps{
+                script{
+                    if(params.BRANCH != 'master' && params.BRANCH != 'feature'){
+                        error('**** Invalid Branch Parameter. Only master or feature is allowed. ****')
+                    }
+                    git branch: params.BRANCH,
+                        url: 'http://git.stratos.xfusioncorp.com/sarah/web_app.git'
+                        
+                    sh'''
+                        cp -r * /var/www/html
+                    '''
+                }
+            }
+        }
+    }
+}
+```
+
+#### Phase 5: Execution and Verification
+1.  I clicked **Save**.
+2.  I clicked **Build with Parameters**.
+3.  I entered `master` and clicked **Build**. I checked the Console Output to confirm "Deploying MASTER branch..." was printed.
+4.  I ran it again, entered `feature`, and clicked **Build**. I checked the Console Output to confirm "Deploying FEATURE branch..." was printed.
+5.  Finally, I clicked the **App** button to confirm the website was loading correctly from the root URL.
+
+---
+
+<br>
+<br>
+
+### Troubleshooting: Pipeline Not Running Logic
+<a name="troubleshooting-pipeline-not-running-logic"></a>
+If your pipeline finishes with `SUCCESS` but the Console Output only shows "Start of Pipeline" and "End of Pipeline" with no actual steps executed:
+
+1.  **Check Node Labels:** Ensure the `agent { label 'ststor01' }` matches the label on your Storage Server node exactly. If it doesn't match, Jenkins might be waiting for a node that doesn't exist or skipping the block.
+2.  **Check Parameter Names:** Verify your String Parameter is named `BRANCH` (all caps). If it's named `Branch`, `params.BRANCH` will be null, and the logic might be skipped (though the `else` block should catch it).
+3.  **Check Syntax:** Ensure your `script` block is correctly nested inside `steps`, which is inside `stage`.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Parameterized Pipelines:** Hardcoding values (like branch names) makes automation brittle. By using parameters (`params.BRANCH`), I created a single, flexible pipeline that can handle multiple scenarios. This allows developers to deploy different versions of the app (e.g., for testing a new feature) without needing to modify the Jenkinsfile.
+-   **Conditional Deployment:** Real-world deployments are rarely linear. We often need logic like "If this is Production, do X; if this is Staging, do Y." The `script` block within the declarative pipeline allowed me to use standard Groovy `if/else` statements to implement this logic.
+-   **Dynamic Git Checkout:** Instead of letting the pipeline configuration handle the SCM checkout (which usually defaults to one branch), I explicitly used the `git` step inside my stages. This gave me total control to switch branches dynamically based on the user's input.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Conditional Pipeline Script
+<a name="deep-dive-the-conditional-pipeline-script"></a>
+Here is the breakdown of the key logic in my script.
+
+
+```groovy
+pipeline{
+    agent{
+        label 'ststor01'
+    }
+    
+    stages{
+        stage('Deploy'){
+            steps{
+                script{
+                    if(params.BRANCH != 'master' && params.BRANCH != 'feature'){
+                        error('**** Invalid Branch Parameter. Only master or feature is allowed. ****')
+                    }
+                    git branch: params.BRANCH,
+                        url: 'http://git.stratos.xfusioncorp.com/sarah/web_app.git'
+                        
+                    sh'''
+                        cp -r * /var/www/html
+                    '''
+                }
+            }
+        }
+    }
+}
+```
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Missing `script` Block:** In Declarative Pipelines (the ones that start with `pipeline { ... }`), you cannot just write `if (...)` directly inside `steps`. You **must** wrap imperative logic like loops and conditionals inside a `script { ... }` block.
+-   **Case Sensitivity:** The stage name `Deploy` must be exact. `deploy` or `Deployment` will fail the validation.
+-   **Parameter Name Mismatch:** The parameter is defined as `BRANCH`. Accessing it as `params.branch` (lowercase) would fail because parameters are case-sensitive.
+-   **Credentials ID:** Ensure the `credentialsId` used in the script matches exactly the ID you gave when creating the credentials in Jenkins.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Build with Parameters`**: This replaces the "Build Now" button when a job has parameters. It creates a form for user input.
+-   **`Pipeline Syntax`**: I used this tool (link at bottom of pipeline editor) to generate the correct syntax for the `git` checkout step, ensuring I got the URL and credentials format right.
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 079: Automating Deployment with Jenkins, Git Triggers & SCP Deployment
+
+This task was about building a fully automated deployment pipeline. The goal was simple:
+**Any change pushed to the Git repo must automatically get deployed to the Storage Server’s `/var/www/html` directory.**
+
+I intentionally used the simplest and most practical approach:
+**sshpass + scp + Jenkins Secret Text + Poll SCM.**
+No Jenkins agents, no fancy deployment plugins — just a direct, clean CD flow.
+
+---
+
+<br>
+<br>
+
+## The Task
+1. Install and configure Apache (`httpd`) on all App Servers to run on port **8080**.
+2. Create a Jenkins job that automatically deploys code changes from the `master` branch of the Git repo.
+3. Ensure Jenkins can push updated content to the Storage Server.
+4. Verify the deployment by modifying `index.html`, pushing to Git, and checking that Jenkins deploys it within a minute.
+
+---
+
+## My Updated, Actual Approach (The Real Workflow)
+This section explains exactly what I did — no theoretical shortcuts.
+
+### **1. Install Git & Credentials Plugin in Jenkins**
+I installed the Git plugin and the Credentials Binding plugin.
+
+### **2. Add Credentials for Sarah**
+- Type: **Secret Text**
+- ID: `sarah-pass`
+- Secret: Sarah's password
+
+This allowed Jenkins to inject the password into the build environment.
+
+---
+
+<br>
+<br>
+
+## Jenkins Job Setup (nautilus-app-deployment)
+### **SCM Configuration**
+- **Git Repo:** `http://git.stratos.xfusioncorp.com/sarah/web.git`
+- **Credentials:** Sarah (username/password)
+- **Branch:** `master`
+
+### **Build Trigger**
+```
+* * * * *
+```
+This makes Jenkins poll the Git repo **every minute**.
+
+### **Environment Injection**
+Selected:
+```
+Use secret text(s) or file(s)
+```
+Added:
+- Variable: `SARAH_PASS`
+- Secret text: Sarah's password
+
+### **Build Step (Execute Shell)**
+I used SCP with sshpass to deploy files to the Storage Server.
+
+```
+sshpass -p "$SARAH_PASS" scp -o StrictHostKeyChecking=no -r * sarah@ststor01:/var/www/html
+```
+
+This does a brute-force but effective deployment:
+- Takes the workspace files
+- Copies everything to `/var/www/html` on the Storage Server
+
+---
+
+<br>
+<br>
+
+## Storage Server Preparation
+```
+sudo chown -R sarah:sarah /var/www/html
+```
+This prevents permission errors during deployments.
+
+---
+
+<br>
+<br>
+
+## Testing the Pipeline
+1. SSH into Storage Server as Sarah:
+   ```
+   ssh sarah@ststor01
+   ```
+2. Navigate to cloned repo:
+   ```
+   cd web
+   ```
+3. Edit `index.html`:
+   ```
+   vi index.html
+   ```
+4. Commit & push:
+   ```
+   git add index.html
+   git commit -m "Update welcome message"
+   git push origin master
+   ```
+5. Wait 1 minute → Jenkins sees the change → Job triggers
+6. Jenkins deploys updated files via SCP
+7. Site instantly reflects new content
+
+---
+
+<br>
+<br>
+
+## Why This Approach Works
+- **Simple:** No need for agents or plugins beyond basics
+- **Direct:** SCP pushes files straight to the production directory
+- **Repeatable:** Every commit = fresh deployment
+- **Fast:** Zero complexity, minimal moving parts
+
+---
+
+<br>
+<br>
+
+## Common Pitfalls
+- Wrong permissions in `/var/www/html` = deployment failure
+- Forgetting to inject secret text = sshpass will fail
+- Poll SCM requires correct cron format
+- SCP copies the *entire workspace* — know what you're deploying
+
+---
+
+<br>
+<br>
+
+## Summary
+You push code → Git updates → Jenkins detects change → SCP deploys files → App servers immediately serve new content from Storage Server.
+
+This is a clean, minimal CD pipeline — reliable, transparent, and easy to debug.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 080: Chained Builds and Downstream Jobs
+
+Today's task was an advanced automation scenario involving **Build Chaining**. The goal was to create a deployment pipeline where one job deploys code, and if (and only if) it succeeds, it triggers a second "downstream" job to restart the application services.
+
+This ensures that we don't restart services if the code deployment failed, preventing downtime. I used the **Publish Over SSH** plugin to manage connections to multiple servers and configured a parameterized downstream job to handle service restarts securely.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to configure two linked Jenkins jobs:
+1.  **`nautilus-app-deployment` (Upstream):** Pulls code from the `web` repository to the shared storage `/var/www/html` on the Storage Server.
+2.  **`manage-services` (Downstream):** Restarts the `httpd` service on all three App Servers (`stapp01`, `stapp02`, `stapp03`), but only if the deployment job is stable.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved configuring the global SSH plugin settings and then setting up the two interdependent jobs.
+
+#### Phase 1: Configuring "Publish Over SSH"
+Before creating jobs, I needed to teach Jenkins how to talk to all four servers (Storage + 3 App Servers).
+1.  **Install Plugin:** I went to **Manage Jenkins** > **Plugins** and installed **"Publish Over SSH"**. I restarted Jenkins.
+2.  **Configure Servers:** I went to **Manage Jenkins** > **System**.
+3.  I scrolled down to the **Publish over SSH** section.
+4.  **Storage Server:**
+    -   Name: `ststor01`
+    -   Hostname: `ststor01.stratos.xfusioncorp.com`
+    -   Username: `natasha`
+    -   Remote Directory: `/`
+    -   **Advanced** > Check **Use password authentication**.
+    -   Password: `Bl@kW`
+    -   Clicked **Test Configuration** -> Success.
+5.  **App Servers:** I clicked "Add" and repeated the process for all three app servers:
+    -   **stapp01:** User `tony` (`Ir0nM@n`).
+    -   **stapp02:** User `steve` (`Am3ric@`).
+    -   **stapp03:** User `banner` (`BigGr33n`).
+6.  I clicked **Save**.
+
+#### Phase 2: Creating the Deployment Job (Upstream)
+1.  **New Item:** Created a Freestyle project named `nautilus-app-deployment`.
+2.  **Build Steps:** Added **"Send files or execute commands over SSH"**.
+    -   **Name:** `ststor01` (Selected from the dropdown).
+    -   **Exec command:**
+        ```bash
+        cd /var/www/html
+        # The repo is already there, just need to update it
+        git pull origin master
+        ```
+3.  **Post-build Actions:** Added **"Build other projects"**.
+    -   **Projects to build:** `manage-services`.
+    -   **Trigger only if build is stable:** Checked.
+4.  I clicked **Save**.
+
+#### Phase 3: Creating the Service Management Job (Downstream)
+1.  **New Item:** Created a Freestyle project named `manage-services`.
+2.  **Parameters:** I checked **"This project is parameterized"** to securely handle sudo passwords.
+    -   Added **Password Parameter**: `STAPP01_PASS` (Default: `Ir0nM@n`).
+    -   Added **Password Parameter**: `STAPP02_PASS` (Default: `Am3ric@`).
+    -   Added **Password Parameter**: `STAPP03_PASS` (Default: `BigGr33n`).
+3.  **Build Steps:** Added **"Send files or execute commands over SSH"**.
+    -   **Server 1:** `stapp01`.
+    -   **Command:** `echo $STAPP01_PASS | sudo -S systemctl restart httpd`
+    -   **Server 2:** `stapp02` (Added another "Transfer Set").
+    -   **Command:** `echo $STAPP02_PASS | sudo -S systemctl restart httpd`
+    -   **Server 3:** `stapp03` (Added another "Transfer Set").
+    -   **Command:** `echo $STAPP03_PASS | sudo -S systemctl restart httpd`
+4.  I clicked **Save**.
+
+#### Phase 4: Verification
+1.  I manually triggered `nautilus-app-deployment`.
+2.  I watched it complete successfully.
+3.  I verified that `manage-services` started automatically right after.
+4.  I checked the console output of `manage-services` to confirm the restart commands were sent successfully.
+5.  I refreshed the main website URL (`https://<LBR-URL>`) to confirm the app was live.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Chained Builds:** In complex systems, you rarely want one giant job that does everything. By splitting "Deployment" and "Restart" into two jobs, I kept them modular. If I just want to restart services without deploying code, I can run `manage-services` independently.
+-   **Downstream Triggers:** This ensures order and safety. We never want to restart the web server if the code deployment failed (leaving the site in a broken state). The "Trigger only if stable" condition acts as a safety gate.
+-   **`sudo -S`:** SSH commands run non-interactively. `sudo` usually asks for a password from the keyboard. The `-S` flag tells `sudo` to read the password from Standard Input (stdin), which allowed me to pipe the password (`echo $PASS | ...`) securely into the command.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: Upstream vs. Downstream Jobs
+<a name="deep-dive-upstream-vs-downstream-jobs"></a>
+This relationship creates a dependency pipeline.
+
+[Image of Jenkins Upstream Downstream flow]
+
+1.  **Upstream (`nautilus-app-deployment`):** The parent job. It initiates the process. It has no idea *how* to restart services; it just knows *who* to call when it's done.
+2.  **Downstream (`manage-services`):** The child job. It waits for a signal. It doesn't care *where* the code came from; its only job is to ensure the services pick up the changes.
+
+This separation of concerns makes debugging easier. If the code didn't update, I check the Upstream logs. If the server didn't restart, I check the Downstream logs.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Parameter Names:** When using `echo $VAR`, the variable name in the shell command MUST match the Parameter Name defined in the job exactly. Case matters.
+-   **Hidden Spaces:** Copy-pasting passwords into the "Default Value" field can sometimes include a trailing space, which causes `sudo` to reject the password.
+-   **SSH Exec Timeout:** If `systemctl restart` takes too long, the SSH command might timeout. Increasing the timeout in the "Publish Over SSH" global settings prevents this.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Manage Jenkins` > `System`**: The location for configuring global tools like the "Publish Over SSH" servers.
+-   **`Post-build Actions`**: The section in a Job configuration where you define what happens *after* the main work is done (e.g., triggering another job).
+-   **`Send files or execute commands over SSH`**: A build step provided by the plugin that allows running shell commands on remote servers without needing a full Jenkins agent setup on them.
+
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 081: CI/CD Pipeline with Deployment and Test Stages
+
+Today's task was to create a structured **Jenkins Pipeline** that not only deploys code but also verifies the deployment with a **Test stage**. This represents a true CI/CD workflow where quality assurance is automated.
+
+I configured a pipeline to pull code from Gitea, deploy it to a storage server using `sshpass` (a robust way to handle SSH passwords in pipelines without key-based auth), and then validate the application by checking the HTTP response of the load balancer.
+
+
+---
+
+<br>
+<br>
+
+### The Task
+<a name="the-task"></a>
+My objective was to create a Jenkins pipeline job named `deploy-job` with two specific stages:
+1.  **Deploy Stage:** Pull code from the `sarah/web` repo (master branch) and copy it to `/var/www/html` on the `Storage Server` (`ststor01`).
+2.  **Test Stage:** Verify the website is running by accessing the Load Balancer URL (`http://stlb01:8091`).
+3.  **Prerequisites:** Update the `index.html` file in the repo before starting and ensure necessary plugins/credentials are set up.
+
+---
+
+<br>
+<br>
+
+### My Step-by-Step Solution
+<a name="my-step-by-step-solution"></a>
+The solution involved manual code updates, Jenkins configuration, and writing a Groovy pipeline script.
+
+#### Phase 1: Code Update & Git Push
+First, I had to act as the developer (`sarah`) to push the new content.
+1.  I SSH'd into the Storage Server: `ssh natasha@ststor01` (Password: `Bl@kW`).
+2.  I navigated to the repository: `cd /var/www/html/web` (or wherever Sarah's repo was cloned, usually her home or `/var/www/html`).
+    * *Correction based on task:* The repo is "already cloned on Storage server under /var/www/html directory".
+3.  I edited the file: `vi index.html`.
+    * Content: `Welcome to xFusionCorp Industries`
+4.  I committed the change:
+    ```bash
+    git add index.html
+    git commit -m "Update index.html"
+    git push origin master
+    ```
+
+#### Phase 2: Jenkins Configuration
+1.  **Install Plugins:** Logged into Jenkins as `admin`. Went to **Manage Jenkins > Plugins**. Installed **Git** and **Pipeline** plugins. Restarted Jenkins.
+2.  **Add Credentials:** Went to **Manage Jenkins > Credentials**.
+    * Added **Username with password** for Gitea: `sarah` / `Sarah_pass123`, ID: `sarah-git-creds`.
+    * Added **Username with password** for SSH: `natasha` / `Bl@kW`, ID: `ssh-storage-server`.
+
+#### Phase 3: Creating the Pipeline
+1.  Created a **New Item** named `deploy-job`, type **Pipeline**.
+2.  In the **Pipeline** section, I entered the following script. I used `sshpass` because it allows passing the password variable directly to `scp` without setting up SSH keys, which fits the requirements of using the credentials stored in Jenkins.
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                // 1. Checkout Code from Gitea
+                git branch: 'master',
+                    credentialsId: 'sarah-git-creds',
+                    url: 'http://git.stratos.xfusioncorp.com/sarah/web.git'
+
+                // 2. Deploy using sshpass
+                // We wrap this in 'withCredentials' to securely inject the password into environment variables.
+                // We use single quotes for the outer sh command to prevent Groovy interpolation issues,
+                // but double quotes inside are tricky.
+                // Best practice is to use the environment variables directly.
+                
+                withCredentials([usernamePassword(credentialsId: 'ssh-storage-server', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
+                    // Using sshpass to run scp non-interactively
+                    // -o StrictHostKeyChecking=no prevents the "unknown host" prompt
+                    sh "sshpass -p '$SSH_PASS' scp -o StrictHostKeyChecking=no -r * $SSH_USER@ststor01:/var/www/html"
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing application accessibility..."
+                // curl -f fails silently on server errors (404, 500) but returns exit code > 0
+                // This ensures the stage fails if the site is down.
+                sh 'curl -f http://stlb01:8091'
+            }
+        }
+    }
+}
+```
+3.  I clicked **Save** and **Build Now**.
+
+#### Phase 4: Verification
+1.  I watched the pipeline execution.
+    * **Deploy Stage:** Green. Logs showed files copied.
+    * **Test Stage:** Green. Logs showed the HTML content of the page fetched by curl.
+2.  I clicked the **App** button in the top bar to verify visually. The text "Welcome to xFusionCorp Industries" was displayed correctly.
+
+---
+
+<br>
+<br>
+
+### Why Did I Do This? (The "What & Why")
+<a name="why-did-i-do-this-the-what--why)"></a>
+-   **Multi-Stage Pipeline:** Splitting the job into "Deploy" and "Test" provides clarity. If the build fails, I know immediately if it was a code transfer issue (Deploy) or an application runtime issue (Test).
+-   **`withCredentials`:** This is the secure way to handle secrets in a Jenkins Pipeline. It injects the username and password into environment variables (`SSH_USER`, `SSH_PASS`) only for the scope of that block. They are masked in the console logs (`****`).
+-   **`sshpass`**: Standard `scp` prompts for a password interactively, which hangs a CI job. `sshpass` wraps the command and supplies the password automatically. It's less secure than SSH keys but very useful when you cannot or should not set up keys.
+-   **`curl -f`:** The `-f` (fail) flag is critical. Without it, `curl` might show a "404 Not Found" page but still exit with code `0` (Success), creating a false positive. `-f` makes `curl` return an error code on HTTP errors, causing the Jenkins stage to fail correctly.
+
+---
+
+<br>
+<br>
+
+### Deep Dive: The Pipeline Script & `sshpass`
+<a name="deep-dive-the-pipeline-script-and-sshpass"></a>
+The core logic relies on safely passing the password to the shell command.
+
+```groovy
+withCredentials([usernamePassword(credentialsId: 'ssh-storage-server', ...)]) {
+    // 1. sshpass -p '${SSH_PASS}': Takes the injected password variable.
+    // 2. scp -o StrictHostKeyChecking=no: Disables the "Are you sure?" prompt for new hosts.
+    // 3. -r *: Recursive copy of everything in the workspace.
+    // 4. ${SSH_USER}@ststor01:/var/www/html: Destination path.
+    sh "sshpass -p '${SSH_PASS}' scp -o StrictHostKeyChecking=no -r * ${SSH_USER}@ststor01:/var/www/html"
+}
+```
+*Note on Quoting:* I used double quotes `"` for the `sh` string so that Groovy would interpolate the `${SSH_PASS}` variable. I wrapped the variable itself in single quotes `'${SSH_PASS}'` inside the shell command to handle any special characters the password might contain.
+
+---
+
+<br>
+<br>
+
+### Common Pitfalls
+<a name="common-pitfalls"></a>
+-   **Missing `sshpass`:** The `sshpass` utility must be installed on the Jenkins server (or agent) running the build. If it's missing, the command will fail with "command not found".
+-   **File Permissions:** If `natasha` doesn't own `/var/www/html` on the storage server, the `scp` command will fail with "Permission denied".
+-   **Stage Names:** The task specified "Deploy" and "Test" are case-sensitive. Using "deploy" or "test" would fail the requirements check.
+-   **Curl without `-f`:** If the web server is up but serving a 403 or 500 error, a normal `curl` will just print the error page and pass the stage. Using `-f` ensures the pipeline actually catches the failure.
+
+---
+
+<br>
+<br>
+
+### Exploring the UI Used
+<a name="exploring-the-ui-used"></a>
+-   **`Pipeline Syntax` Snippet Generator:** I used this to generate the `withCredentials` block structure, as remembering the exact syntax for binding username/password variables is difficult.
+-   **`Global Credentials`**: Where I securely stored the passwords so they didn't have to be hardcoded in the pipeline script.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 082: Ansible Playbooks & Inventories - Testing on App Server 1
+
+This document provides a comprehensive guide to completing the Ansible task for DevOps Day 82. It covers the creation of an inventory file and the execution of a playbook to test connectivity with an application server.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team needs to test Ansible playbooks on `App Server 1` in the Stratos Datacenter. The playbooks are already located at `/home/thor/playbook/` on the jump host.
+
+**Requirements:**
+1.  **Inventory File:** Create an INI-style inventory file named `inventory` inside `/home/thor/playbook/`.
+2.  **Target Host:** Add App Server 1 (hostname `stapp01`) to this inventory.
+3.  **Variables:** Include necessary connection variables (`ansible_user`, `ansible_ssh_pass`).
+4.  **Validation:** Execute the existing `playbook.yml` using the newly created inventory.
+
+---
+
+<br>
+<br>
+
+## Understanding Ansible Concepts
+<a name="understanding-ansible-concepts"></a>
+
+### What is Ansible?
+<a name="what-is-ansible"></a>
+Ansible is an open-source automation tool used for configuration management, application deployment, and task automation. It is **agentless**, meaning it doesn't require any software to be installed on the target nodes. It connects via SSH (for Linux) or WinRM (for Windows).
+
+### Inventory Files
+<a name="inventory-files"></a>
+An **Inventory** is a file (often `hosts` or `inventory`) that lists the servers (hosts) Ansible will manage. It can be formatted as INI or YAML.
+
+**INI Format Example:**
+```ini
+[webservers]
+server1 ansible_host=192.168.1.10
+server2 ansible_host=192.168.1.11
+
+[dbservers]
+db1 ansible_host=192.168.1.20
+```
+
+### Playbooks
+<a name="playbooks"></a>
+A **Playbook** is a YAML file containing a list of **plays**. Each play maps a group of hosts to a list of **tasks**. Each task calls an Ansible **module**. Playbooks describe the *desired state* of your system (e.g., "Ensure Apache is installed").
+
+**Example Playbook (`playbook.yml`):**
+```yaml
+---
+- name: Test Connection
+  hosts: all
+  tasks:
+    - name: Ping the server
+      ping:
+```
+
+### Modules
+<a name="modules"></a>
+Modules are the units of work in Ansible. They are standalone scripts that Ansible executes on your behalf.
+* **`ping`**: Tries to connect to the host and verify a usable python environment.
+* **`command` / `shell`**: Executes shell commands.
+* **`yum` / `apt`**: Manages packages.
+* **`service`**: Manages services (start, stop, restart).
+* **`copy`**: Copies files from the control node to managed nodes.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Navigate to the Directory
+<a name="1-navigate-to-the-directory"></a>
+The task specifies that playbooks are in `/home/thor/playbook/`. Move there first.
+
+```bash
+cd /home/thor/playbook/
+```
+
+### Here is the playbook file provided by kodekloud:
+### Playbooks
+
+<a name="playbooks"></a>
+
+**Provided Playbook (`playbook.yml`) – with line-by-line explanation:**
+
+```yaml
+---                                    # Start of YAML document.
+- hosts: all                           # Targets all hosts from the inventory (here, `stapp01`).
+  become: yes                          # Enables sudo privilege escalation.
+  become_user: root                    # Runs tasks as the root user.
+  tasks:                               # Defines the list of actions to execute.
+    - name: Install httpd package      
+      yum:                             # Uses the YUM package manager module.
+        name: httpd                    # Specifies the Apache package.
+        state: installed               # Ensures Apache is installed.
+    
+    - name: Start service httpd
+      service:                         # Controls system services.
+        name: httpd                    # Starts the Apache service.
+```
+
+
+### 2. Create the Inventory File
+<a name="2-create-the-inventory-file"></a>
+We need to create a file named `inventory`. It must contain the server name (`stapp01`) and the connection credentials.
+
+**Command:**
+```bash
+vi inventory
+```
+
+**Content to Add (INI Format):**
+```ini
+stapp01 ansible_host=stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n
+
+
+# OR
+
+
+[app]                        # Group name
+stapp01                      # Target application server's hostname
+
+[app:vars]                   # Group variables
+ansible_user=tony            # SSH username for App Server 1
+ansible_ssh_pass=Ir0nM@n     # SSH password for user `tony`
+```
+
+* **`stapp01`**: The alias/hostname used in Ansible commands.
+* **`ansible_host=stapp01`**: The actual DNS name or IP address Ansible connects to.
+* **`ansible_user=tony`**: The SSH username for App Server 1.
+* **`ansible_ssh_pass=Ir0nM@n`**: The SSH password for user `tony`.
+
+*Alternative grouping structure:*
+```ini
+[app_servers]
+stapp01 ansible_host=stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n
+```
+
+### 3. Validate Connectivity (Ad-hoc Command)
+<a name="3-validate-connectivity-ad-hoc-command"></a>
+Before running the full playbook, it is best practice to test if Ansible can actually talk to the server using the `ping` module.
+
+**Command:**
+```bash
+ansible all -i inventory -m ping
+```
+
+* **`all`**: Target all hosts listed in the inventory.
+* **`-i inventory`**: Use the specific inventory file we just created.
+* **`-m ping`**: Run the `ping` module.
+
+**Expected Output:**
+```json
+stapp01 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+### 4. Run the Playbook
+<a name="4-run-the-playbook"></a>
+Finally, execute the provided playbook as requested.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Breakdown:**
+* **`PLAY [ ... ]`**: The start of the play.
+* **`TASK [Gathering Facts]`**: Ansible automatically collects info about the remote system (OS, IP, etc.).
+* **`TASK [ ... ]`**: The custom tasks defined in `playbook.yml`.
+* **`PLAY RECAP`**: A summary. `ok=X` means success. `failed=0` is critical.
+
+---
+
+<br>
+<br>
+
+## Command Breakdown
+<a name="command-breakdown"></a>
+
+| Command Segment | Explanation |
+| :--- | :--- |
+| **`ansible`** | The CLI tool for running ad-hoc commands (one-off tasks). |
+| **`ansible-playbook`** | The CLI tool for running Ansible playbooks (orchestrated workflows). |
+| **`-i inventory`** | **Inventory Flag:** Tells Ansible exactly which file to look at for the list of servers. Without this, it defaults to `/etc/ansible/hosts`. |
+| **`-m ping`** | **Module Flag:** Tells Ansible which module to run. |
+| **`all`** | **Host Pattern:** Refers to every host listed in the inventory file. You could also use `stapp01` or a group name like `[web]`. |
+| **`playbook.yml`** | The YAML file containing the definition of tasks to execute. |
+
+---
+
+<br>
+<br>
+
+## Troubleshooting & Common Scenarios
+<a name="troubleshooting--common-scenarios"></a>
+
+**Scenario 1: `Permission denied (publickey,password)`**
+* **Cause:** Wrong username or password in the inventory file.
+* **Fix:** Double-check `ansible_user` (is it `tony`?) and `ansible_ssh_pass` (is it `Ir0nM@n`?). Ensure there are no extra spaces.
+
+**Scenario 2: `UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh..."}`**
+* **Cause:** The server `stapp01` might be down, or DNS resolution is failing.
+* **Fix:** Try `ping stapp01` from the command line. If that fails, check the server status or IP address.
+
+**Scenario 3: `SSH authenticity of host 'stapp01' can't be established.`**
+* **Cause:** This is the first time the jump host is connecting to `stapp01`.
+* **Fix:** Ansible usually hangs here waiting for "yes". You can:
+    1.  Run `ssh tony@stapp01` manually once and type "yes".
+    2.  Add `ansible_ssh_common_args='-o StrictHostKeyChecking=no'` to your inventory line to bypass this check automatically.
+
+**Scenario 4: `syntax error` in inventory**
+* **Cause:** INI files are sensitive to structure.
+* **Fix:** Ensure variables are on the same line as the hostname, separated by spaces: `host var1=value var2=value`.
+
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 083: Ansible Playbooks & File Management
+
+This document provides a comprehensive guide to completing the Ansible task for DevOps Day 83. It covers troubleshooting an existing inventory configuration and creating a new playbook to manage files on a remote application server.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team needs to complete an unfinished Ansible setup on the jump host. You must fix the inventory file and create a playbook to generate a file on **App Server 1**.
+
+**Requirements:**
+1.  **Inventory Adjustment:** Update `/home/thor/ansible/inventory` to include App Server 1 (`stapp01`) with the correct connection credentials.
+2.  **Playbook Creation:** Create `/home/thor/ansible/playbook.yml`.
+3.  **Task:** The playbook must create an empty file named `/tmp/file.txt` on App Server 1.
+4.  **Validation:** Run `ansible-playbook -i inventory playbook.yml`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Update the Inventory File
+<a name="1-update-the-inventory-file"></a>
+The existing inventory file is incomplete. We need to define the host `stapp01` and provide the SSH user and password.
+
+* **Host:** `stapp01`
+* **User:** `tony`
+* **Password:** `Ir0nM@n`
+
+**Command:**
+```bash
+cd /home/thor/ansible/
+vi inventory
+```
+
+**Content:**
+```ini
+stapp01 ansible_host=stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+*Note: Adding `ansible_ssh_common_args='-o StrictHostKeyChecking=no'` is a pro-tip. It prevents the playbook from hanging on the "Are you sure you want to connect?" prompt.*
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+We need a YAML file that defines the play.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: Configure App Server 1
+  hosts: stapp01
+  become: yes  # Optional: Use if /tmp requires elevated privileges (usually not needed for /tmp)
+  tasks:
+    - name: Create an empty file at /tmp/file.txt
+      file:
+        path: /tmp/file.txt
+        state: touch
+```
+
+**Breakdown:**
+* **`hosts: stapp01`**: Tells Ansible to run these tasks only on the server labelled `stapp01` in our inventory.
+* **`file` module**: The dedicated module for managing file properties.
+* **`state: touch`**: Similar to the Linux `touch` command—it creates the file if it doesn't exist, or updates the timestamp if it does.
+
+### 3. Validate and Execute
+<a name="3-validate-and-execute"></a>
+Run the playbook using the inventory you created.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Expected Output:**
+```text
+PLAY [Configure App Server 1] *******************************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [stapp01]
+
+TASK [Create an empty file at /tmp/file.txt] ****************************************
+changed: [stapp01]
+
+PLAY RECAP **************************************************************************
+stapp01                    : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `file` Module
+<a name="the-file-module"></a>
+The `file` module is your Swiss Army knife for filesystem operations. It can create files, directories, symlinks, and modify permissions.
+
+* **Create a directory:** `state: directory`
+* **Create a file:** `state: touch`
+* **Remove a file:** `state: absent`
+* **Change permissions:** `mode: '0755'`
+
+### Inventory Variables
+<a name="inventory-variables"></a>
+In the inventory file, we used inline variables to define how Ansible connects:
+
+| Variable | Description |
+| :--- | :--- |
+| `ansible_host` | The actual IP or FQDN of the server. |
+| `ansible_user` | The username SSH uses to login. |
+| `ansible_ssh_pass` | The password for the user. |
+| `ansible_ssh_common_args` | Additional arguments passed to the SSH command line (useful for bypassing host key checking). |
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Host Key Verification Failed"**
+* **Cause:** This is the first time connecting to `stapp01`, and SSH is waiting for you to type "yes" to accept the fingerprint.
+* **Fix:** Ensure you included `ansible_ssh_common_args='-o StrictHostKeyChecking=no'` in your inventory file. Alternatively, run `ssh tony@stapp01` manually once and accept the key.
+
+**Issue: "Permission Denied"**
+* **Cause:** Incorrect password or username.
+* **Fix:** Double check that `ansible_user=tony` and `ansible_ssh_pass=Ir0nM@n`. Note that `Ir0nM@n` has special characters; ensure no extra spaces were pasted.
+
+**Issue: "Authentication failed" using `ansible_ssh_password`**
+* **Note:** The standard variable is `ansible_ssh_pass`. While `ansible_ssh_password` works in many contexts/plugins, `ansible_ssh_pass` is the traditional default for the connection variable. If one fails, try the other.
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 084: Copy Data to App Servers using Ansible
+
+This document outlines the solution for DevOps Day 84, where the objective was to distribute a specific file from the jump host to all application servers in the Stratos Datacenter using Ansible automation.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team requires a file (`index.html`) located at `/usr/src/data/` on the jump host to be copied to the `/opt/data/` directory on all three application servers (`stapp01`, `stapp02`, `stapp03`).
+
+**Requirements:**
+1.  **Inventory Creation:** Create `/home/thor/ansible/inventory` listing all app servers.
+2.  **Playbook Creation:** Create `/home/thor/ansible/playbook.yml` to perform the copy operation.
+3.  **Source:** `/usr/src/data/index.html` (Local on Jump Host).
+4.  **Destination:** `/opt/data/index.html` (Remote on App Servers).
+5.  **Validation:** Execute with `ansible-playbook -i inventory playbook.yml`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create the Inventory File
+<a name="1-create-the-inventory-file"></a>
+We need to define a group of servers (which I named `[app]`) containing all three application nodes. We also need to define the specific connection credentials for each user (`tony`, `steve`, `banner`).
+
+**Command:**
+```bash
+cd /home/thor/ansible/
+vi inventory
+```
+
+**Content:**
+```ini
+[app]
+stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n
+stapp02 ansible_user=steve ansible_ssh_pass=Am3ric@
+stapp03 ansible_user=banner ansible_ssh_pass=BigGr33n
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+*Note: The `[all:vars]` section is a best practice in these lab environments to avoid SSH "host key verification" failures.*
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+We need a YAML file to describe the task. We will use the `copy` module.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: copy data to application server
+  hosts: app
+  become: yes  # Required because /opt/data usually requires root/sudo permissions to write
+  tasks:
+    - name: copy index.html to /opt/data
+      copy:
+        src: /usr/src/data/index.html
+        dest: /opt/data/
+        mode: '0644'
+```
+
+### 3. Execution and Validation
+<a name="3-execution-and-validation"></a>
+Run the playbook against the inventory.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+PLAY [copy data to application server] **********************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [stapp02]
+ok: [stapp01]
+ok: [stapp03]
+
+TASK [copy index.html to /opt/data] *************************************************
+changed: [stapp03]
+changed: [stapp02]
+changed: [stapp01]
+
+PLAY RECAP **************************************************************************
+stapp01 : ok=2    changed=1    unreachable=0    failed=0 ...
+stapp02 : ok=2    changed=1    unreachable=0    failed=0 ...
+stapp03 : ok=2    changed=1    unreachable=0    failed=0 ...
+```
+* **`ok=2`**: Means both "Gathering Facts" and "Copy" succeeded.
+* **`changed=1`**: Means the file was successfully copied (it wasn't there before, or it was different).
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### Inventory Groups
+<a name="inventory-groups"></a>
+Instead of listing every server under `[all]`, we created a group called `[app]`. This allows us to target all three servers simultaneously in the playbook by simply setting `hosts: app`.
+
+### The `copy` Module
+<a name="the-copy-module"></a>
+The `copy` module copies a file from the local or remote machine to a location on the remote machine.
+* **`src`**: The path to the file on the control node (jump host).
+* **`dest`**: The destination path on the remote host (app servers).
+* **`mode`**: (Optional but recommended) Sets the file permissions (e.g., `0644` for read/write owner, read others).
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Permission Denied" on Destination**
+* **Cause:** The destination directory `/opt/data` is often owned by root. The user (e.g., `tony`) cannot write to it directly.
+* **Fix:** Ensure you include `become: yes` in your playbook. This tells Ansible to use `sudo` to execute the task.
+
+**Issue: "Authentication Failed"**
+* **Cause:** Incorrect password in the inventory file.
+* **Fix:** Double-check the passwords for each user:
+    * `tony`: `Ir0nM@n`
+    * `steve`: `Am3ric@`
+    * `banner`: `BigGr33n`
+    * *Note: Ensure no trailing spaces are pasted into the inventory file.*
+
+**Issue: "Destination directory does not exist"**
+* **Cause:** The folder `/opt/data` might not exist on the app servers.
+* **Fix:** While the `copy` module can create the file, it usually expects the parent directory to exist. If it fails, add a task *before* the copy task using the `file` module with `state: directory` to ensure `/opt/data` exists.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 085: Create Files on App Servers using Ansible
+
+This document outlines the solution for DevOps Day 85, where the objective was to use Ansible to create a specific file with distinct ownership permissions on multiple application servers.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team needs to create a blank file `/opt/appdata.txt` on all three application servers (`stapp01`, `stapp02`, `stapp03`).
+
+**Requirements:**
+1.  **Inventory Creation:** Create `/home/thor/playbook/inventory` listing all app servers.
+2.  **Playbook Creation:** Create `/home/thor/playbook/playbook.yml`.
+3.  **File Creation:** Create `/opt/appdata.txt`.
+4.  **Permissions:** Set file permissions to `0655`.
+5.  **Ownership:**
+    * `stapp01`: Owner/Group `tony`
+    * `stapp02`: Owner/Group `steve`
+    * `stapp03`: Owner/Group `banner`
+6.  **Validation:** Execute with `ansible-playbook -i inventory playbook.yml`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create the Inventory File
+<a name="1-create-the-inventory-file"></a>
+The key to solving the "different owner per server" requirement efficiently is to use the `ansible_user` variable in our inventory. Since we already define `ansible_user` to connect (tony, steve, banner), we can reuse this variable in the playbook!
+
+**Command:**
+```bash
+mkdir -p ~/playbook
+cd ~/playbook
+vi inventory
+```
+
+**Content:**
+```ini
+[app]
+stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n
+stapp02 ansible_user=steve ansible_ssh_pass=Am3ric@
+stapp03 ansible_user=banner ansible_ssh_pass=BigGr33n
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+We use the `file` module. To set the owner dynamically, we use the `{{ ansible_user }}` variable. This means when Ansible runs on `stapp01`, it uses `tony`. When on `stapp02`, it uses `steve`.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: create file with specific ownership
+  hosts: all
+  become: true  # Required to write to /opt
+  tasks:
+    - name: create a blank file /opt/appdata.txt
+      file:
+        path: /opt/appdata.txt
+        state: touch
+        mode: '0655'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+```
+
+### 3. Execution and Validation
+<a name="3-execution-and-validation"></a>
+Run the playbook against the inventory.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+PLAY [create file with specific ownership] ******************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [stapp02]
+ok: [stapp03]
+ok: [stapp01]
+
+TASK [create a blank file /opt/appdata.txt] *****************************************
+changed: [stapp02]
+changed: [stapp03]
+changed: [stapp01]
+
+PLAY RECAP **************************************************************************
+stapp01 : ok=2    changed=1    unreachable=0    failed=0 ...
+stapp02 : ok=2    changed=1    unreachable=0    failed=0 ...
+stapp03 : ok=2    changed=1    unreachable=0    failed=0 ...
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `file` Module
+<a name="the-file-module"></a>
+This module manages file properties.
+* `state: touch`: Creates an empty file or updates timestamps.
+* `mode`: Sets permissions. Note that `0655` is unusual (Read/Write owner, Read/Execute group/others), but we must follow the task requirements exactly.
+
+### Dynamic Ownership with Variables
+<a name="dynamic-ownership-with-variables"></a>
+Instead of writing three separate tasks (one for tony, one for steve, etc.), we used the power of Ansible variables.
+* **`{{ ansible_user }}`**: This is a "magic variable" or connection variable defined in the inventory.
+* By setting `owner: "{{ ansible_user }}"`, the playbook automatically adapts to whichever server it is currently running on.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Permission Denied"**
+* **Cause:** Writing to `/opt` requires root privileges.
+* **Fix:** Ensure `become: true` is present at the play level or task level.
+
+**Issue: "Invalid User"**
+* **Cause:** If `ansible_user` is not defined in the inventory, the playbook will fail.
+* **Fix:** Check your `inventory` file to ensure `ansible_user=...` is correctly set for every host.
+
+**Issue: "Syntax Error" in YAML**
+* **Cause:** Indentation issues.
+* **Fix:** Ensure `file:` is indented under `tasks:`, and properties like `path:` are indented under `file:`. YAML forbids tabs; use spaces.
+
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 086: Ansible Ping Module Usage (Password-less SSH)
+
+This document provides a comprehensive solution for DevOps Day 86. The goal was to establish a secure, password-less SSH connection between the Ansible controller (Jump Host) and the managed nodes (App Servers), and then verify this connection using the Ansible `ping` module.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team needs to enable password-less SSH authentication for the user `thor` on the Jump Host to connect to `App Server 1` (and others).
+
+**Requirements:**
+1.  **Generate Keys:** Create an RSA SSH key pair for the user `thor` on the Jump Host.
+2.  **Copy Keys:** Install the public key onto the target App Servers (`stapp01`, `stapp02`, `stapp03`).
+3.  **Update Inventory:** Modify `/home/thor/ansible/inventory` to remove hardcoded passwords.
+4.  **Test:** Verify connectivity to App Server 1 using `ansible -m ping`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Generate SSH Keys
+<a name="1-generate-ssh-keys"></a>
+First, we generate a secure RSA key pair on the controller (Jump Host).
+
+**Command:**
+```bash
+ssh-keygen -t rsa -b 4096
+```
+* **Prompt:** Press Enter to accept the default file location (`/home/thor/.ssh/id_rsa`).
+* **Passphrase:** Press Enter twice to leave it empty (for truly automated, password-less login).
+
+### 2. Distribute Public Keys
+<a name="2-distribute-public-keys"></a>
+Next, we copy the newly created public key (`id_rsa.pub`) to the `authorized_keys` file on each app server.
+
+**Commands:**
+```bash
+# For App Server 1 (Tony)
+ssh-copy-id tony@stapp01
+# Password: Ir0nM@n
+
+# For App Server 2 (Steve)
+ssh-copy-id steve@stapp02
+# Password: Am3ric@
+
+# For App Server 3 (Banner)
+ssh-copy-id banner@stapp03
+# Password: BigGr33n
+```
+*Note: You will be prompted for the user's password one last time during this step.*
+
+### 3. Update the Inventory File
+<a name="3-update-the-inventory-file"></a>
+Since we now have key-based authentication, we **must remove** the `ansible_ssh_pass` (or `ansible_ssh_password`) variable from the inventory. It is no longer needed and keeping it is a security risk.
+
+**Command:**
+```bash
+vi /home/thor/ansible/inventory
+```
+
+**New Content:**
+```ini
+[app]
+stapp01 ansible_host=stapp01 ansible_user=tony ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+stapp02 ansible_host=stapp02 ansible_user=steve ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+stapp03 ansible_host=stapp03 ansible_user=banner ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+* Removed: `ansible_ssh_pass=...`
+* Kept: `ansible_user=...` (Ansible still needs to know *who* to login as)
+
+### 4. Validate with Ansible Ping
+<a name="4-validate-with-ansible-ping"></a>
+Finally, verify that Ansible can connect without asking for a password.
+
+**Command:**
+```bash
+ansible stapp01 -i inventory -m ping
+```
+
+**Expected Output:**
+```json
+stapp01 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+* **SUCCESS**: Connection established.
+* **pong**: The standard response from the ping module.
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Concepts Used
+<a name="deep-dive-concepts-used"></a>
+
+### Password-less SSH
+<a name="password-less-ssh"></a>
+This mechanism uses **asymmetric cryptography**.
+1.  **Private Key (`id_rsa`):** Kept secret on the Jump Host. It's like your actual physical key.
+2.  **Public Key (`id_rsa.pub`):** Copied to the server. It's like the lock.
+When Ansible connects, the server uses the "lock" (public key) to create a challenge that only the "key" (private key) can solve. If solved, access is granted without a password.
+
+### Ansible Ping Module
+<a name="ansible-ping-module"></a>
+The `ping` module is **not** an ICMP ping (like the network command `ping google.com`).
+* **What it does:** It attempts to SSH into the remote server, verify valid login credentials, and check if a usable Python interpreter is available.
+* **Why use it?** It is the definitive test for "Is Ansible ready to run playbooks on this host?"
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Permission denied (publickey,password)"**
+* **Cause:** The public key was not correctly copied to the server, or permissions on `~/.ssh` are wrong.
+* **Fix:** Run `ssh -v tony@stapp01` to debug. Retry `ssh-copy-id`. Ensure you removed `ansible_ssh_pass` from the inventory if it was incorrect.
+
+**Issue: Still prompted for password**
+* **Cause:** You might have set a passphrase when creating the key in step 1.
+* **Fix:** Generate a new key without a passphrase, or use `ssh-agent` to cache the passphrase for the session.
+
+**Issue: "Host key verification failed"**
+* **Cause:** The known_hosts file doesn't recognize the server fingerprint.
+* **Fix:** Ensure `ansible_ssh_common_args='-o StrictHostKeyChecking=no'` is in your inventory or `ansible.cfg`.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 087: Ansible Install Package & Troubleshooting
+
+This document outlines the solution for DevOps Day 87. The goal was to use Ansible to install the `samba` package on all application servers. During the process, a connection error (`rc: 137`) occurred on `stapp01`, which required troubleshooting the inventory configuration.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** The Nautilus DevOps team needs to install the `samba` package on all App Servers (`stapp01`, `stapp02`, `stapp03`) using Ansible.
+
+**Requirements:**
+1.  **Inventory:** Create `/home/thor/playbook/inventory` with all app servers.
+2.  **Playbook:** Create `/home/thor/playbook/playbook.yml` to install `samba`.
+3.  **Module:** Use the Ansible `yum` module.
+4.  **Validation:** Run `ansible-playbook -i inventory playbook.yml`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create the Inventory File
+<a name="1-create-the-inventory-file"></a>
+We define a group `[app]` containing all servers and set the connection variables.
+
+**Command:**
+```bash
+mkdir -p ~/playbook
+cd ~/playbook
+vi inventory
+```
+
+**Initial Content:**
+```ini
+[app]
+stapp01 ansible_host=stapp01 ansible_user=tony ansible_ssh_pass=Ir0nM@n
+stapp02 ansible_host=stapp02 ansible_user=steve ansible_ssh_pass=Am3ric@
+stapp03 ansible_host=stapp03 ansible_user=banner ansible_ssh_pass=BigGr33n
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+We use the `yum` module to install the package. `become: true` is essential because installing packages requires root privileges.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: install packages on app servers
+  hosts: all
+  become: true
+  tasks: 
+    - name: install samba using yum
+      yum:
+        name: samba
+        state: present
+```
+
+### 3. Initial Execution & Error
+<a name="3-initial-execution--error"></a>
+When running the playbook initially, `stapp01` failed.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Error:**
+```text
+fatal: [stapp01]: FAILED! => {"changed": false, "module_stderr": "Shared connection to stapp01 closed.\r\n", ... "rc": 137}
+```
+**Analysis:** Return code 137 often indicates a memory issue or an abrupt termination of the process on the remote host. However, in Ansible contexts, connection failures like "Shared connection closed" usually point to **SSH authentication issues** or SSH timeout configurations.
+
+### 4. Troubleshooting & Fix
+<a name="4-troubleshooting--fix"></a>
+Upon reviewing the inventory, we switched to using `ansible_ssh_password` (which is synonymous with `ansible_ssh_pass` but sometimes handled differently depending on the plugin versions or environment configuration). We also ensured the password for `stapp01` (`Ir0nM@n`) was correct and had no hidden characters.
+
+**Corrected Inventory Content:**
+```ini
+[app]
+stapp01  ansible_host=stapp01 ansible_user=tony ansible_ssh_password=Ir0nM@n
+stapp02  ansible_host=stapp02 ansible_user=steve ansible_ssh_password=Am3ric@
+stapp03  ansible_host=stapp03 ansible_user=banner ansible_ssh_password=BigGr33n
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+```
+
+### 5. Final Validation
+<a name="5-final-validation"></a>
+Re-running the playbook with the corrected inventory resulted in success.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Result:**
+```text
+TASK [install samba using yum] ******************************************************
+ok: [stapp03]
+ok: [stapp02]
+changed: [stapp01]
+```
+* `changed: [stapp01]` indicates Samba was successfully installed.
+* `ok: [stapp02]` and `[stapp03]` indicates Samba was already installed (from the previous partial run).
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `yum` Module
+<a name="the-yum-module"></a>
+The `yum` module manages packages on RHEL/CentOS systems.
+* **`name`**: The name of the package (e.g., `samba`, `httpd`).
+* **`state`**:
+    * `present`: Ensures it is installed (default).
+    * `latest`: Updates to the newest version.
+    * `absent`: Uninstalls the package.
+
+### Connection Troubleshooting
+<a name="connection-troubleshooting"></a>
+When Ansible fails with "Shared connection closed", check:
+1.  **Passwords:** Are they correct? Do they contain special characters that need escaping?
+2.  **SSH Keys:** If using keys, are they in `authorized_keys`?
+3.  **Privilege Escalation:** Does the user have sudo rights? (The `become: true` requires sudo access).
+4.  **Resource Limits:** On very small VMs, installing heavy packages might OOM (Out of Memory) kill the process, though rare for basic packages like Samba.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 088: Ansible Blockinfile Module
+
+This document outlines the solution for DevOps Day 88. The objective was to use Ansible to install a web server (`httpd`) and deploy a sample `index.html` file using the `blockinfile` module, ensuring specific content, ownership, and permissions.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Install `httpd` on all app servers and create `/var/www/html/index.html` with specific multi-line content using Ansible.
+
+**Requirements:**
+1.  **Playbook:** Create `/home/thor/ansible/playbook.yml`.
+2.  **Package:** Install `httpd` and ensure the service is running/enabled.
+3.  **Content:** Use `blockinfile` to add the welcome message to `index.html`.
+4.  **Permissions:** File owner/group: `apache`, Mode: `0744`.
+5.  **Constraints:** Do not use custom markers.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Verify Inventory
+<a name="1-verify-inventory"></a>
+Before writing the playbook, I ensured the inventory file existed and was correct.
+
+**Command:**
+```bash
+cd /home/thor/ansible
+ls -l
+# Expected output: inventory file exists
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+I created the playbook to handle three main tasks: installing the package, starting the service, and managing the file content.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: setup and configure httpd server
+  hosts: all
+  become: true
+  tasks:
+    - name: install httpd package
+      yum: 
+        name: httpd
+        state: present
+
+    - name: start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: add content to index.html using blockinfile
+      blockinfile:
+        path: /var/www/html/index.html
+        create: yes
+        block: |
+          Welcome to XfusionCorp!
+          This is Nautilus sample file, created using Ansible!
+          Please do not modify this file manually!
+        owner: apache
+        group: apache
+        mode: '0744'
+```
+
+### 3. Execute and Validate
+<a name="3-execute-and-validate"></a>
+I ran the playbook using the standard command.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+TASK [install httpd package] ********************************************************
+ok: [stapp03]
+ok: [stapp01]
+changed: [stapp02]
+
+TASK [add content to index.html using blockinfile] **********************************
+changed: [stapp02]
+ok: [stapp03]
+ok: [stapp01]
+```
+* **Changed:** Indicates Ansible performed an action (installed package, added content).
+* **Ok:** Indicates the state was already correct (idempotency).
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `blockinfile` Module
+<a name="the-blockinfile-module"></a>
+This module inserts, updates, or removes a block of multi-line text surrounded by marker lines.
+* **`create: yes`**: If the file doesn't exist, create it. This effectively creates our `index.html`.
+* **`block: |`**: The `|` character allows us to define a multi-line string in YAML, preserving newlines.
+* **Markers:** By default, Ansible wraps the content in `# BEGIN ANSIBLE MANAGED BLOCK` and `# END ANSIBLE MANAGED BLOCK`. This makes it easy for Ansible to find and update this specific section later without overwriting the rest of the file.
+
+### Service Management
+<a name="service-management"></a>
+The `service` module ensures the web server is actually running.
+* `state: started`: Starts the service immediately.
+* `enabled: yes`: Ensures the service starts automatically if the server reboots.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Shared connection closed" (rc 137)**
+* **Context:** In the provided logs, `stapp02` initially failed with this error.
+* **Cause:** This is often a transient SSH connection issue or resource limit (OOM kill) on the remote host during package installation.
+* **Fix:** Re-running the playbook usually resolves it, as seen in the successful second run. Ansible is idempotent, so it picks up right where it left off.
+
+**Issue: "Destination directory /var/www/html does not exist"**
+* **Cause:** The `httpd` package creates this directory. If the install task fails or runs out of order, the directory won't exist for the `blockinfile` task.
+* **Fix:** Ensure the `yum` task runs *before* the `blockinfile` task.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 089: Ansible Manage Services
+
+This document outlines the solution for DevOps Day 89. The objective was to create an Ansible playbook that installs and configures the `httpd` (Apache) web server on multiple application servers, ensuring the service is both running and enabled to start on boot.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Install `httpd` on all app servers in Stratos DC and ensure the service is active and enabled.
+
+**Requirements:**
+1.  **Playbook:** Create `/home/thor/ansible/playbook.yml`.
+2.  **Package:** Install the `httpd` package.
+3.  **Service:** Start the `httpd` service and enable it (autostart on boot).
+4.  **Targets:** All app servers defined in the existing inventory.
+5.  **User:** The task must be performed by user `thor` from the jump host.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Verify Inventory
+<a name="1-verify-inventory"></a>
+First, I verified the existing inventory file to ensure connection details for `stapp01`, `stapp02`, and `stapp03` were correct.
+
+**Command:**
+```bash
+cd /home/thor/ansible
+cat inventory
+```
+
+**Content:**
+```ini
+stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
+stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
+stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=banner
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+I created a YAML playbook to define the desired state configuration.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: Install and Configure httpd
+  hosts: all
+  become: true  # Required for installing packages and managing system services
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start and Enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+```
+
+### 3. Execute and Validate
+<a name="3-execute-and-validate"></a>
+I executed the playbook and validated the results.
+
+**Execution Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+PLAY [Install and Configure httpd] **************************************************
+
+TASK [Install httpd package] ********************************************************
+changed: [stapp02]
+changed: [stapp01]
+changed: [stapp03]
+
+TASK [Start and Enable httpd service] ***********************************************
+changed: [stapp03]
+changed: [stapp02]
+changed: [stapp01]
+```
+* **Changed:** Indicates that Ansible successfully installed the missing package and changed the service state from stopped to started.
+
+**Verification Command:**
+I verified the service status on all nodes using an ad-hoc command.
+```bash
+ansible all -i inventory -a "systemctl status httpd"
+```
+*Result:* All servers returned `Active: active (running)`, confirming success.
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### Package Management (`yum`)
+<a name="package-management-yum"></a>
+The `yum` module allows us to manage packages on RedHat-based systems (like CentOS/RHEL).
+* `name: httpd`: Specifies the package to install.
+* `state: present`: Ensures the package is installed. If it's already there, Ansible does nothing.
+
+### Service Management (`service`)
+<a name="service-management-service"></a>
+The `service` module controls system services (systemd, init.d).
+* `state: started`: Ensures the service is currently running. If it crashed or was stopped, Ansible starts it.
+* `enabled: yes`: Creates the necessary symlinks so the service starts automatically when the server reboots.
+
+### Idempotency
+<a name="idempotency"></a>
+A key feature of Ansible. As mentioned in the solution notes:
+> "If any error occurs... I can run plays on all servers again, because of its idempotent behaviour it wont change the things if things were changed previously."
+
+This means you can safely run this playbook 100 times. The first time, it installs Apache. The next 99 times, it checks the state, sees Apache is already installed and running, and reports `ok` (no changes), ensuring stability without side effects.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: Service fails to start**
+* **Cause:** Port 80 might be in use, or configuration files are invalid.
+* **Fix:** Check `systemctl status httpd -l` or `/var/log/messages` on the remote host.
+
+**Issue: "Permission Denied"**
+* **Cause:** Managing services and installing packages requires root privileges.
+* **Fix:** Ensure `become: true` is set in the playbook.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 090: Managing ACLs using Ansible
+
+This document outlines the solution for DevOps Day 90. The objective was to create specific files on different application servers and configure Access Control Lists (ACLs) to grant granular permissions to specific users and groups using Ansible.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Create files under `/opt/sysops/` on three app servers and set specific ACLs.
+
+**Requirements:**
+1.  **Playbook:** Create `/home/thor/ansible/playbook.yml`.
+2.  **App Server 1 (`stapp01`):**
+    * Create `blog.txt`. Owner: `root`.
+    * ACL: Grant `read (r)` permission to group `tony`.
+3.  **App Server 2 (`stapp02`):**
+    * Create `story.txt`. Owner: `root`.
+    * ACL: Grant `read + write (rw)` permission to user `steve`.
+4.  **App Server 3 (`stapp03`):**
+    * Create `media.txt`. Owner: `root`.
+    * ACL: Grant `read + write (rw)` permission to group `banner`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Verify Inventory
+<a name="1-verify-inventory"></a>
+First, I verified the inventory file to ensure connection details were correct.
+
+**Command:**
+```bash
+cd /home/thor/ansible
+cat inventory
+```
+
+**Content:**
+```ini
+stapp01 ansible_host=172.16.238.10 ansible_ssh_pass=Ir0nM@n ansible_user=tony
+stapp02 ansible_host=172.16.238.11 ansible_ssh_pass=Am3ric@ ansible_user=steve
+stapp03 ansible_host=172.16.238.12 ansible_ssh_pass=BigGr33n ansible_user=banner
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+I structured the playbook with three distinct plays, each targeting a specific host (`stapp01`, `stapp02`, `stapp03`) to handle their unique requirements.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: Configure App Server 1
+  hosts: stapp01
+  become: true
+  tasks:
+    - name: Create empty file blog.txt
+      file: 
+        path: /opt/sysops/blog.txt
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+ 
+    - name: Set ACL for group tony
+      acl:
+        path: /opt/sysops/blog.txt
+        entity: tony
+        etype: group
+        permissions: r
+        state: present
+
+- name: Configure App Server 2
+  hosts: stapp02
+  become: true
+  tasks:
+    - name: Create empty file story.txt
+      file:
+        path: /opt/sysops/story.txt
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Set ACL for user steve
+      acl:
+        path: /opt/sysops/story.txt
+        entity: steve
+        etype: user
+        permissions: rw
+        state: present
+
+- name: Configure App Server 3
+  hosts: stapp03
+  become: true
+  tasks:
+    - name: Create empty file media.txt
+      file:
+        path: /opt/sysops/media.txt
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Set ACL for group banner
+      acl:
+        path: /opt/sysops/media.txt
+        entity: banner
+        etype: group
+        permissions: rw
+        state: present
+```
+
+### 3. Execute and Validate
+<a name="3-execute-and-validate"></a>
+I executed the playbook and then verified the ACLs on the remote servers.
+
+**Execution Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+PLAY [Configure App Server 1] *******************************************************
+changed: [stapp01] (File Created)
+changed: [stapp01] (ACL Set)
+
+PLAY [Configure App Server 2] *******************************************************
+changed: [stapp02] (File Created)
+changed: [stapp02] (ACL Set)
+
+PLAY [Configure App Server 3] *******************************************************
+changed: [stapp03] (File Created)
+changed: [stapp03] (ACL Set)
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `acl` Module
+<a name="the-acl-module"></a>
+Standard Linux permissions (`chmod`) only allow setting permissions for one owner, one group, and "others". ACLs (Access Control Lists) allow fine-grained control, giving permissions to *specific* extra users or groups.
+* **`entity`**: The name of the user or group (e.g., `tony`, `steve`).
+* **`etype`**: The type of entity (`user` or `group`).
+* **`permissions`**: The permission string (e.g., `r`, `rw`, `rwx`).
+* **`state: present`**: Ensures the ACL rule exists.
+
+### Targeting Specific Hosts
+<a name="targeting-specific-hosts"></a>
+Unlike previous tasks where we used `hosts: all`, this task required different actions on different servers. I achieved this by writing **three separate plays** in one playbook file:
+1.  `- name: Configure App Server 1` -> `hosts: stapp01`
+2.  `- name: Configure App Server 2` -> `hosts: stapp02`
+3.  `- name: Configure App Server 3` -> `hosts: stapp03`
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: `getfacl: No such file or directory`**
+* **Cause:** As seen in the provided logs (`stapp03 | FAILED`), running a verification command on *all* servers for a file that only exists on *one* server will cause errors on the other two.
+* **Fix:** Verify files individually per server:
+    ```bash
+    ansible stapp01 -i inventory -a "getfacl /opt/sysops/blog.txt" --become
+    ansible stapp02 -i inventory -a "getfacl /opt/sysops/story.txt" --become
+    ```
+
+**Issue: "Operation not supported"**
+* **Cause:** The filesystem on the remote host might not have ACLs enabled.
+* **Fix:** (Usually handled by sysadmin) Remount the partition with the `acl` option. In this lab environment, it's usually pre-configured.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 091: Ansible Lineinfile Module & Web Server Automation
+
+This document outlines the solution for DevOps Day 91. The objective was to create a comprehensive Ansible playbook to deploy an `httpd` web server, create an initial web page, and then modify that page's content dynamically using the `lineinfile` module.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Install and configure `httpd` on all app servers, deploy an `index.html` with initial text, and insert a new welcome message at the top of the file.
+
+**Requirements:**
+1.  **Playbook:** Create `/home/thor/ansible/playbook.yml`.
+2.  **Web Server:** Install `httpd`, start the service, and enable it on boot.
+3.  **Initial Content:** Create `/var/www/html/index.html` containing "This is a Nautilus sample file, created using Ansible!".
+4.  **Modify Content:** Insert "Welcome to xFusionCorp Industries!" at the **top** of the file using `lineinfile`.
+5.  **Permissions:** File owner/group: `apache`, Mode: `0644`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Verify Inventory
+<a name="1-verify-inventory"></a>
+First, I verified the inventory file to ensure we could connect to all target servers.
+
+**Command:**
+```bash
+cd /home/thor/ansible
+ls -l
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+I created a multi-task playbook to handle the package installation, service management, file creation, and file modification.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: Deploy and Configure Web Server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+  
+    - name: Start and Enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Create index.html with initial content
+      copy:
+        dest: /var/www/html/index.html
+        content: "This is a Nautilus sample file, created using Ansible!"
+        force: yes
+
+    - name: Add welcome message to the top of index.html
+      lineinfile:
+        path: /var/www/html/index.html
+        line: "Welcome to xFusionCorp Industries!"
+        insertbefore: BOF
+        state: present
+  
+    - name: Set ownership and permission for index.html
+      file: 
+        path: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: '0644'
+```
+
+### 3. Execute and Validate
+<a name="3-execute-and-validate"></a>
+I ran the playbook against the inventory.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+```text
+TASK [Add welcome message to the top of index.html] ***************************************************
+changed: [stapp01]
+changed: [stapp02]
+changed: [stapp03]
+```
+* **Changed:** Confirms that Ansible successfully found the file and inserted the new line at the beginning.
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `lineinfile` Module
+<a name="the-lineinfile-module"></a>
+This module ensures a particular line is in a file, or replaces an existing line using a regular expression. It's powerful for editing configuration files.
+* **`path`**: The file to modify.
+* **`line`**: The exact line content to insert/ensure exists.
+* **`state: present`**: Ensures the line is added if missing.
+
+### The `insertbefore` Parameter
+<a name="the-insertbefore-parameter"></a>
+The task requirement was to add the line **at the top** of the file.
+* **`insertbefore: BOF`**: This is a special alias. `BOF` stands for **Beginning Of File**. It tells Ansible to insert the `line` before the very first line of the file.
+* Without this parameter (or using `insertafter: EOF`), the line would be appended to the end.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "Destination directory does not exist"**
+* **Cause:** If `httpd` isn't installed first, `/var/www/html` won't exist.
+* **Fix:** Ensure the `yum` task runs before any `copy` or `lineinfile` tasks.
+
+**Issue: Line appended instead of prepended**
+* **Cause:** Forgetting `insertbefore: BOF`.
+* **Fix:** Add the parameter to the `lineinfile` task.
+
+**Issue: "Permission denied"**
+* **Cause:** Modifying files in `/var/www/html` requires root privileges.
+* **Fix:** Ensure `become: yes` is set at the play level.
+
+
+
+---
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 092: Managing Jinja2 Templates Using Ansible
+
+This document outlines the solution for DevOps Day 92. The objective was to enhance an existing Ansible role for `httpd` by adding a dynamic Jinja2 template for the `index.html` file. This demonstrates how Ansible can customize configuration files based on the specific server it is deploying to.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Deploy an `httpd` role to App Server 1 (`stapp01`) that includes a dynamically generated `index.html` file using a Jinja2 template.
+
+**Requirements:**
+1.  **Playbook:** Update `~/ansible/playbook.yml` to target `stapp01` and use the `httpd` role.
+2.  **Template:** Create `index.html.j2` inside the role's templates directory. It must use the `{{ inventory_hostname }}` variable.
+3.  **Task:** Add a task to `main.yml` to deploy this template to `/var/www/html/index.html`.
+4.  **Permissions:** Set file permissions to `0777` and ownership to the respective user (e.g., `tony` for `stapp01`).
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create the Template
+<a name="1-create-the-template"></a>
+The core requirement is to create a file that changes its content based on where it is deployed.
+
+**Command:**
+```bash
+cd ~/ansible/role/httpd/templates/
+vi index.html.j2
+```
+
+**Content:**
+```jinja2
+This file was created using Ansible on {{ inventory_hostname }}
+```
+* **`.j2` Extension:** This signifies a Jinja2 template file. Ansible processes this file before sending it to the remote server.
+* **`{{ inventory_hostname }}`:** This is an Ansible "magic variable". When the playbook runs on `stapp01`, Ansible automatically replaces this placeholder with the string "stapp01".
+
+### 2. Update the Role Tasks
+<a name="2-update-the-role-tasks"></a>
+Next, I updated the role's main task file to include the template deployment step.
+
+**Command:**
+```bash
+cd ~/ansible/role/httpd/tasks/
+vi main.yml
+```
+
+**Content:**
+```yaml
+---
+# tasks file for role/httpd
+
+- name: install the latest version of HTTPD
+  yum:
+    name: httpd
+    state: latest
+
+- name: Start service httpd
+  service:
+    name: httpd
+    state: started
+
+- name: Copy index.html template
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    mode: '0777'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+```
+* **`template` module:** This module reads the local `.j2` file, processes the variables inside it, and writes the resulting static file to the remote `dest`.
+* **`owner: "{{ ansible_user }}"`**: This ensures the file is owned by the user we connected as (e.g., `tony`), fulfilling the dynamic ownership requirement.
+
+### 3. Configure the Playbook
+<a name="3-configure-the-playbook"></a>
+I updated the main playbook to call the role for the correct host.
+
+**Command:**
+```bash
+cd ~/ansible/
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- hosts: stapp01
+  become: yes
+  become_user: root
+  roles:
+    - role/httpd
+```
+
+### 4. Execute and Validate
+<a name="4-execute-and-validate"></a>
+I ran the playbook and verified the result.
+
+**Execution Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Verification:**
+```bash
+ansible -i inventory stapp01 -a "cat /var/www/html/index.html"
+```
+**Output:**
+`This file was created using Ansible on stapp01`
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### Jinja2 Templates
+<a name="jinja2-templates"></a>
+Jinja2 is a modern and designer-friendly templating language for Python. In Ansible, it allows you to:
+* **Dynamic Content:** Insert variable values (like IPs, hostnames, usernames).
+* **Logic:** Use `{% if %}` statements or `{% for %}` loops to generate complex configuration files (e.g., adding a config block only if a certain variable is true).
+
+### The `template` Module
+<a name="the-template-module"></a>
+Unlike the `copy` module, which transfers a file exactly as-is, the `template` module processes the file on the Ansible control node first.
+1.  Ansible reads `src` (local).
+2.  The Jinja2 engine replaces all `{{ variables }}` with their actual values for the current host.
+3.  The rendered file is transferred to `dest` (remote).
+
+### Ansible Roles
+<a name="ansible-roles"></a>
+Roles are the primary way to break a playbook into multiple files. This simplifies writing complex playbooks and makes them easier to reuse. A role structure looks like:
+* `tasks/main.yml`: The main list of tasks to execute.
+* `templates/`: Where `.j2` files are stored.
+* `handlers/`: Handlers like "restart service".
+* `vars/`: Variables specific to the role.
+
+---
+
+<br>
+<br>
+
+## Internal Execution Flow
+<a name="internal-execution-flow"></a>
+
+When you ran `ansible-playbook -i inventory playbook.yml`, the following process occurred internally:
+
+1.  **Parsing:** Ansible read `playbook.yml`, identified the target host `stapp01`, and saw it needed to run the `role/httpd`.
+2.  **Inventory Lookup:** It looked up `stapp01` in the `inventory` file to find the IP address, SSH user (`tony`), and password (`Ir0nM@n`).
+3.  **Fact Gathering:** It connected to `stapp01` via SSH and ran the `setup` module to gather facts (IP addresses, OS version, hostname). This populated the `inventory_hostname` variable.
+4.  **Task Execution (Yum/Service):** It executed the `yum` and `service` tasks using `sudo` privileges (`become: yes`).
+5.  **Templating Engine:**
+    * Ansible paused at the `template` task.
+    * On the **Jump Host (Local)**, it loaded `index.html.j2`.
+    * It found `{{ inventory_hostname }}` and replaced it with the value `"stapp01"`.
+    * It found `{{ ansible_user }}` and replaced it with `"tony"`.
+6.  **File Transfer:** Ansible securely transferred the *rendered* content (now just plain text) to a temporary file on `stapp01`.
+7.  **Finalize:** It moved the temporary file to `/var/www/html/index.html` and set the permissions to `0777` and owner to `tony`.
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 093: Using Ansible Conditionals
+
+This document outlines the solution for DevOps Day 93. The objective was to create a single Ansible playbook that runs on all hosts but performs different file copy operations depending on the specific server node name using the `when` conditional statement.
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Distribute specific files to specific App Servers using a single playbook targeting `all` hosts.
+
+**Requirements:**
+1.  **Playbook:** Create `/home/thor/ansible/playbook.yml`.
+2.  **Target:** `hosts: all`.
+3.  **Logic:**
+    * If node is `stapp01`: Copy `blog.txt` to `/opt/devops/`. Owner: `tony`.
+    * If node is `stapp02`: Copy `story.txt` to `/opt/devops/`. Owner: `steve`.
+    * If node is `stapp03`: Copy `media.txt` to `/opt/devops/`. Owner: `banner`.
+4.  **Permissions:** All files must have mode `0655`.
+5.  **Condition:** Use `ansible_nodename` or `ansible_hostname` variables.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Verify Inventory
+<a name="1-verify-inventory"></a>
+First, I verified the inventory file to ensure we could connect to all target servers.
+
+**Command:**
+```bash
+cd /home/thor/ansible
+cat inventory
+```
+
+### 2. Create the Playbook
+<a name="2-create-the-playbook"></a>
+I created the playbook using the `copy` module combined with the `when` conditional. This allows me to write one play for `hosts: all`, but selectively execute tasks.
+
+**Command:**
+```bash
+vi playbook.yml
+```
+
+**Content:**
+```yaml
+---
+- name: Copy files using conditionals
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Show the nodename for debugging
+      debug:
+        msg: "Nodename is: {{ ansible_nodename }}"
+
+    - name: Copy blog.txt to app server 1
+      copy:
+        src: /usr/src/devops/blog.txt
+        dest: /opt/devops/blog.txt
+        owner: tony
+        group: tony
+        mode: '0655'
+      when: ansible_nodename == "stapp01.stratos.xfusioncorp.com"
+
+    - name: Copy story.txt to app server 2
+      copy:
+        src: /usr/src/devops/story.txt
+        dest: /opt/devops/story.txt
+        owner: steve
+        group: steve
+        mode: '0655'
+      when: ansible_nodename == "stapp02.stratos.xfusioncorp.com"    
+
+    - name: Copy media.txt to app server 3
+      copy:
+        src: /usr/src/devops/media.txt
+        dest: /opt/devops/media.txt
+        owner: banner
+        group: banner
+        mode: '0655'
+      when: ansible_nodename == "stapp03.stratos.xfusioncorp.com"
+```
+
+### 3. Execute and Validate
+<a name="3-execute-and-validate"></a>
+I ran the playbook against the inventory.
+
+**Command:**
+```bash
+ansible-playbook -i inventory playbook.yml
+```
+
+**Output Analysis:**
+The output clearly shows the conditional logic in action:
+* **stapp01:** Executed "Copy blog.txt", skipped "Copy story.txt", skipped "Copy media.txt".
+* **stapp02:** Skipped "Copy blog.txt", executed "Copy story.txt", skipped "Copy media.txt".
+* **stapp03:** Skipped "Copy blog.txt", skipped "Copy story.txt", executed "Copy media.txt".
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Ansible Concepts Used
+<a name="deep-dive-ansible-concepts-used"></a>
+
+### The `when` Conditional
+<a name="the-when-conditional"></a>
+The `when` statement is Ansible's version of an `if` statement. It evaluates a Jinja2 expression. If the expression is true, the task runs. If false, the task is skipped.
+* **Syntax:** `when: variable == "value"`
+* **Context:** You do not need `{{ }}` brackets inside a `when` clause because it is already an implicit Jinja2 context.
+
+### Ansible Facts (`ansible_nodename`)
+<a name="ansible-facts-ansible_nodename"></a>
+When Ansible runs (specifically the `Gathering Facts` task), it collects data about the remote system.
+* **`ansible_hostname`**: Usually just the short hostname (e.g., `stapp01`).
+* **`ansible_nodename`** or **`ansible_fqdn`**: Often the full Fully Qualified Domain Name (e.g., `stapp01.stratos.xfusioncorp.com`).
+* **Debugging:** The `debug` task I added was crucial. It revealed that `ansible_nodename` returned the full domain name, not just `stapp01`. This allowed me to fix my `when` condition to match the exact string.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: Tasks skipped on all hosts**
+* **Cause:** The conditional check didn't match. For example, checking `when: ansible_nodename == "stapp01"` when the actual value was `stapp01.stratos.xfusioncorp.com`.
+* **Fix:** Use the `debug` module to print the variable (`msg: "{{ ansible_nodename }}"`) and copy the exact value into your `when` statement.
+
+**Issue: "Permission denied"**
+* **Cause:** Writing to `/opt/devops` requires root privileges.
+* **Fix:** Ensure `become: yes` is present at the play level.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 094: Create VPC Using Terraform
+
+This document outlines the solution for DevOps Day 94. The objective was to provision a fundamental networking component—an AWS Virtual Private Cloud (VPC)—using Infrastructure as Code (IaC) with Terraform.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Provision an AWS VPC named `nautilus-vpc` in the `us-east-1` region using Terraform.
+
+**Requirements:**
+1.  **Directory:** `/home/bob/terraform`
+2.  **File:** Create only `main.tf`.
+3.  **Resource:** `aws_vpc`
+4.  **Properties:**
+    * **Name Tag:** `nautilus-vpc`
+    * **CIDR Block:** Any valid IPv4 CIDR (e.g., `10.0.0.0/16`).
+    * **Region:** `us-east-1`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create the `main.tf` File
+<a name="1-create-the-maintf-file"></a>
+This file contains the provider configuration (telling Terraform *where* to create resources) and the resource definition (telling Terraform *what* to create).
+
+**Command:**
+```bash
+cd /home/bob/terraform
+vi main.tf
+```
+
+**Content:**
+```hcl
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "nautilus-vpc"
+  }
+}
+```
+
+### 2. Initialize Terraform
+<a name="2-initialize-terraform"></a>
+Before Terraform can do anything, it needs to download the code that knows how to talk to AWS. This is the **AWS Provider**.
+
+**Command:**
+```bash
+terraform init
+```
+* **Output:** "Terraform has been successfully initialized!"
+* **What happened:** Terraform scanned `main.tf`, saw `provider "aws"`, and downloaded the AWS plugin into a hidden `.terraform/` directory.
+
+### 3. Generate the Plan
+<a name="3-generate-the-plan"></a>
+This is a dry run. Terraform compares your `main.tf` against the *current state* of your AWS account (which is empty right now).
+
+**Command:**
+```bash
+terraform plan
+```
+* **Output:** `Plan: 1 to add, 0 to change, 0 to destroy.`
+* **Analysis:** Terraform calculates that to match your code, it needs to create one new VPC.
+
+### 4. Apply the Configuration
+<a name="4-apply-the-configuration"></a>
+This executes the plan and actually talks to the AWS API to create the resource.
+
+**Command:**
+```bash
+terraform apply
+```
+* **Prompt:** Type `yes` when asked.
+* **Output:** `Apply complete! Resources: 1 added, 0 changed, 0 destroyed.`
+
+---
+
+<br>
+<br>
+
+## Deep Dive: How Terraform Works Internally
+<a name="deep-dive-how-terraform-works-internally"></a>
+
+You asked how Terraform talks to cloud providers and creates infrastructure. Here is the breakdown of the magic under the hood.
+
+### Core Architecture
+<a name="core-architecture"></a>
+Terraform is split into two main parts:
+1.  **Terraform Core:** The binary you download (`terraform`). It reads your configuration files (`.tf`) and manages the **State**. It essentially builds a dependency graph of your resources (e.g., "I need a VPC before I can create a Subnet").
+2.  **Providers:** These are separate plugins (like the AWS Provider, Azure Provider, Google Provider) that act as translators.
+
+### The Provider Plugin Model
+<a name="the-provider-plugin-model"></a>
+Terraform Core *doesn't know* what an AWS VPC is. It just knows "resource aws_vpc".
+* When you run `terraform apply`, Core passes the configuration data to the **AWS Provider Plugin**.
+* **The Provider's Job:** The AWS Provider is written in Go and contains the AWS SDK. It translates the Terraform configuration (`cidr_block = "10.0.0.0/16"`) into an actual **AWS API Call** (e.g., `ec2:CreateVpc`).
+* **Authentication:** The provider handles the authentication using the credentials stored in your environment (`~/.aws/credentials` or environment variables) to sign these API requests securely.
+
+### State Management (`terraform.tfstate`)
+<a name="state-management"></a>
+This is Terraform's brain.
+* When you created the VPC, AWS returned an ID (e.g., `vpc-01234567`).
+* Terraform *must* remember this ID. If it forgets, running `terraform apply` again would create a *second* VPC instead of updating the first one.
+* It saves this mapping (Resource Name `aws_vpc.main` -> Real ID `vpc-01234567`) in a JSON file called `terraform.tfstate`.
+
+### Execution Flow
+<a name="execution-flow"></a>
+1.  **Read Config:** Terraform reads `main.tf`.
+2.  **Refresh State:** It checks `terraform.tfstate` and queries the real AWS API to see if the resources still exist.
+3.  **Diff:** It compares **Config** vs. **Real World**.
+    * *Config says:* VPC exists with CIDR 10.0.0.0/16.
+    * *Real World says:* Nothing exists.
+    * *Result:* Create (+).
+4.  **Execute:** It calls the AWS Provider -> AWS Provider calls AWS API (`CreateVpc`) -> AWS creates the VPC.
+5.  **Update State:** AWS returns the new VPC ID. Terraform writes this into `terraform.tfstate`.
+
+
+
+---
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 095: Create Security Group Using Terraform
+
+This document outlines the solution for DevOps Day 95. The objective was to provision an AWS Security Group in the default VPC using Terraform, with specific inbound rules for HTTP (port 80) and SSH (port 22).
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Create a Security Group named `datacenter-sg` in the `us-east-1` region within the default VPC.
+
+**Requirements:**
+1.  **Directory:** `/home/bob/terraform`
+2.  **Files:** `variables.tf` (optional but good practice) and `main.tf`.
+3.  **Resource:** `aws_security_group`.
+4.  **Properties:**
+    * **Name:** `datacenter-sg`
+    * **Description:** "Security group for Nautilus App Servers"
+    * **Inbound Rule 1:** HTTP (Port 80) from `0.0.0.0/0`.
+    * **Inbound Rule 2:** SSH (Port 22) from `0.0.0.0/0`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create `variables.tf`
+<a name="1-create-variablestf"></a>
+We define variables to make our configuration cleaner and reusable.
+
+**Command:**
+```bash
+cd /home/bob/terraform
+vi variables.tf
+```
+
+**Content:**
+```hcl
+variable "sg_name" {
+  default = "datacenter-sg"
+}
+
+variable "sg_description" {
+  default = "Security group for Nautilus App Servers"
+}
+```
+
+### 2. Create `main.tf`
+<a name="2-create-maintf"></a>
+This is the core configuration. We use a **Data Source** to find the default VPC ID dynamically, and a **Resource** to create the Security Group.
+
+**Command:**
+```bash
+vi main.tf
+```
+
+**Content:**
+```hcl
+# Data Source: Get the Default VPC
+data "aws_vpc" "default_vpc" {
+  default = true
+}
+
+# Resource: Create the Security Group
+resource "aws_security_group" "xfusion_sg" {
+  name        = var.sg_name
+  description = var.sg_description
+  vpc_id      = data.aws_vpc.default_vpc.id
+  
+  # Inbound Rule for HTTP
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Inbound Rule for SSH
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+
+### 3. Initialize and Apply
+<a name="3-initialize-and-apply"></a>
+Run the Terraform workflow to deploy the infrastructure.
+
+1.  **Initialize:** Downloads the AWS provider plugin.
+    ```bash
+    terraform init
+    ```
+2.  **Plan:** Shows what Terraform intends to do.
+    ```bash
+    terraform plan
+    ```
+3.  **Apply:** Executes the plan. The `-auto-approve` flag skips the "yes" confirmation prompt.
+    ```bash
+    terraform apply -auto-approve
+    ```
+
+**Verification:**
+To verify the creation, you can list the state or use the AWS CLI (if configured).
+```bash
+terraform state list
+# Expected Output:
+# data.aws_vpc.default_vpc
+# aws_security_group.xfusion_sg
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### Data Sources (`aws_vpc`)
+<a name="data-sources-aws_vpc"></a>
+Data sources allow Terraform to use information defined outside of Terraform.
+* `data "aws_vpc" "default_vpc"`: This tells Terraform to query AWS for an existing VPC.
+* `default = true`: The filter used to find the specific VPC we want (the default one).
+* `data.aws_vpc.default_vpc.id`: How we reference the ID of the found VPC in other resources.
+
+### Resources (`aws_security_group`)
+<a name="resources-aws_security_group"></a>
+Resources are the most important element in Terraform. They define the infrastructure objects you want to create.
+* `resource "aws_security_group" "xfusion_sg"`: This declares a security group resource. `xfusion_sg` is the internal Terraform name, while `var.sg_name` ("datacenter-sg") becomes the actual AWS resource name.
+
+### Ingress Rules
+<a name="ingress-rules"></a>
+* **Ingress:** Defines inbound traffic rules (traffic coming *into* the server).
+* **Egress:** Defines outbound traffic rules (traffic leaving the server). By default, AWS Security Groups allow all outbound traffic, so we didn't need to define an egress block explicitly for this task unless we wanted to restrict it.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: `Unsupported block type`**
+* **Error:** `Blocks of type "ingres" are not expected here.`
+* **Cause:** A typo in the `main.tf` file. The keyword was written as `ingres` instead of `ingress`.
+* **Fix:** Correct spelling to `ingress` in the `main.tf` file.
+
+**Issue: `vpc_id` is required**
+* **Cause:** Creating a Security Group without specifying a VPC ID creates it in the default VPC in older platforms (EC2-Classic), but in modern VPCs, it's best practice (and often required) to specify the VPC ID explicitly using the data source method shown above.
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 096: Create EC2 Instance Using Terraform
+
+This document outlines the solution for DevOps Day 96. The objective was to provision an AWS EC2 instance using Terraform, including generating an SSH key pair and attaching it to the instance for secure access.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Provision an AWS EC2 instance named `datacenter-ec2` with a specific AMI and instance type, secured by a new SSH key pair.
+
+**Requirements:**
+1.  **Directory:** `/home/bob/terraform`
+2.  **File:** `main.tf`
+3.  **Key Pair:** Create a new RSA key named `datacenter-kp`.
+4.  **EC2 Instance:**
+    * **AMI:** `ami-0c101f26f147fa7fd`
+    * **Type:** `t2.micro`
+    * **Name Tag:** `datacenter-ec2`
+    * **Security Group:** Attach the `default` security group.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create `main.tf`
+<a name="1-create-maintf"></a>
+We define the necessary resources: a cryptographic key, an AWS key pair resource to upload that key, a data source to find the security group, and finally the instance itself.
+
+**Command:**
+```bash
+cd /home/bob/terraform
+vi main.tf
+```
+
+**Content:**
+```hcl
+# 1. Generate a secure private key locally
+resource "tls_private_key" "my_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# 2. Create an AWS Key Pair using the public key from the resource above
+resource "aws_key_pair" "deployer" {
+  key_name   = "datacenter-kp"
+  public_key = tls_private_key.my_key.public_key_openssh
+}
+
+# 3. Find the 'default' Security Group ID dynamically
+data "aws_security_group" "default_sg" {
+  name = "default"
+}
+
+# 4. Create the EC2 Instance
+resource "aws_instance" "web" {
+  ami           = "ami-0c101f26f147fa7fd"
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.deployer.key_name
+
+  # Attach the security group found in step 3
+  vpc_security_group_ids = [data.aws_security_group.default_sg.id]
+
+  tags = {
+    Name = "datacenter-ec2"
+  }
+}
+```
+
+### 2. Initialize and Apply
+<a name="2-initialize-and-apply"></a>
+Run the standard Terraform workflow.
+
+1.  **Initialize:** Downloads the AWS and TLS provider plugins.
+    ```bash
+    terraform init
+    ```
+2.  **Plan:** Previews the creation of the key, key pair, and instance.
+    ```bash
+    terraform plan
+    ```
+3.  **Apply:** Deploys the resources.
+    ```bash
+    terraform apply -auto-approve
+    ```
+
+### 3. Verification
+<a name="3-verification"></a>
+Verify that Terraform is tracking the resources.
+```bash
+terraform state list
+# Expected Output:
+# data.aws_security_group.default_sg
+# aws_instance.web
+# aws_key_pair.deployer
+# tls_private_key.my_key
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### TLS Private Key & AWS Key Pair
+<a name="tls-private-key--aws-key-pair"></a>
+This is a powerful pattern for managing access.
+* **`tls_private_key`**: Generates the raw cryptographic material (the private and public key data) within Terraform's memory.
+* **`aws_key_pair`**: Takes the public key part (`public_key_openssh`) and uploads it to AWS console so it can be injected into EC2 instances.
+* **Security Note:** The private key exists in your `terraform.tfstate` file. In production, treat your state file as a sensitive secret!
+
+### EC2 Instance Resource
+<a name="ec2-instance-resource"></a>
+* **`aws_instance`**: The fundamental resource for creating virtual machines.
+* **`key_name`**: Links the instance to the Key Pair we created, allowing SSH access.
+* **`vpc_security_group_ids`**: Controls network access. We used a list `[]` because an instance can have multiple security groups.
+
+### Data Sources (Security Groups)
+<a name="data-sources-security-groups"></a>
+* **`data "aws_security_group"`**: Instead of hardcoding a Security Group ID (like `sg-12345`), which changes per account/region, we tell Terraform to "Find the group named 'default'". This makes the code portable across different AWS accounts.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: "AMI not found"**
+* **Cause:** The AMI ID `ami-0c101f26f147fa7fd` is specific to a region (likely `us-east-1`). If your provider is configured for a different region (e.g., `us-west-2`), this AMI ID will not exist there.
+* **Fix:** Ensure your `provider "aws"` block or environment variables specify `region = "us-east-1"`.
+
+**Issue: "InvalidKey.Format"**
+* **Cause:** If you try to paste a pre-generated key incorrectly into the `public_key` field.
+* **Fix:** Using `tls_private_key` resource (as done in the solution) avoids format errors because Terraform handles the string generation automatically.
+  
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 097: Create IAM Policy Using Terraform
+
+This document outlines the solution for DevOps Day 97. The objective was to provision an AWS IAM Policy that grants read-only access to the EC2 console using Terraform.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Create an IAM policy named `iampolicy_yousuf` in the `us-east-1` region that allows read-only access to EC2 instances, AMIs, and snapshots.
+
+**Requirements:**
+1.  **Directory:** `/home/bob/terraform`
+2.  **File:** `main.tf`
+3.  **Resource:** `aws_iam_policy`
+4.  **Properties:**
+    * **Name:** `iampolicy_yousuf`
+    * **Description:** "Read-only access to EC2 Console (instances, AMIs and snapshots)"
+    * **Permissions:** `ec2:Describe*` on all resources (`*`).
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create `main.tf`
+<a name="1-create-maintf"></a>
+We define the IAM policy resource. The crucial part is the `policy` argument, which expects a JSON string. We use Terraform's `jsonencode` function to write this cleanly.
+
+**Command:**
+```bash
+cd /home/bob/terraform
+vi main.tf
+```
+
+**Content:**
+```hcl
+resource "aws_iam_policy" "policy_yousuf" {
+  name        = "iampolicy_yousuf"
+  description = "Read-only access to EC2 Console (instances, AMIs and snapshots)"
+
+  # Using jsonencode ensures the policy is formatted correctly without manual escaping
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ec2:Describe*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+```
+
+### 2. Initialize Terraform
+<a name="2-initialize-terraform"></a>
+Prepare the working directory by downloading the necessary provider plugins.
+
+**Command:**
+```bash
+terraform init
+```
+
+### 3. Plan and Apply
+<a name="3-plan-and-apply"></a>
+Preview the changes and then apply them to create the infrastructure.
+
+**Commands:**
+```bash
+terraform plan
+terraform apply -auto-approve
+```
+
+**Verification:**
+After applying, you can list the state to confirm the resource exists.
+```bash
+terraform state list
+# Expected output: aws_iam_policy.policy_yousuf
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### IAM Policy Resource
+<a name="iam-policy-resource"></a>
+* **`aws_iam_policy`**: This resource creates a managed policy in IAM. Managed policies are standalone policies that you can attach to multiple users, groups, and roles.
+
+### JSON Policy Document
+<a name="json-policy-document"></a>
+* **`jsonencode()`**: Writing raw JSON inside a Terraform file can be messy due to quote escaping (e.g., `"{\"Version\": \"...\"}"`). The `jsonencode` function allows you to write standard HCL (Terraform language) maps and lists, and it automatically converts them to valid JSON string format required by the AWS API.
+* **`ec2:Describe*`**: This wild-card action grants permission for all API calls starting with "Describe". In AWS, "Describe" actions are read-only (viewing lists of instances, volumes, snapshots, etc.), satisfying the "read-only access" requirement.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: Syntax Error in JSON**
+* **Cause:** A common mistake (visible in the initial prompt) is using an equals sign inside the version string: `"Version" = "2012=10-17"`.
+* **Fix:** The correct AWS Policy version string is `"2012-10-17"`.
+
+**Issue: Invalid Action**
+* **Cause:** Providing an action that doesn't exist, like `ec2:ListAll`.
+* **Fix:** Verify permission names in the AWS Policy Generator documentation. `ec2:Describe*` is the standard for read-only access.
+
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+# Day 098: Launch EC2 in Private VPC Subnet Using Terraform
+
+This document outlines the solution for DevOps Day 98. The objective was to architect a secure, private infrastructure environment on AWS. This involved creating a custom Virtual Private Cloud (VPC), a private subnet, a secure Security Group, and an EC2 instance that is isolated from the public internet.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Provision a private infrastructure stack containing a VPC, Subnet, and EC2 Instance.
+
+**Requirements:**
+1.  **VPC:** `nautilus-priv-vpc` with CIDR `10.0.0.0/16`.
+2.  **Subnet:** `nautilus-priv-subnet` with CIDR `10.0.1.0/24`. Must be private (disable auto-assign public IP).
+3.  **EC2:** `nautilus-priv-ec2` (t2.micro) inside the private subnet.
+4.  **Security:** Allow inbound traffic *only* from the VPC's CIDR block.
+5.  **Structure:** Use `variables.tf`, `main.tf`, and `outputs.tf`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Define Variables (`variables.tf`)
+<a name="1-define-variables-variablestf"></a>
+First, I defined the CIDR blocks as variables to keep the configuration flexible.
+
+**Command:**
+```bash
+vi variables.tf
+```
+
+**Content:**
+```hcl
+variable "KKE_VPC_CIDR" {
+  default = "10.0.0.0/16"
+}
+
+variable "KKE_SUBNET_CIDR" {
+  default = "10.0.1.0/24"
+}
+```
+
+### 2. Define Outputs (`outputs.tf`)
+<a name="2-define-outputs-outputstf"></a>
+I defined outputs to easily retrieve resource names after deployment.
+
+**Command:**
+```bash
+vi outputs.tf
+```
+
+**Content:**
+```hcl
+output "KKE_vpc_name" {
+  value = aws_vpc.devops_vpc.tags["Name"]
+}
+
+output "KKE_subnet_name" {
+  value = aws_subnet.devops_subnet.tags["Name"]
+}
+
+output "KKE_ec2_private" {
+  value = aws_instance.devops_ec2.tags["Name"]
+}
+```
+
+### 3. Create Infrastructure (`main.tf`)
+<a name="3-create-infrastructure-maintf"></a>
+This is the core logic. I created the VPC, Subnet, Security Group, and EC2 instance. I also used a Data Source to fetch the latest Amazon Linux 2 AMI automatically.
+
+**Command:**
+```bash
+vi main.tf
+```
+
+**Content:**
+```hcl
+# 1. Create the VPC
+resource "aws_vpc" "devops_vpc" {
+  cidr_block = var.KKE_VPC_CIDR
+  tags = {
+    Name = "nautilus-priv-vpc"
+  }
+}
+
+# 2. Create the Private Subnet
+resource "aws_subnet" "devops_subnet" {
+  vpc_id                  = aws_vpc.devops_vpc.id
+  cidr_block              = var.KKE_SUBNET_CIDR
+  map_public_ip_on_launch = false # Ensures it is a private subnet
+
+  tags = {
+    Name = "nautilus-priv-subnet"
+  }
+}
+
+# 3. Create Security Group
+resource "aws_security_group" "devops_sg" {
+  name        = "devops_priv_sg"
+  description = "Allow traffic from VPC CIDR only"
+  vpc_id      = aws_vpc.devops_vpc.id
+
+  # Ingress: Allow all traffic protocol (-1) ONLY from within the VPC
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.KKE_VPC_CIDR]
+  }
+
+  # Egress: Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# 4. Fetch Latest AMI
+data "aws_ami" "latest_amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+# 5. Create EC2 Instance
+resource "aws_instance" "devops_ec2" {
+  ami                    = data.aws_ami.latest_amazon_linux.id
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.devops_subnet.id
+  vpc_security_group_ids = [aws_security_group.devops_sg.id]
+
+  tags = {
+    Name = "nautilus-priv-ec2"
+  }
+}
+```
+
+### 4. Initialize, Plan, and Apply
+<a name="4-initialize-plan-and-apply"></a>
+Finally, I executed the Terraform workflow.
+
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### Private Subnets
+<a name="private-subnets"></a>
+In Terraform, defining a subnet as "private" isn't a single switch. It involves:
+1.  **`map_public_ip_on_launch = false`**: This ensures instances launched here do not get a public IP address automatically.
+2.  **Routing**: Although not explicitly configured in this basic task, a true private subnet usually has a Route Table that does *not* point to an Internet Gateway (IGW).
+
+### Security Group Ingress Logic
+<a name="security-group-ingress-logic"></a>
+The requirement was "accessible only from within the VPC".
+* **`cidr_blocks = [var.KKE_VPC_CIDR]`**: This limits incoming traffic to IP addresses that exist inside the VPC (`10.0.0.0/16`). Any traffic attempting to enter from the internet (e.g., `0.0.0.0/0`) will be blocked by this rule.
+
+### Data Sources for AMIs
+<a name="data-sources-for-amis"></a>
+Hardcoding AMI IDs (e.g., `ami-0abcdef12345`) is brittle because IDs change between AWS regions and over time as AWS releases updates.
+* **`data "aws_ami"`**: Allows us to query AWS for an image based on filters (like "name matches amzn2-ami*"). This ensures we always get a valid, recent image for the current region.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: `Unsupported attribute "vpc_id"`**
+* **Error:**
+  ```text
+  Error: Unsupported attribute
+  on main.tf line 11, in resource "aws_subnet" "devops_subnet":
+  11:      vpc_id = aws_vpc.devops_vpc.vpc_id
+  ```
+* **Cause:** The `aws_vpc` resource exports an attribute named `id`, not `vpc_id`. When referencing a resource you just created, you almost always use `<RESOURCE_TYPE>.<NAME>.id`.
+* **Fix:** Change `aws_vpc.devops_vpc.vpc_id` to `aws_vpc.devops_vpc.id`.
+
+**Issue: Instance not reachable from internet**
+* **Context:** This is actually **intended behavior** for this task. Since the instance is in a private subnet and the Security Group only allows internal VPC traffic, you cannot SSH into it directly from your laptop or the jump host unless the jump host is also inside the VPC.
+   
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 099: Attach IAM Policy for DynamoDB Access Using Terraform
+
+This document outlines the solution for DevOps Day 99. The objective was to implement secure, fine-grained access control for a DynamoDB table. I used Terraform to provision the table, create a specific IAM role for EC2 instances, and attach a strictly scoped read-only policy.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Create a secure DynamoDB table and an IAM role with read-only access to that specific table.
+
+**Requirements:**
+1.  **DynamoDB Table:** `xfusion-table` (Billing: PAY_PER_REQUEST, Hash Key: id).
+2.  **IAM Role:** `xfusion-role` (Assumable by EC2).
+3.  **IAM Policy:** `xfusion-readonly-policy` (Permissions: GetItem, Scan, Query).
+4.  **Scope:** The policy must apply *only* to the created table.
+5.  **Structure:** Use `variables.tf`, `terraform.tfvars`, `main.tf`, and `outputs.tf`.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Define Variables (`variables.tf` & `terraform.tfvars`)
+<a name="1-define-variables-variablestf--terraformtfvars"></a>
+I started by defining the input variables to make the code reusable, then assigned their specific values in the `.tfvars` file.
+
+**`variables.tf`**:
+```hcl
+variable "KKE_TABLE_NAME" {}
+variable "KKE_ROLE_NAME" {}
+variable "KKE_POLICY_NAME" {}
+```
+
+**`terraform.tfvars`**:
+```hcl
+KKE_TABLE_NAME  = "xfusion-table"
+KKE_ROLE_NAME   = "xfusion-role"
+KKE_POLICY_NAME = "xfusion-readonly-policy"
+```
+
+### 2. Create Infrastructure (`main.tf`)
+<a name="2-create-infrastructure-maintf"></a>
+This file ties everything together. It creates the table, the role, the policy, and the attachment between the role and policy.
+
+**Command:**
+```bash
+vi main.tf
+```
+
+**Content:**
+```hcl
+# 1. Create DynamoDB Table
+resource "aws_dynamodb_table" "xfusion_table" {
+  name         = var.KKE_TABLE_NAME
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  tags = {
+    Name = var.KKE_TABLE_NAME
+  }
+}
+
+# 2. Create IAM Role
+resource "aws_iam_role" "xfusion_role" {
+  name = var.KKE_ROLE_NAME
+
+  # Trust Policy: Allows EC2 to assume this role
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+  })
+}
+
+# 3. Create Read-Only Policy
+resource "aws_iam_policy" "xfusion_readonly_policy" {
+  name        = var.KKE_POLICY_NAME
+  description = "Read-only access to xfusion-table"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = [
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:Query"
+      ]
+      # Crucial: Restricting access ONLY to this specific table's ARN
+      Resource = aws_dynamodb_table.xfusion_table.arn
+    }]
+  })
+}
+
+# 4. Attach Policy to Role
+resource "aws_iam_role_policy_attachment" "xfusion_attach" {
+  role       = aws_iam_role.xfusion_role.name
+  policy_arn = aws_iam_policy.xfusion_readonly_policy.arn
+}
+```
+
+### 3. Define Outputs (`outputs.tf`)
+<a name="3-define-outputs-outputstf"></a>
+I defined outputs to verify the created resource names.
+
+**Content:**
+```hcl
+output "kke_dynamodb_table" {
+  value = aws_dynamodb_table.xfusion_table.name
+}
+
+output "kke_iam_role_name" {
+  value = aws_iam_role.xfusion_role.name
+}
+
+output "kke_iam_policy_name" {
+  value = aws_iam_policy.xfusion_readonly_policy.name
+}
+```
+
+### 4. Initialize and Apply
+<a name="4-initialize-and-apply"></a>
+I initialized Terraform to download the AWS provider and applied the configuration.
+
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+---
+
+<br>
+<br>
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### DynamoDB Resource
+<a name="dynamodb-resource"></a>
+* **`aws_dynamodb_table`**: Creates a NoSQL table.
+* **`billing_mode = "PAY_PER_REQUEST"`**: This is ideal for unpredictable workloads or dev environments as you don't pay for idle capacity.
+* **`hash_key`**: This is the primary key. We defined a simple primary key named `id` of type String (`S`).
+
+### IAM Roles & Assume Policies
+<a name="iam-roles--assume-policies"></a>
+* **Role vs. User**: A Role is an identity you *assume*, not one you log in as.
+* **`assume_role_policy`**: This is the "Trust Policy". It defines *who* can wear the hat. In our code, we specified `Principal: { Service: "ec2.amazonaws.com" }`, meaning only EC2 instances can use this role.
+
+### IAM Policies & JSON Encoding
+<a name="iam-policies--json-encoding"></a>
+* **`jsonencode`**: Writing policies in native Terraform maps/lists is cleaner and safer than writing raw JSON strings. Terraform handles the formatting and escaping.
+* **Dynamic ARN Reference**: Instead of hardcoding the resource ARN (e.g., `arn:aws:dynamodb:us-east-1:123:table/xfusion-table`), I used `aws_dynamodb_table.xfusion_table.arn`. This ensures the policy always points to the exact table Terraform created, even if the region or account ID changes.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: Invalid JSON Syntax**
+* **Error:** `MalformedPolicyDocument`
+* **Cause:** Often caused by writing raw JSON strings with incorrect escaping.
+* **Fix:** Always use the `jsonencode()` function in Terraform for policy documents.
+
+**Issue: Cycle Error**
+* **Cause:** If you try to reference the Policy ARN inside the Role creation or vice-versa incorrectly.
+* **Fix:** Keep resources separate. Create the Role, create the Policy, and then link them with `aws_iam_role_policy_attachment`.
+   
+---
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+# Day 100: Create and Configure Alarm Using CloudWatch Using Terraform
+
+This document outlines the solution for DevOps Day 100. The objective was to enhance operational monitoring by creating an EC2 instance and a corresponding CloudWatch alarm. This alarm monitors CPU utilization and triggers an alert via SNS if the threshold is breached.
+
+
+---
+
+<br>
+<br>
+
+## Task Overview
+<a name="task-overview"></a>
+
+**Objective:** Provision an EC2 instance and a CloudWatch CPU utilization alarm.
+
+**Requirements:**
+1.  **EC2 Instance:** `xfusion-ec2` (AMI: `ami-0c02fb55956c7d316`, Type: `t2.micro`).
+2.  **SNS Topic:** `xfusion-sns-topic` (Already exists or needs creation for the alarm action).
+3.  **CloudWatch Alarm:** `xfusion-alarm`.
+    * **Metric:** CPUUtilization >= 90%.
+    * **Period:** 5 minutes (300 seconds).
+    * **Action:** Notify the SNS topic.
+4.  **Outputs:** Export the instance name and alarm name.
+
+---
+
+<br>
+<br>
+
+## Step-by-Step Solution
+<a name="step-by-step-solution"></a>
+
+### 1. Create Infrastructure (`main.tf`)
+<a name="1-create-infrastructure-maintf"></a>
+The configuration creates the SNS topic (to ensure we have a valid ARN for the alarm), the EC2 instance, and the CloudWatch alarm linked to that specific instance.
+
+**Command:**
+```bash
+cd /home/bob/terraform
+vi main.tf
+```
+
+**Content:**
+```hcl
+# 1. Create SNS Topic for Notifications
+resource "aws_sns_topic" "sns_topic" {
+  name = "xfusion-sns-topic"
+}
+
+# 2. Launch EC2 Instance
+resource "aws_instance" "nautilus_node" {
+  ami           = "ami-0c02fb55956c7d316"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "xfusion-ec2"
+  }
+}
+
+# 3. Create CloudWatch Alarm
+resource "aws_cloudwatch_metric_alarm" "cpu_alert" {
+  alarm_name          = "xfusion-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "90"
+  alarm_description   = "Alarm when CPU exceeds 90%"
+  
+  # Actions to take when the alarm state changes to ALARM
+  alarm_actions       = [aws_sns_topic.sns_topic.arn]
+
+  # Dimensions map the metric to a specific resource (our EC2 instance)
+  dimensions = {
+    InstanceId = aws_instance.nautilus_node.id
+  }
+}
+```
+
+### 2. Define Outputs (`outputs.tf`)
+<a name="2-define-outputs-outputstf"></a>
+We define outputs to confirm the resource creation names.
+
+**Command:**
+```bash
+vi outputs.tf
+```
+
+**Content:**
+```hcl
+output "KKE_instance_name" {
+  value = aws_instance.nautilus_node.tags.Name
+}
+
+output "KKE_alarm_name" {
+  value = aws_cloudwatch_metric_alarm.cpu_alert.alarm_name
+}
+```
+
+### 3. Initialize and Apply
+<a name="3-initialize-and-apply"></a>
+Run the Terraform workflow to deploy the monitoring stack.
+
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+**Verification:**
+```bash
+terraform state list
+# Expected:
+# aws_cloudwatch_metric_alarm.cpu_alert
+# aws_instance.nautilus_node
+# aws_sns_topic.sns_topic
+```
+
+---
+
+## Deep Dive: Terraform Concepts Used
+<a name="deep-dive-terraform-concepts-used"></a>
+
+### SNS Topic Resource
+<a name="sns-topic-resource"></a>
+* **`aws_sns_topic`**: Simple Notification Service. It acts as a pub/sub messaging channel. In this context, CloudWatch "publishes" an alarm message to this topic, and any subscribers (email, SMS, Lambda) would receive it.
+
+### CloudWatch Metric Alarm
+<a name="cloudwatch-metric-alarm"></a>
+* **`aws_cloudwatch_metric_alarm`**: Defines the rule for monitoring.
+* **`metric_name` & `namespace`**: These define *what* to watch. `AWS/EC2` and `CPUUtilization` are standard metrics provided by the AWS hypervisor.
+* **`dimensions`**: This is critical. Without dimensions, CloudWatch looks at the aggregate CPU of *all* instances. By specifying `InstanceId`, we target only the specific instance we just created.
+* **`alarm_actions`**: Links the alarm to the SNS topic ARN.
+
+---
+
+<br>
+<br>
+
+## Troubleshooting
+<a name="troubleshooting"></a>
+
+**Issue: Invalid AMI**
+* **Cause:** The AMI ID `ami-0c02fb55956c7d316` might not exist in the configured region if it's not `us-east-1` (or if the AMI is deprecated).
+* **Fix:** Ensure the provider region matches the region where the AMI exists.
+
+**Issue: Alarm stuck in "Insufficient Data"**
+* **Cause:** This is normal immediately after creation. It takes at least one period (300 seconds/5 minutes) for CloudWatch to gather enough data points to evaluate the state.
+  
+
+
+---
+
 
 <br>
 <br>
