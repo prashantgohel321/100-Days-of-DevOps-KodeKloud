@@ -1,0 +1,5238 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="100 Days of DevOps project covering Linux, Git, Docker, Kubernetes, Jenkins, Ansible, Terraform and Cloud Automation by Prashant Gohel.">
+      
+      
+        <meta name="author" content="Prashant Gohel">
+      
+      
+        <link rel="canonical" href="https://prashantgohel321.github.io/100-Days-of-DevOps-KodeKloud/Commands%20%28from%2050%20Days%20of%20DevOps%29/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>The Ultimate DevOps Command Reference (from 50 Days of DevOps) - 100 Days of DevOps - Prashant Gohel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-ultimate-devops-command-reference-from-50-days-of-devops" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="100 Days of DevOps - Prashant Gohel" class="md-header__button md-logo" aria-label="100 Days of DevOps - Prashant Gohel" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            100 Days of DevOps - Prashant Gohel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Ultimate DevOps Command Reference (from 50 Days of DevOps)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/prashantgohel321/100-Days-of-DevOps-KodeKloud" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    100-Days-of-DevOps-KodeKloud
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../commands.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Commands Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Terminology%20%28From%2050%20Days%20of%20DevOps%29/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Terminology
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20001%20Linux%20User%20Setup%20With%20Non-Interactive%20Shell/" class="md-tabs__link">
+          
+  
+  
+  Linux (Day 001-014)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20021%20Set%20Up%20Git%20Repository%20on%20Storage%20Server/" class="md-tabs__link">
+          
+  
+  
+  Git (Day 021-034)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20035%20Install%20Docker%20Packages%20and%20Start%20Docker%20Service/" class="md-tabs__link">
+          
+  
+  
+  Docker (Day 035-047)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20048%20Deploy%20Pods%20in%20Kubernetes%20Cluster/" class="md-tabs__link">
+          
+  
+  
+  Kubernetes (Day 048-067)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20068%20Set%20Up%20Jenkins%20Server/" class="md-tabs__link">
+          
+  
+  
+  Jenkins (Day 068-081)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20082%20Create%20Ansible%20Inventory%20for%20App%20Server%20Testing/" class="md-tabs__link">
+          
+  
+  
+  Ansible (Day 082-093)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Day%20094%20Create%20VPC%20Using%20Terraform/" class="md-tabs__link">
+          
+  
+  
+  Terraform (Day 094-100)
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="100 Days of DevOps - Prashant Gohel" class="md-nav__button md-logo" aria-label="100 Days of DevOps - Prashant Gohel" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    100 Days of DevOps - Prashant Gohel
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/prashantgohel321/100-Days-of-DevOps-KodeKloud" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    100-Days-of-DevOps-KodeKloud
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Terminology%20%28From%2050%20Days%20of%20DevOps%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux (Day 001-014)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux (Day 001-014)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20001%20Linux%20User%20Setup%20With%20Non-Interactive%20Shell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 001
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20002%20Temporary%20User%20Setup%20with%20Expiry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 002
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20003%20Secure%20Root%20SSH%20Access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 003
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20004%20Script%20Execution%20Permissions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 004
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20005%20SElinux%20Installation%20and%20Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 005
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20006%20Create%20a%20Cron%20Job/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 006
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20007%20Linux%20SSH%20Authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 007
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20008%20Install%20Ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 008
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20009%20MariaDB%20Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 009
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20010%20Linux%20Bash%20Scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 010
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20011%20Install%20and%20Configure%20Tomcat%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 011
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20012%20Linux%20Network%20Services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 012
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20013%20IPtables%20Installation%20And%20Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 013
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20014%20Linux%20Process%20Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 014
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git (Day 021-034)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Git (Day 021-034)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20021%20Set%20Up%20Git%20Repository%20on%20Storage%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 021
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20022%20Clone%20Git%20Repository%20on%20Storage%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 022
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20023%20Fork%20a%20Git%20Repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20024%20Git%20Create%20Branches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20025%20Git%20Merge%20Branches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20026%20Git%20Manage%20Remotes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20027%20Git%20Revert%20Some%20Changes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 027
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20028%20Git%20Cherry%20Pick/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 028
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20029%20Manage%20Git%20Pull%20Requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 029
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20030%20Git%20hard%20reset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 030
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20031%20Git%20Stash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 031
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20032%20Git%20Rebase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20033%20Resolve%20Git%20Merge%20Conflicts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 033
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20034%20Git%20Hook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 034
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker (Day 035-047)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docker (Day 035-047)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20035%20Install%20Docker%20Packages%20and%20Start%20Docker%20Service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 035
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20036%20Deploy%20Nginx%20Container%20on%20Application%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 036
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20037%20Copy%20File%20to%20Docker%20Container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 037
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20038%20Pull%20Docker%20Image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 038
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20039%20Create%20a%20Docker%20Image%20From%20Container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 039
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20040%20Docker%20EXEC%20Operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 040
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20041%20Write%20a%20Dockerfile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 041
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20042%20Create%20a%20Docker%20Network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 042
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20043%20Docker%20Ports%20Mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 043
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20044%20Write%20a%20Docker%20Compose%20File/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 044
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20045%20Resolve%20Dockerfile%20Issues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 045
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20046%20Deploy%20an%20App%20on%20Docker%20Containers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 046
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20047%20Docker%20Python%20App/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 047
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes (Day 048-067)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kubernetes (Day 048-067)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20048%20Deploy%20Pods%20in%20Kubernetes%20Cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 048
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20049%20Deploy%20Applications%20with%20Kubernetes%20Deployments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 049
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20050%20Set%20Resource%20Limits%20in%20Kubernetes%20Pods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 050
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20051%20Execute%20Rolling%20Updates%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 051
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20052%20Revert%20Deployment%20to%20Previous%20Version%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 052
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20053%20Resolve%20VolumeMounts%20Issue%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 053
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20054%20Kubernetes%20Shared%20Volumes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 054
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20055%20Kubernetes%20Sidecar%20Containers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 055
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20056%20Deploy%20Nginx%20Web%20Server%20on%20Kubernetes%20Cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 056
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20057%20Print%20Environment%20Variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 057
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20058%20Deploy%20Grafana%20on%20Kubernetes%20Cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 058
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20059%20Troubleshoot%20Deployment%20issues%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 059
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20060%20Persistent%20Volumes%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 060
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20061%20Init%20Containers%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 061
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20062%20Manage%20Secrets%20in%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 062
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20063%20Deploy%20Iron%20Gallery%20App%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 063
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20064%20Fix%20Python%20App%20Deployed%20on%20Kubernetes%20Cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 064
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20065%20Deploy%20Redis%20Deployment%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 065
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20066%20Deploy%20MySQL%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 066
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20067%20Deploy%20Guest%20Book%20App%20on%20Kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 067
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jenkins (Day 068-081)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jenkins (Day 068-081)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20068%20Set%20Up%20Jenkins%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 068
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20069%20Install%20Jenkins%20Plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 069
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20070%20Configure%20Jenkins%20User%20Access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 070
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20071%20Configure%20Jenkins%20Job%20for%20Package%20Installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 071
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20072%20Jenkins%20Parameterized%20Builds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 072
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20073%20Jenkins%20Scheduled%20Jobs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 073
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20074%20Jenkins%20Database%20Backup%20Job/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 074
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20075%20Jenkins%20Slave%20Nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 075
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20076%20Jenkins%20Project%20Security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 076
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20077%20Jenkins%20Deploy%20Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 077
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20078%20Jenkins%20Conditional%20Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 078
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20079%20Jenkins%20Deployment%20Job/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 079
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20080%20Jenkins%20Chained%20Builds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 080
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20081%20Jenkins%20Multistage%20Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 081
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible (Day 082-093)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ansible (Day 082-093)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20082%20Create%20Ansible%20Inventory%20for%20App%20Server%20Testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 082
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20083%20Ansible%20Playbook%20and%20File%20Management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 083
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20084%20Copy%20Data%20to%20App%20Servers%20Using%20Ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 084
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20085%20Create%20Files%20on%20App%20Servers%20Using%20Ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 085
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20086%20Ansible%20Ping%20Module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 086
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20087%20Ansible%20Install%20Package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 087
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20088%20Ansible%20Block%20In%20FIle%20Module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 088
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20089%20Ansible%20Manage%20Services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 089
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20090%20Managing%20ACLs%20Using%20Ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 090
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20091%20Ansible%20Lineinfile%20Module/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 091
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20092%20Managing%20Jinja2%20Templates%20Using%20Ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 092
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20093%20Using%20Ansible%20Conditionals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 093
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terraform (Day 094-100)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Terraform (Day 094-100)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20094%20Create%20VPC%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 094
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20095%20Create%20Security%20Group%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 095
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20096%20Create%20EC2%20Instance%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 096
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20097%20Create%20IAM%20Policy%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 097
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20098%20Launch%20EC2%20in%20Private%20VPC%20Subnet%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 098
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20099%20Attach%20IAM%20Policy%20for%20DynamoDB%20Access%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 099
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Day%20100%20Create%20and%20Configure%20Alarm%20Using%20CloudWatch%20Using%20Terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 100
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-linux-fundamentals-user-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Linux Fundamentals &amp; User Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Linux Fundamentals &amp; User Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#useradd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        useradd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        grep
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-file-system-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: File System &amp; Permissions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: File System &amp; Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chmod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chmod
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#touch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        touch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mkdir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mkdir
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cd
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-system-service-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: System &amp; Service Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: System &amp; Service Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#systemctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#journalctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        journalctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-networking-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Networking &amp; Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4: Networking &amp; Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-keygen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ssh-keygen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-copy-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ssh-copy-id
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        curl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#df" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        df
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        netstat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall-cmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        firewall-cmd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iptables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iptables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-scripting-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Scripting &amp; Automation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5: Scripting &amp; Automation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crontab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        crontab
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#echo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        echo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        zip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-version-control-with-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: Version Control with Git
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 6: Version Control with Git">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git clone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git push
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-revert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git revert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git reset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-cherry-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git cherry-pick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-stash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git stash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git rebase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git fetch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-7-containerization-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 7: Containerization with Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 7: Containerization with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-ps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker ps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-cp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker cp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker compose
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-8-orchestration-with-kubernetes-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 8: Orchestration with Kubernetes (kubectl)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 8: Orchestration with Kubernetes (kubectl)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl apply
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-describe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl describe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl exec
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl delete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-top" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl top
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-9-configuration-management-with-ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 9: Configuration Management with Ansible
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 9: Configuration Management with Ansible">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pip3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pip3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ansible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ansible-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ansible-playbook
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="the-ultimate-devops-command-reference-from-50-days-of-devops">The Ultimate DevOps Command Reference (from 50 Days of DevOps)<a class="headerlink" href="#the-ultimate-devops-command-reference-from-50-days-of-devops" title="Permanent link">&para;</a></h1>
+<p>This document is a comprehensive reference guide to every command used in the "50 Days of DevOps" document. The commands are organized by category and progress from basic to more advanced concepts, reflecting the structure of the learning journey. Each command includes an explanation of its purpose, a breakdown of the specific flags used, and the real-world example from the document.</p>
+<hr />
+<h3 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h3>
+<ol>
+<li><a href="#part-1-linux-fundamentals--user-management"><strong>Linux Fundamentals &amp; User Management</strong></a></li>
+<li><a href="#part-2-file-system--permissions"><strong>File System &amp; Permissions</strong></a></li>
+<li><a href="#part-3-system--service-management"><strong>System &amp; Service Management</strong></a></li>
+<li><a href="#part-4-networking--troubleshooting"><strong>Networking &amp; Troubleshooting</strong></a></li>
+<li><a href="#part-5-scripting--automation"><strong>Scripting &amp; Automation</strong></a></li>
+<li><a href="#part-6-version-control-with-git"><strong>Version Control with Git</strong></a></li>
+<li><a href="#part-7-containerization-with-docker"><strong>Containerization with Docker</strong></a></li>
+<li><a href="#part-8-orchestration-with-kubernetes-kubectl"><strong>Orchestration with Kubernetes (kubectl)</strong></a></li>
+<li><a href="#part-9-configuration-management-with-ansible"><strong>Configuration Management with Ansible</strong></a></li>
+</ol>
+<hr />
+<h2 id="part-1-linux-fundamentals-user-management">Part 1: Linux Fundamentals &amp; User Management<a class="headerlink" href="#part-1-linux-fundamentals-user-management" title="Permanent link">&para;</a></h2>
+<p><a name="part-1-linux-fundamentals--user-management"></a></p>
+<h3 id="sudo"><code>sudo</code><a class="headerlink" href="#sudo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Super User Do) Executes a command with elevated (root/administrator) privileges. It is prepended to almost any command that modifies system-level configurations or resources.</li>
+<li><strong>Example:</strong> <code>sudo useradd james ...</code></li>
+</ul>
+<h3 id="useradd"><code>useradd</code><a class="headerlink" href="#useradd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The primary command for adding a new user account to a Linux system.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-s /sbin/nologin</code>: Sets the user's login shell to <code>/sbin/nologin</code>, which prevents interactive logins.</li>
+<li><code>--expiredate YYYY-MM-DD</code>: Sets a specific date on which the user account will be automatically disabled.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo useradd james -s /sbin/nologin</code></li>
+<li><code>sudo useradd anita --expiredate 2024-01-28</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="chage"><code>chage</code><a class="headerlink" href="#chage" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Change Age) A utility for viewing and modifying user account and password aging information.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-l &lt;username&gt;</code>: Lists the current account aging information for the specified user.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo chage -l anita</code></li>
+</ul>
+<h3 id="grep"><code>grep</code><a class="headerlink" href="#grep" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A powerful command-line tool for searching plain-text data for lines that match a regular expression or a simple string.</li>
+<li><strong>Examples:</strong><ul>
+<li><code>grep 'james' /etc/passwd</code> (Searches the user database file for any line containing "james").</li>
+<li><code>grep Listen /etc/httpd/conf/httpd.conf</code> (Finds the line containing the "Listen" directive in the Apache config).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="part-2-file-system-permissions">Part 2: File System &amp; Permissions<a class="headerlink" href="#part-2-file-system-permissions" title="Permanent link">&para;</a></h2>
+<p><a name="part-2-file-system--permissions"></a></p>
+<h3 id="ls"><code>ls</code><a class="headerlink" href="#ls" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (List) Lists files and directories.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-l</code>: Long format, showing detailed information like permissions, owner, size, and modification date.</li>
+<li><code>-a</code>: All files, including hidden dotfiles (e.g., <code>.git</code>).</li>
+<li><code>-d</code>: Directory, lists the directory itself, not its contents.</li>
+<li><code>-R</code>: Recursive, lists the contents of all subdirectories.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>ls -l /tmp/xfusioncorp.sh</code></li>
+<li><code>ls -ld /var/lib/mysql</code></li>
+<li><code>ls -la</code></li>
+<li><code>ls -R</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="chmod"><code>chmod</code><a class="headerlink" href="#chmod" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Change Mode) The primary command for changing the access permissions of a file or directory.</li>
+<li><strong>Arguments Used:</strong><ul>
+<li><code>a+x</code>: Adds (<code>+</code>) execute (<code>x</code>) permission for all (<code>a</code>) users.</li>
+<li><code>+x</code>: A shorthand to add execute permission for the owner, group, and others if they have read permission.</li>
+<li><code>600</code>: Numeric (octal) notation to set read/write for the owner and no permissions for anyone else.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo chmod a+x /tmp/xfusioncorp.sh</code></li>
+<li><code>chmod +x /scripts/news_backup.sh</code></li>
+<li><code>sudo chmod 600 /etc/nginx/ssl/nautilus.key</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="vi"><code>vi</code><a class="headerlink" href="#vi" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A powerful, ubiquitous command-line text editor. Used to edit configuration files, scripts, and other text files.</li>
+<li><strong>Example:</strong> <code>sudo vi /etc/ssh/sshd_config</code></li>
+</ul>
+<h3 id="cat"><code>cat</code><a class="headerlink" href="#cat" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Concatenate) Primarily used to display the content of a file to the standard output.</li>
+<li><strong>Example:</strong> <code>cat /tmp/cron_text</code></li>
+</ul>
+<h3 id="touch"><code>touch</code><a class="headerlink" href="#touch" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates an empty file if it doesn't exist, or updates the modification timestamp of an existing file.</li>
+<li><strong>Example:</strong> <code>touch /scripts/news_backup.sh</code></li>
+</ul>
+<h3 id="mkdir"><code>mkdir</code><a class="headerlink" href="#mkdir" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Make Directory) Creates a new directory.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-p</code>: Parent, creates parent directories as needed.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo mkdir /var/lib/mysql</code></li>
+<li><code>sudo mkdir -p /scripts /backup</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="chown"><code>chown</code><a class="headerlink" href="#chown" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Change Owner) Changes the user and/or group ownership of a file or directory.</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo chown mysql:mysql /var/lib/mysql</code></li>
+<li><code>sudo chown steve:steve /scripts /backup</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="mv"><code>mv</code><a class="headerlink" href="#mv" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Move) Moves or renames files and directories.</li>
+<li><strong>Example:</strong> <code>sudo mv /tmp/nautilus.crt /etc/nginx/ssl/</code></li>
+</ul>
+<h3 id="cp"><code>cp</code><a class="headerlink" href="#cp" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Copy) Copies files or directories.</li>
+<li><strong>Example:</strong> <code>sudo cp /tmp/index.html .</code></li>
+</ul>
+<h3 id="cd"><code>cd</code><a class="headerlink" href="#cd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Change Directory) Navigates to a different directory in the file system.</li>
+<li><strong>Example:</strong> <code>cd /usr/src/kodekloudrepos/</code></li>
+</ul>
+<hr />
+<h2 id="part-3-system-service-management">Part 3: System &amp; Service Management<a class="headerlink" href="#part-3-system-service-management" title="Permanent link">&para;</a></h2>
+<p><a name="part-3-system--service-management"></a></p>
+<h3 id="systemctl"><code>systemctl</code><a class="headerlink" href="#systemctl" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The central management tool for the <code>systemd</code> init system, used to control services (daemons).</li>
+<li><strong>Actions Used:</strong><ul>
+<li><code>status &lt;service&gt;</code>: Checks the current running status of a service.</li>
+<li><code>start &lt;service&gt;</code>: Starts a service for the current session.</li>
+<li><code>stop &lt;service&gt;</code>: Stops a running service.</li>
+<li><code>restart &lt;service&gt;</code>: Stops and then starts a service.</li>
+<li><code>reload &lt;service&gt;</code>: Reloads a service's configuration without a full restart.</li>
+<li><code>enable &lt;service&gt;</code>: Configures a service to start automatically on boot.</li>
+<li><code>disable &lt;service&gt;</code>: Prevents a service from starting on boot.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo systemctl restart sshd</code></li>
+<li><code>sudo systemctl status mariadb</code></li>
+<li><code>sudo systemctl start crond</code></li>
+<li><code>sudo systemctl enable crond</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="journalctl"><code>journalctl</code><a class="headerlink" href="#journalctl" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A command to query and display the logs from the <code>systemd</code> journal. It's the primary tool for in-depth service troubleshooting.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-xeu &lt;service&gt;</code>: Shows detailed log entries (<code>-e</code>), provides explanations (<code>-x</code>), specifically for the given unit (<code>-u</code>).</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>journalctl -xeu mariadb.service</code></li>
+</ul>
+<h3 id="service"><code>service</code><a class="headerlink" href="#service" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> An older command for managing system services. On modern systems, it often acts as a wrapper for <code>systemctl</code>. It is still commonly used for interacting with <code>iptables</code>.</li>
+<li><strong>Example:</strong> <code>sudo service iptables save</code></li>
+</ul>
+<hr />
+<h2 id="part-4-networking-troubleshooting">Part 4: Networking &amp; Troubleshooting<a class="headerlink" href="#part-4-networking-troubleshooting" title="Permanent link">&para;</a></h2>
+<p><a name="part-4-networking--troubleshooting"></a></p>
+<h3 id="ssh"><code>ssh</code><a class="headerlink" href="#ssh" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Secure Shell) The standard command for securely connecting to a remote Linux server.</li>
+<li><strong>Example:</strong> <code>ssh tony@stapp01</code></li>
+</ul>
+<h3 id="ssh-keygen"><code>ssh-keygen</code><a class="headerlink" href="#ssh-keygen" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Generates a new SSH authentication key pair (a public key and a private key).</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-t rsa</code>: Specifies the type (<code>-t</code>) of key to create, in this case, the <code>RSA</code> algorithm.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>ssh-keygen -t rsa</code></li>
+</ul>
+<h3 id="ssh-copy-id"><code>ssh-copy-id</code><a class="headerlink" href="#ssh-copy-id" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A utility to securely copy a public SSH key to a remote server, correctly setting it up in the <code>authorized_keys</code> file for password-less login.</li>
+<li><strong>Example:</strong> <code>ssh-copy-id clint@stbkp01</code></li>
+</ul>
+<h3 id="scp"><code>scp</code><a class="headerlink" href="#scp" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Secure Copy) Copies files between hosts on a network using the SSH protocol.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-r</code>: Recursive, used to copy entire directories and their contents.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>scp -r /home/thor/ecommerce tony@stapp01:/home/tony</code></li>
+</ul>
+<h3 id="curl"><code>curl</code><a class="headerlink" href="#curl" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A command-line tool for transferring data with URLs. It's essential for testing web servers and APIs.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-Ik</code>: Shows the headers (<code>-I</code>) and allows insecure (<code>-k</code>) connections (for self-signed SSL certificates).</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>curl http://stapp01:6400</code></li>
+</ul>
+<h3 id="df"><code>df</code><a class="headerlink" href="#df" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Disk Free) Reports file system disk space usage.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-h</code>: Human-readable format (e.g., MB, GB).</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>df -h</code></li>
+</ul>
+<h3 id="netstat"><code>netstat</code><a class="headerlink" href="#netstat" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A networking tool that displays network connections, routing tables, and interface statistics.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-tulpn</code>: Shows TCP (<code>t</code>), UDP (<code>u</code>), listening (<code>l</code>) ports, the program (<code>p</code>) using them, and uses numeric (<code>n</code>) addresses.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo netstat -tulpn | grep 6400</code></li>
+</ul>
+<h3 id="firewall-cmd"><code>firewall-cmd</code><a class="headerlink" href="#firewall-cmd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The command-line interface for <code>firewalld</code>, the modern default firewall on many Linux distributions.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--permanent</code>: Makes a rule persistent across reboots.</li>
+<li><code>--add-service=https</code>: Allows traffic for a predefined service (https is TCP port 443).</li>
+<li><code>--reload</code>: Applies permanent rules to the live firewall.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo firewall-cmd --permanent --add-service=https</code></li>
+</ul>
+<h3 id="iptables"><code>iptables</code><a class="headerlink" href="#iptables" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A user-space utility for configuring the Linux kernel firewall. The classic, powerful firewall tool.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-I INPUT 1</code>: Inserts a rule into the <code>INPUT</code> chain at position 1.</li>
+<li><code>-A INPUT</code>: Appends a rule to the end of the <code>INPUT</code> chain.</li>
+<li><code>-p tcp</code>: Specifies the protocol (TCP).</li>
+<li><code>--dport &lt;port&gt;</code>: Specifies the destination port.</li>
+<li><code>-j ACCEPT</code>: The "jump" target, telling the firewall to accept the packet.</li>
+<li><code>-j REJECT</code>: The target to reject the packet.</li>
+<li><code>-L</code>: Lists the rules.</li>
+<li><code>-n</code>: Numeric output.</li>
+<li><code>--line-numbers</code>: Shows the rule numbers in the chain.</li>
+</ul>
+</li>
+<li><strong>Examples:</strong><ul>
+<li><code>sudo iptables -I INPUT 1 -p tcp --dport 3002 -j ACCEPT</code></li>
+<li><code>sudo iptables -L INPUT -n --line-numbers</code></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="part-5-scripting-automation">Part 5: Scripting &amp; Automation<a class="headerlink" href="#part-5-scripting-automation" title="Permanent link">&para;</a></h2>
+<p><a name="part-5-scripting--automation"></a></p>
+<h3 id="crontab"><code>crontab</code><a class="headerlink" href="#crontab" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Cron Table) The command to manage the <code>cron</code> jobs for a user.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-e</code>: Edits the user's crontab file.</li>
+<li><code>-l</code>: Lists the current cron jobs.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo crontab -e</code></li>
+</ul>
+<h3 id="echo"><code>echo</code><a class="headerlink" href="#echo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A shell builtin that displays a line of text.</li>
+<li><strong>Example:</strong> <code>echo "Welcome!" | sudo tee /usr/share/nginx/html/index.html</code></li>
+</ul>
+<h3 id="zip"><code>zip</code><a class="headerlink" href="#zip" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> A utility to create <code>.zip</code> archive files.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-r</code>: Recursive, to include all files and subdirectories.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>zip -r /backup/xfusioncorp_news.zip /var/www/html/news</code></li>
+</ul>
+<h3 id="sed"><code>sed</code><a class="headerlink" href="#sed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> (Stream Editor) A powerful utility for parsing and transforming text.</li>
+<li><strong>Example:</strong> <code>sudo sed -i 's/^Listen .*/Listen 3002/' /etc/httpd/conf/httpd.conf</code> (Finds the line starting with "Listen" and replaces the entire line with "Listen 3002").</li>
+</ul>
+<hr />
+<h2 id="part-6-version-control-with-git">Part 6: Version Control with Git<a class="headerlink" href="#part-6-version-control-with-git" title="Permanent link">&para;</a></h2>
+<p><a name="part-6-version-control-with-git"></a></p>
+<h3 id="git-init"><code>git init</code><a class="headerlink" href="#git-init" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Initializes a new Git repository.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--bare</code>: Creates a "bare" repository, which is a central repository for sharing that has no working files.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git init --bare /opt/official.git</code></li>
+</ul>
+<h3 id="git-clone"><code>git clone</code><a class="headerlink" href="#git-clone" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates a local copy (a "clone") of a remote repository.</li>
+<li><strong>Example:</strong> <code>git clone /opt/media.git</code></li>
+</ul>
+<h3 id="git-branch"><code>git branch</code><a class="headerlink" href="#git-branch" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Manages branches. When run without arguments, it lists local branches.</li>
+<li><strong>Example:</strong> <code>sudo git branch xfusioncorp_games</code></li>
+</ul>
+<h3 id="git-checkout"><code>git checkout</code><a class="headerlink" href="#git-checkout" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Switches between branches or restores working tree files.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-b &lt;branch-name&gt;</code>: Creates a new branch and immediately switches to it.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git checkout -b datacenter</code></li>
+</ul>
+<h3 id="git-add"><code>git add</code><a class="headerlink" href="#git-add" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Adds file contents to the staging area, marking them to be included in the next commit.</li>
+<li><strong>Example:</strong> <code>sudo git add index.html</code></li>
+</ul>
+<h3 id="git-commit"><code>git commit</code><a class="headerlink" href="#git-commit" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Records changes to the repository by creating a new commit.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-m "message"</code>: Sets the commit message directly from the command line.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git commit -m "Add new index file"</code></li>
+</ul>
+<h3 id="git-merge"><code>git merge</code><a class="headerlink" href="#git-merge" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Joins two or more development histories (branches) together.</li>
+<li><strong>Example:</strong> <code>sudo git merge datacenter</code></li>
+</ul>
+<h3 id="git-push"><code>git push</code><a class="headerlink" href="#git-push" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Updates remote refs along with associated objects. It's how you send your local commits to a remote server like GitHub.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--force</code>: Forcefully overwrites the remote branch. <strong>Use with extreme caution.</strong></li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git push origin master datacenter</code></li>
+</ul>
+<h3 id="git-pull"><code>git pull</code><a class="headerlink" href="#git-pull" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Fetches from and integrates with another repository or a local branch. It's how you get updates from others.</li>
+<li><strong>Example:</strong> <code>git pull origin master</code></li>
+</ul>
+<h3 id="git-log"><code>git log</code><a class="headerlink" href="#git-log" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Shows the commit logs.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--oneline</code>: Shows each commit on a single, condensed line.</li>
+<li><code>--graph</code>: Draws a text-based graph of the commit history.</li>
+<li><code>--all</code>: Shows all branches.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git log --oneline --graph --all</code></li>
+</ul>
+<h3 id="git-remote"><code>git remote</code><a class="headerlink" href="#git-remote" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Manages the set of tracked remote repositories.</li>
+<li><strong>Subcommands:</strong><ul>
+<li><code>add &lt;name&gt; &lt;url&gt;</code>: Adds a new remote.</li>
+<li><code>rename &lt;old&gt; &lt;new&gt;</code>: Renames a remote.</li>
+<li><code>-v</code>: Verbose, shows the URLs of the remotes.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git remote add dev_official /opt/xfusioncorp_official.git</code></li>
+</ul>
+<h3 id="git-revert"><code>git revert</code><a class="headerlink" href="#git-revert" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates a new commit that is the inverse of a previous commit, safely undoing changes on a shared branch.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--no-commit</code>: Performs the revert in the working directory but does not automatically create a new commit.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git revert --no-commit HEAD</code></li>
+</ul>
+<h3 id="git-reset"><code>git reset</code><a class="headerlink" href="#git-reset" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Resets the current <code>HEAD</code> to a specified state, rewriting history. <strong>Dangerous on shared branches.</strong></li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--hard</code>: Resets the branch pointer, staging area, and working directory, discarding all changes.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git reset --hard a1b2c3d</code></li>
+</ul>
+<h3 id="git-cherry-pick"><code>git cherry-pick</code><a class="headerlink" href="#git-cherry-pick" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Applies the changes introduced by an existing commit as a new commit on the current branch.</li>
+<li><strong>Example:</strong> <code>sudo git cherry-pick a1b2c3d</code></li>
+</ul>
+<h3 id="git-stash"><code>git stash</code><a class="headerlink" href="#git-stash" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Temporarily shelves (or stashes) uncommitted changes in your working directory.</li>
+<li><strong>Subcommands:</strong><ul>
+<li><code>list</code>: Lists all stashed changes.</li>
+<li><code>apply &lt;stash_id&gt;</code>: Re-applies the stashed changes without removing them from the stash list.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git stash apply stash@{1}</code></li>
+</ul>
+<h3 id="git-rebase"><code>git rebase</code><a class="headerlink" href="#git-rebase" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Re-applies commits on top of another base tip, creating a linear history.</li>
+<li><strong>Example:</strong> <code>sudo git rebase master</code></li>
+</ul>
+<h3 id="git-fetch"><code>git fetch</code><a class="headerlink" href="#git-fetch" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Downloads objects and refs from another repository.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--tags</code>: Fetches all tags from the remote.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo git fetch origin --tags</code></li>
+</ul>
+<h3 id="git-tag"><code>git tag</code><a class="headerlink" href="#git-tag" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates, lists, deletes, or verifies a tag object signed with GPG.</li>
+<li><strong>Example:</strong> <code>sudo git tag</code></li>
+</ul>
+<hr />
+<h2 id="part-7-containerization-with-docker">Part 7: Containerization with Docker<a class="headerlink" href="#part-7-containerization-with-docker" title="Permanent link">&para;</a></h2>
+<p><a name="part-7-containerization-with-docker"></a></p>
+<h3 id="docker-run"><code>docker run</code><a class="headerlink" href="#docker-run" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Runs a command in a new container.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-d</code>: Detached mode, runs the container in the background.</li>
+<li><code>--name &lt;name&gt;</code>: Assigns a name to the container.</li>
+<li><code>-p &lt;host_port&gt;:&lt;container_port&gt;</code>: Publishes a container's port to the host.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo docker run -d --name news -p 8088:80 nginx:stable</code></li>
+</ul>
+<h3 id="docker-ps"><code>docker ps</code><a class="headerlink" href="#docker-ps" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Lists running containers.</li>
+<li><strong>Example:</strong> <code>sudo docker ps</code></li>
+</ul>
+<h3 id="docker-cp"><code>docker cp</code><a class="headerlink" href="#docker-cp" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Copies files/folders between a container and the local filesystem.</li>
+<li><strong>Example:</strong> <code>sudo docker cp /tmp/nautilus.txt.gpg ubuntu_latest:/home/</code></li>
+</ul>
+<h3 id="docker-exec"><code>docker exec</code><a class="headerlink" href="#docker-exec" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Executes a command in a running container.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-it</code>: Interactive terminal, allowing you to get a shell inside the container.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo docker exec -it kkloud bash</code></li>
+</ul>
+<h3 id="docker-pull"><code>docker pull</code><a class="headerlink" href="#docker-pull" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Pulls an image or a repository from a registry.</li>
+<li><strong>Example:</strong> <code>sudo docker pull busybox:musl</code></li>
+</ul>
+<h3 id="docker-tag"><code>docker tag</code><a class="headerlink" href="#docker-tag" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates a tag (an alias) that refers to a source image.</li>
+<li><strong>Example:</strong> <code>sudo docker tag busybox:musl busybox:local</code></li>
+</ul>
+<h3 id="docker-images"><code>docker images</code><a class="headerlink" href="#docker-images" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Lists all images on the local system.</li>
+<li><strong>Example:</strong> <code>sudo docker images</code></li>
+</ul>
+<h3 id="docker-commit"><code>docker commit</code><a class="headerlink" href="#docker-commit" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Creates a new image from a container's changes.</li>
+<li><strong>Example:</strong> <code>sudo docker commit ubuntu_latest news:devops</code></li>
+</ul>
+<h3 id="docker-build"><code>docker build</code><a class="headerlink" href="#docker-build" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Builds an image from a Dockerfile.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-t &lt;name:tag&gt;</code>: Tags the resulting image.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo docker build -t my-apache:test .</code></li>
+</ul>
+<h3 id="docker-network"><code>docker network</code><a class="headerlink" href="#docker-network" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Manages Docker networks.</li>
+<li><strong>Subcommands:</strong><ul>
+<li><code>create</code>: Creates a new network.</li>
+<li><code>inspect</code>: Displays detailed information on a network.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo docker network create --driver bridge --subnet=192.168.0.0/24 ecommerce</code></li>
+</ul>
+<h3 id="docker-compose"><code>docker compose</code><a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The command for defining and running multi-container Docker applications using a <code>docker-compose.yml</code> file.</li>
+<li><strong>Subcommands:</strong><ul>
+<li><code>up -d</code>: Creates and starts containers in detached mode.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>sudo docker compose up -d</code></li>
+</ul>
+<hr />
+<h2 id="part-8-orchestration-with-kubernetes-kubectl">Part 8: Orchestration with Kubernetes (kubectl)<a class="headerlink" href="#part-8-orchestration-with-kubernetes-kubectl" title="Permanent link">&para;</a></h2>
+<p><a name="part-8-orchestration-with-kubernetes-kubectl"></a></p>
+<h3 id="kubectl-apply"><code>kubectl apply</code><a class="headerlink" href="#kubectl-apply" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Applies a configuration to a resource by filename. It's the standard way to create or update Kubernetes objects.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-f &lt;filename&gt;</code>: Specifies the filename of the manifest.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>kubectl apply -f pod-httpd.yaml</code></li>
+</ul>
+<h3 id="kubectl-get"><code>kubectl get</code><a class="headerlink" href="#kubectl-get" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Displays one or many resources.</li>
+<li><strong>Resources:</strong> <code>pods</code>, <code>deployments</code>, <code>all</code>.</li>
+<li><strong>Example:</strong> <code>kubectl get pods</code></li>
+</ul>
+<h3 id="kubectl-describe"><code>kubectl describe</code><a class="headerlink" href="#kubectl-describe" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Shows a detailed description of a resource. This is the primary tool for troubleshooting.</li>
+<li><strong>Resources:</strong> <code>pod &lt;pod-name&gt;</code>, <code>deployment &lt;deployment-name&gt;</code>.</li>
+<li><strong>Example:</strong> <code>kubectl describe pod httpd-pod</code></li>
+</ul>
+<h3 id="kubectl-logs"><code>kubectl logs</code><a class="headerlink" href="#kubectl-logs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Prints the logs for a container in a pod.</li>
+<li><strong>Example:</strong> <code>kubectl logs pod-httpd</code></li>
+</ul>
+<h3 id="kubectl-exec"><code>kubectl exec</code><a class="headerlink" href="#kubectl-exec" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Executes a command in a container.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-it</code>: Interactive terminal.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>kubectl exec -it pod-httpd -- /bin/bash</code></li>
+</ul>
+<h3 id="kubectl-delete"><code>kubectl delete</code><a class="headerlink" href="#kubectl-delete" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Deletes resources by filename or name.</li>
+<li><strong>Example:</strong> <code>kubectl delete deployment httpd</code></li>
+</ul>
+<h3 id="kubectl-scale"><code>kubectl scale</code><a class="headerlink" href="#kubectl-scale" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Sets a new size for a Deployment, ReplicaSet, or Replication Controller.</li>
+<li><strong>Example:</strong> <code>kubectl scale deployment httpd --replicas=3</code></li>
+</ul>
+<h3 id="kubectl-top"><code>kubectl top</code><a class="headerlink" href="#kubectl-top" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> Displays resource (CPU/Memory) usage.</li>
+<li><strong>Example:</strong> <code>kubectl top pod httpd-pod</code></li>
+</ul>
+<hr />
+<h2 id="part-9-configuration-management-with-ansible">Part 9: Configuration Management with Ansible<a class="headerlink" href="#part-9-configuration-management-with-ansible" title="Permanent link">&para;</a></h2>
+<p><a name="part-9-configuration-management-with-ansible"></a></p>
+<h3 id="pip3"><code>pip3</code><a class="headerlink" href="#pip3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The package installer for Python 3.</li>
+<li><strong>Example:</strong> <code>sudo pip3 install ansible==4.7.0</code></li>
+</ul>
+<h3 id="ansible"><code>ansible</code><a class="headerlink" href="#ansible" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The main Ansible command-line tool.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>--version</code>: Displays the version of Ansible (specifically, <code>ansible-core</code>).</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>ansible --version</code></li>
+</ul>
+<h3 id="ansible-playbook"><code>ansible-playbook</code><a class="headerlink" href="#ansible-playbook" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Meaning:</strong> The command to run an Ansible playbook.</li>
+<li><strong>Flags Used:</strong><ul>
+<li><code>-i &lt;inventory_file&gt;</code>: Specifies the inventory file to use.</li>
+</ul>
+</li>
+<li><strong>Example:</strong> <code>ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.ini playbook.yaml</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.suggest", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
